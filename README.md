@@ -7,7 +7,7 @@ the application. Developers are encouraged to add features, make changes, and us
 dependency for other Android Loopr Wallets.
 
 This library uses Kotlin's Coroutines to make asynchronous requests. For more information on 
-Kotlin's Coroutines, see [here](https://kotlinlang.org/docs/reference/coroutines.html) 
+Kotlin's Coroutines, see [here](https://kotlinlang.org/docs/reference/coroutines.html).
 
 ### Adding the Library
 
