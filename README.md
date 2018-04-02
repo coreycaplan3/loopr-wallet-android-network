@@ -13,7 +13,7 @@ Kotlin's Coroutines, see [here](https://kotlinlang.org/docs/reference/coroutines
 
 To add this library as a dependency to your project, add the following:
 
-`compile 'com.loopring.android:loopr-wallet-network:0.0.2'`
+`compile 'com.loopring.android:loopr-wallet-network:0.1.0'`
 
 ### Using the ETH Wrapper
 
