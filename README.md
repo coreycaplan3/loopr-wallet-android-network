@@ -23,10 +23,10 @@ Sending ETH is really simple. It only requires the following:
 
 ```kotlin
 fun sendMyEther(
-    amount: BigDecimal, 
-    destAddress: String, 
-    web3j: Web3j, 
-    credentials: Credentials
+        amount: BigDecimal, 
+        destAddress: String, 
+        web3j: Web3j, 
+        credentials: Credentials
 ) = runBlocking {
     sendEth(amount, destAddress, web3j, credentials).await()
 }
