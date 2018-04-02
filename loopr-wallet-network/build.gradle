@@ -1,5 +1,30 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'loopr-wallet-android-network'
+
+    publishedGroupId = 'com.loopring.android'
+    libraryName = 'Loopr Wallet Network'
+    artifact = 'loopr-wallet-network'
+
+    libraryDescription = 'This library contains the necessary APIs and dependencies to interact with all of the network-based features for the Loopr Wallet Android Application. '
+
+    siteUrl = 'https://github.com/coreycaplan3/loopr-wallet-android-network'
+    gitUrl = 'https://github.com/coreycaplan3/loopr-wallet-android-network.git'
+
+    libraryVersion = '0.0.2'
+
+    developerId = 'coreycaplan3'
+    developerName = 'Corey Caplan'
+    developerEmail = 'developer.coreycaplan@gmail.com'
+
+    licenseName = 'GNU General Public License v3.0'
+    licenseUrl = 'https://www.gnu.org/licenses/gpl-3.0.en.html'
+    allLicenses = ["GPL-3.0"]
+}
 
 android {
     compileSdkVersion 27
@@ -61,3 +86,11 @@ dependencies {
 repositories {
     mavenCentral()
 }
+
+// Avoid Kotlin docs error
+tasks.withType(Javadoc) {
+    enabled = false
+}
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
