@@ -11,16 +11,23 @@ Kotlin's Coroutines, see [here](https://kotlinlang.org/docs/reference/coroutines
 
 ### Adding the Library
 
-To add this library as a dependency to your project, add the following:
+To add this library as a dependency to your project via Gradle, add the following:
 
-`compile 'com.loopring.android:loopr-wallet-network:0.1.0'`
+```
+compile 'com.loopring.android:loopr-wallet-network:0.1.0'
+```
 
 ### Using the ETH Wrapper
 
 Sending ETH is really simple. It only requires the following:
 
 ```kotlin
-fun sendMyEther(amount: BigDecimal, destAddress: String, web3j: Web3j, credentials: Credentials) = runBlocking {
+fun sendMyEther(
+    amount: BigDecimal, 
+    destAddress: String, 
+    web3j: Web3j, 
+    credentials: Credentials
+) = runBlocking {
     sendEth(amount, destAddress, web3j, credentials).await()
 }
 ```
@@ -64,7 +71,7 @@ fun setupKey() {
 ### Using the Etherscan and Ethplorer APIs
 
 Using the API is as simple as using [Retrofit](http://square.github.io/retrofit/), which has been 
-orchestrated work with the respective APIs.
+orchestrated work to with the respective APIs.
 
 ```kotlin
 // Assume that [apiKey] was already set!!
@@ -81,7 +88,7 @@ fun getTransactions(address: String) = runBlocking {
 
 ### Thanks and Credits
 - [Adam Knuckey](https://github.com/aknuck) of *New Market Elements* for creating this library
-- The [Loopring Foundation](https://loopring.org) and everyone working on its Ecosystem
+- The [Loopring Foundation](https://loopring.org) and everyone working on its ecosystem
 - The team working on the [Web3j](https://github.com/web3j/web3j) library, and advancing its 
 capabilities 
-- The [Ethereum Foundation](https://www.ethereum.org/) and everyone working on the Ethereum Ecosystem 
+- The [Ethereum Foundation](https://www.ethereum.org/) and everyone working on its ecosystem 
