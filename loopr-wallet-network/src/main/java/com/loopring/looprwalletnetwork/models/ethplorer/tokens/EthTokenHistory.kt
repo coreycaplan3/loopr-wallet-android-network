@@ -1,11 +1,12 @@
 package com.loopring.looprwalletnetwork.models.ethplorer.tokens
 
-import com.loopring.looprwalletnetwork.models.etherscan.transactions.EthTransactionOperationInfo
+import com.loopring.looprwalletnetwork.models.ethplorer.address.EthTransactionOperationInfo
 
 /**
  * Created by arknw229 on 3/13/18.
  *
  * Ethplorer API
+ *
  * Gets history of token operations for an address
  *
  * @author arknw229

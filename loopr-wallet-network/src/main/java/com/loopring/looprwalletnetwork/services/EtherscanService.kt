@@ -6,9 +6,9 @@ import com.loopring.looprwalletnetwork.models.etherscan.CoinPriceData
 import com.loopring.looprwalletnetwork.models.etherscan.address.BalanceListResponse
 import com.loopring.looprwalletnetwork.models.etherscan.address.BalanceResponse
 import com.loopring.looprwalletnetwork.models.etherscan.eth.EthPriceResponse
+import com.loopring.looprwalletnetwork.models.etherscan.eth.EthSupplyResponse
 import com.loopring.looprwalletnetwork.models.etherscan.transactions.TransactionResponse
 import com.loopring.looprwalletnetwork.models.ethplorer.address.EthAddressTransactions
-import com.loopring.looprwalletnetwork.models.ethplorer.eth.EthSupplyResponse
 import com.loopring.looprwalletnetwork.models.ethplorer.tokens.EthTokenInfo
 import kotlinx.coroutines.experimental.Deferred
 import okhttp3.Interceptor
@@ -22,7 +22,8 @@ import retrofit2.http.Query
 /**
  * Created by arknw229 on 2/20/18.
  *
- * Etherscan API service
+ * **Etherscan API service**
+ *
  * All calls are to *https://api.etherscan.io*
  *
  * @author arknw229
@@ -32,6 +33,7 @@ interface EtherscanService {
 
     /**
      * Ethereum supply
+     *
      * @return [EthSupplyResponse]
      */
     @get:GET("api?module=stats&action=ethsupply")
@@ -39,6 +41,7 @@ interface EtherscanService {
 
     /**
      * Ethereum price data
+     *
      * @return [EthPriceResponse]
      */
     @get:GET("api?module=stats&action=ethprice")
@@ -46,6 +49,7 @@ interface EtherscanService {
 
     /**
      * Retrieve the ABI for a contract
+     *
      * @param address
      * @return [AbiResponse]
      */
@@ -54,6 +58,7 @@ interface EtherscanService {
 
     /**
      * Retrieve the balance of a given account
+     *
      * @param address
      * @return [BalanceResponse]
      */
@@ -62,6 +67,7 @@ interface EtherscanService {
 
     /**
      * Retrieve the balances for several given account
+     *
      * @param addressList - comma separated string of addresses
      * @return [BalanceListResponse]
      */
@@ -70,6 +76,7 @@ interface EtherscanService {
 
     /**
      * Retrieve the transaction list for a given account
+     *
      * @param address - comma separated string of addresses
      * @return [TransactionResponse]
      */
@@ -78,7 +85,6 @@ interface EtherscanService {
 
     companion object {
 
-        // var API_KEY = "537ZMY3HV44B111IV29WNPTEAE3ZNSBU5M" // TODO
         @Suppress("MemberVisibilityCanBePrivate")
         var apiKey = "TODO"
 
@@ -89,7 +95,7 @@ interface EtherscanService {
          *
          * @return [Retrofit] object configured with the necessary custom deserializers and built with the Etherscan base URL
          */
-        fun getService(): EthplorerService {
+        fun getService(): EtherscanService {
 
             if (apiKey == "TODO") {
                 throw IllegalStateException("You need to set the API key in order to use it")
@@ -121,7 +127,7 @@ interface EtherscanService {
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build()
 
-            return retrofit.create<EthplorerService>(EthplorerService::class.java)
+            return retrofit.create<EtherscanService>(EtherscanService::class.java)
         }
     }
 }

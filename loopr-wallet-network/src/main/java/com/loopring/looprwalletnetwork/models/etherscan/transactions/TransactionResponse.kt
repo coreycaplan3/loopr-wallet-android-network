@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName
  * Created by arknw229 on 3/1/18.
  *
  * Etherscan API
+ *
  * Data about a transaction on the blockchain
  *
  * @author arknw229

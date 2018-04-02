@@ -7,11 +7,14 @@ import java.lang.reflect.Type
  * Created by arknw229 on 3/13/18.
  *
  * Ethplorer API
+ *
  * List of [EthAddressInfo] objects for a given address
  *
  * limit:   maximum number of operations [1 - 50, default = 10]
+ *
  * showZeroValues:  show transactions with zero ETH value, default = 0
  *
+ * ```
  * [
  *   {
  *     timestamp:       # operation timestamp
@@ -23,6 +26,7 @@ import java.lang.reflect.Type
  *     success:         # true if transactions was completed, false if failed
  *   },
  * ]
+ * ```
  *
  * @author arknw229
  */

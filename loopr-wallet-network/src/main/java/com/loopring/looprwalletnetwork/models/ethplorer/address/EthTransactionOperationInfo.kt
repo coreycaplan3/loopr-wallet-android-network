@@ -1,8 +1,8 @@
-package com.loopring.looprwalletnetwork.models.etherscan.transactions
+package com.loopring.looprwalletnetwork.models.ethplorer.address
 
 import android.util.Log
-import com.loopring.looprwalletnetwork.models.ethplorer.tokens.EthTokenInfo
 import com.google.gson.*
+import com.loopring.looprwalletnetwork.models.ethplorer.tokens.EthTokenInfo
 import java.lang.reflect.Type
 import java.math.BigInteger
 
@@ -10,6 +10,7 @@ import java.math.BigInteger
  * Created by arknw229 on 3/13/18.
  *
  * Ethplorer API
+ *
  * Operations performed with an ERC20 token
  *
  * @author arknw229

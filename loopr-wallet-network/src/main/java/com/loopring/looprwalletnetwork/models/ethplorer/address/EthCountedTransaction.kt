@@ -7,8 +7,10 @@ import com.loopring.looprwalletnetwork.models.etherscan.transactions.EthTransact
  * Created by arknw229 on 3/13/18.
  *
  * Ethplorer API
+ *
  * A count of the number of transactions at a given date
  *
+ * ```
  * {
  *   _id: {
  *     year:  # transaction year
@@ -18,6 +20,7 @@ import com.loopring.looprwalletnetwork.models.etherscan.transactions.EthTransact
  *   ts:        # timestamp of the first transaction in group
  *   cnt:       # number of transaction in group
  * }
+ * ```
  *
  * @author arknw229
  */

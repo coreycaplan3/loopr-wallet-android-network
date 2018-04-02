@@ -1,14 +1,12 @@
-package com.example.arknw229.networkingtests
+package com.loopring.looprwalletnetwork.models.etherscan.transactions
 
-import com.loopring.looprwalletnetwork.models.etherscan.transactions.EthTransactionLogInfo
-import com.loopring.looprwalletnetwork.models.etherscan.transactions.EthTransactionOperationInfo
+import com.loopring.looprwalletnetwork.models.ethplorer.address.EthTransactionOperationInfo
 
 /**
  * Created by arknw229 on 3/13/18.
- */
-
-/**
+ *
  * Ethplorer API
+ *
  * Information on a transaction
  */
 class EthTransactionInfo (

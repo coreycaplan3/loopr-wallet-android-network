@@ -6,8 +6,10 @@ import java.math.BigDecimal
  * Created by arknw229 on 3/13/18.
  *
  * Ethplorer API
+ *
  * Cumulative market data related to a given token address
  *
+ * ```
  * {
  *     "tokens": # total number of tokens listed
  *     "tokensWithPrice": # total number of tokens with price data provided
@@ -16,6 +18,7 @@ import java.math.BigDecimal
  *     "volume24h": # cumulative 24 hour volume on the tokens listed
  *     "volumePrevious": # previous cumulative volume on the tokens listed
  * }
+ * ```
  *
  * @author arknw229
  */

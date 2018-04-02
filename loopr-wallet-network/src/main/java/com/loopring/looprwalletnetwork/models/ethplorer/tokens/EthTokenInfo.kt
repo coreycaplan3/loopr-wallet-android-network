@@ -13,9 +13,12 @@ import java.math.BigDecimal
  * Created by arknw229 on 3/11/18.
  *
  * Ethplorer API
+ *
  * This is a commonly used object for the Ethplorer API
+ *
  * The fields change depending on which API call is being made, often many are null
  *
+ * ```
  * {
  *   address:        # token address,
  *   totalSupply:    # total token supply,
@@ -35,6 +38,7 @@ import java.math.BigDecimal
  *   holdersCount:   # total numnber of token holders
  *   issuancesCount: # total count of token issuances
  * }
+ * ```
  *
  * @author arknw229
  */
@@ -335,7 +339,7 @@ class EthTokenInfo(
             }
         }
 
-        fun parseLong(value: JsonElement, name: String): Long? {
+        private fun parseLong(value: JsonElement, name: String): Long? {
             try {
                 return value.asLong
             } catch (e: UnsupportedOperationException) {
@@ -344,7 +348,7 @@ class EthTokenInfo(
             }
         }
 
-        fun parseBigDecimal(value: String, name: String): BigDecimal? {
+        private fun parseBigDecimal(value: String, name: String): BigDecimal? {
             try {
                 return BigDecimal(value)
             } catch (e: NumberFormatException) {

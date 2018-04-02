@@ -1,11 +1,12 @@
-package com.loopring.looprwalletnetwork.models.ethplorer.eth
+package com.loopring.looprwalletnetwork.models.etherscan.eth
 
 import com.google.gson.annotations.SerializedName
 
 /**
  * Created by arknw229 on 3/1/18.
  *
- * Ethplorer API
+ * Etherscan API
+ *
  * Retrieves the supply of eth
  *
  * @author arknw229

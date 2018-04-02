@@ -12,11 +12,14 @@ import java.math.BigDecimal
  * Created by arknw229 on 3/13/18.
  *
  * Ethplorer API
+ *
  * Information about a transaction perfomed by an address
  *
  * limit:   maximum number of operations [1 - 50, default = 10]
+ *
  * showZeroValues:  show transactions with zero ETH value, default = 0
  *
+ * ```
  * {
  *   timestamp:       # operation timestamp
  *   from:            # source address (if two addresses involved),
@@ -26,6 +29,7 @@ import java.math.BigDecimal
  *   input:           # input data
  *   success:         # true if transactions was completed, false if failed
  * }
+ * ```
  *
  * @author arknw229
  */

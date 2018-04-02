@@ -5,12 +5,14 @@ package com.loopring.looprwalletnetwork.models.etherscan.eth
  *
  * Ethereum price data at a given time
  *
+ * ```
  * {
  *   ethbtc
  *   ethbtc_timestamp
  *   ethusd
  *   ethusd_timestamp
  * }
+ * ```
  *
  * @author arknw229
  */

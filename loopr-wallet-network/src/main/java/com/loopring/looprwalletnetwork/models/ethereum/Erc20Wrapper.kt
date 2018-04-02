@@ -9,13 +9,9 @@ import org.web3j.abi.datatypes.Type
 import org.web3j.abi.datatypes.generated.Uint256
 import org.web3j.crypto.Credentials
 import org.web3j.protocol.Web3j
-import org.web3j.protocol.core.RemoteCall
 import org.web3j.protocol.core.methods.response.TransactionReceipt
 import org.web3j.tx.Contract
 import org.web3j.tx.TransactionManager
-import org.web3j.tx.Transfer
-import org.web3j.utils.Convert
-import java.math.BigDecimal
 import java.math.BigInteger
 import java.util.*
 import java.util.Collections.emptyList
@@ -27,104 +23,6 @@ import java.util.Collections.emptyList
  * @author arknw229
  */
 class Erc20Wrapper : Contract {
-
-    companion object {
-
-        /**
-         * This will create a new instance of the smart contract on the Ethereum blockchain using
-         * the supplied credentials, and constructor parameter values
-         *
-         * @param web3j the web3j object that connects with the network
-         * @param credentials the credentials of the wallet conducting the transaction
-         * @param gasPrice price of gas for this transaction
-         * @param gasLimit gas limit for the transaction
-         * @param binary The binary info attached to the transaction
-         * @return RemoteCall with response of the request
-         */
-        fun deploy(
-                web3j: Web3j,
-                credentials: Credentials,
-                gasPrice: BigInteger,
-                gasLimit: BigInteger,
-                binary: String
-        ) = Contract.deployRemoteCall(Erc20Wrapper::class.java, web3j, credentials, gasPrice, gasLimit, binary, "")
-
-        /**
-         * This will create a new instance of the smart contract on the Ethereum blockchain using
-         * the supplied credentials, and constructor parameter values
-         *
-         * @param web3j the web3j object that connects with the network
-         * @param transactionManager the transaction manager with the relevant transaction information
-         * @param gasPrice price of gas for this transaction
-         * @param gasLimit gas limit for the transaction
-         * @param binary The binary info attached to the transaction
-         * @return RemoteCall with response of the reqquest
-         */
-        fun deploy(
-                web3j: Web3j,
-                transactionManager: TransactionManager,
-                gasPrice: BigInteger,
-                gasLimit: BigInteger,
-                binary: String
-        ) = Contract.deployRemoteCall(Erc20Wrapper::class.java, web3j, transactionManager, gasPrice, gasLimit, binary, "")
-
-        /**
-         * Constructs an instance of a smart contract wrapper with an existing smart contract
-         *
-         * @param web3j the web3j object that connects with the network
-         * @param credentials the credentials of the wallet conducting the transaction
-         * @param gasPrice price of gas for this transaction
-         * @param gasLimit gas limit for the transaction
-         * @param binary The binary transaction information
-         * @return RemoteCall with response of the request
-         */
-        fun createWrapper(
-                contractAddress: String,
-                web3j: Web3j,
-                credentials: Credentials,
-                gasPrice: BigInteger,
-                gasLimit: BigInteger,
-                binary: String
-        ) = Erc20Wrapper(contractAddress, web3j, credentials, gasPrice, gasLimit, binary)
-
-        /**
-         * Constructs an instance of a smart contract wrapper with an existing smart contract
-         *
-         * @param web3j the web3j object that connects with the network
-         * @param transactionManager the transaction manager with the relevant transaction information
-         * @param gasPrice price of gas for this transaction
-         * @param gasLimit gas limit for the transaction
-         * @param binary The binary transaction information
-         * @return RemoteCall with response of the request
-         */
-        fun createWrapper(
-                contractAddress: String,
-                web3j: Web3j,
-                transactionManager: TransactionManager,
-                gasPrice: BigInteger,
-                gasLimit: BigInteger,
-                binary: String
-        ) = Erc20Wrapper(contractAddress, web3j, transactionManager, gasPrice, gasLimit, binary)
-
-        /**
-         * Sends ether from the address in [credentials] to [destAddress].
-         *
-         * @param amount The amount (in ETH) to send (represented as a whole number)
-         * @param destAddress The address to send the ETH
-         * @param web3j The [Web3j] instance that is used to send the ETH.
-         * @param credentials The user's [Credentials] for signing and sending the transaction
-         * @return A deferred transaction hash for the send.
-         * @throws java.io.IOException If there was a connectivity issue
-         * @throws InterruptedException If the thread from which the send is occurring is interrupted
-         * @throws org.web3j.protocol.exceptions.TransactionException If the transaction takes too
-         * long to broadcast
-         */
-        fun sendEth(amount: BigDecimal, destAddress: String, web3j: Web3j, credentials: Credentials): Deferred<String> = async {
-            Transfer.sendFunds(web3j, credentials, destAddress, amount, Convert.Unit.ETHER)
-                    .send()
-                    .transactionHash
-        }
-    }
 
     private constructor(contractAddress: String,
                         web3j: Web3j,
@@ -148,39 +46,39 @@ class Erc20Wrapper : Contract {
      *
      * @return Returns a remoteCall with a BigInteger repesenting the supply
      */
-    fun totalSupply(): RemoteCall<BigInteger> {
+    fun totalSupply(): Deferred<BigInteger> = async {
         val function = Function("totalSupply",
                 Arrays.asList(),
                 Arrays.asList<TypeReference<*>>(object : TypeReference<Uint256>() {}))
-        return executeRemoteCallSingleValueReturn(function, BigInteger::class.java)
+        executeRemoteCallSingleValueReturn(function, BigInteger::class.java).send()
     }
 
     /**
      * Provides the number of tokens held by a given address
      * Note that anyone can query any address’ balance, as all data on the blockchain is public
      *
-     * @param tokenOwner: the owner of the token
+     * @param tokenOwner the owner of the token
      * @return Returns a remoteCall with a BigInteger repesenting the balance
      */
-    fun balanceOf(tokenOwner: String): RemoteCall<BigInteger> {
+    fun balanceOf(tokenOwner: String): Deferred<BigInteger> = async {
         val function = Function("balanceOf",
-                Arrays.asList<Type<*>>(org.web3j.abi.datatypes.Address(tokenOwner)),
+                Arrays.asList<Type<*>>(Address(tokenOwner)),
                 Arrays.asList<TypeReference<*>>(object : TypeReference<Uint256>() {}))
-        return executeRemoteCallSingleValueReturn(function, BigInteger::class.java)
+        executeRemoteCallSingleValueReturn(function, BigInteger::class.java).send()
     }
 
     /**
      * Provides the number of tokens allowed to be transferred from a given address by another given address
      *
-     * @param tokenOwner: the owner of the token
-     * @param spender: the owner of the token
+     * @param tokenOwner the owner of the token
+     * @param spender the owner of the token
      * @return Returns a remoteCall with a BigInteger
      */
-    fun allowance(tokenOwner: String, spender: String): RemoteCall<BigInteger> {
+    fun allowance(tokenOwner: String, spender: String): Deferred<BigInteger> = async {
         val function = Function("allowance",
                 Arrays.asList<Type<*>>(Address(tokenOwner), Address(spender)),
                 Arrays.asList<TypeReference<*>>(object : TypeReference<Uint256>() {}))
-        return executeRemoteCallSingleValueReturn(function, BigInteger::class.java)
+        executeRemoteCallSingleValueReturn(function, BigInteger::class.java).send()
     }
 
     /**
@@ -193,16 +91,16 @@ class Erc20Wrapper : Contract {
      * which addresses transferred funds where and so cannot assert that the user calling
      * the contract has paid the required amount of funds to operate the contract.
      *
-     * @param to: the recipient of the tokens
-     * @param tokens: the number of tokens to be sent (in smallest token unit)
+     * @param to the recipient of the tokens
+     * @param tokens the number of tokens to be sent (in smallest token unit)
      * @return Returns a remoteCall with a TransactionReceipt to give status of the transaction
      */
-    fun transfer(to: String, tokens: BigInteger): RemoteCall<TransactionReceipt> {
+    fun transfer(to: String, tokens: BigInteger): Deferred<TransactionReceipt> = async {
         val function = Function(
                 "transfer",
                 Arrays.asList(Address(to), Uint256(tokens)),
                 emptyList<TypeReference<*>>())
-        return executeRemoteCallTransaction(function)
+        executeRemoteCallTransaction(function).send()
     }
 
     /**
@@ -210,16 +108,16 @@ class Erc20Wrapper : Contract {
      * up to a certain number of tokens, known as an allowance. The token holder uses approve()
      * to provide this information
      *
-     * @param spender: the spender of the tokens
-     * @param tokens: the number of tokens to approve
+     * @param spender the spender of the tokens
+     * @param tokens the number of tokens to approve
      * @return Returns a remoteCall with a TransactionReceipt to give status of the transaction
      */
-    fun approve(spender: String, tokens: BigInteger): RemoteCall<TransactionReceipt> {
+    fun approve(spender: String, tokens: BigInteger): Deferred<TransactionReceipt> = async {
         val function = Function(
                 "approve",
                 Arrays.asList(Address(spender), Uint256(tokens)),
                 emptyList<TypeReference<*>>())
-        return executeRemoteCallTransaction(function)
+        executeRemoteCallTransaction(function).send()
     }
 
     /**
@@ -229,17 +127,101 @@ class Erc20Wrapper : Contract {
      * fees in sub-currencies; the command should fail unless the _from account has
      * deliberately authorized the sender of the message via some mechanism
      *
-     * @param from: the spender of the tokens
-     * @param to: the receiver of the tokens
-     * @param tokens: the number of tokens to approve
+     * @param from the spender of the tokens
+     * @param to the receiver of the tokens
+     * @param tokens the number of tokens to approve
      * @return Returns a remoteCall with a TransactionReceipt to give status of the transaction
      */
-    fun transferFrom(from: String, to: String, tokens: BigInteger): RemoteCall<TransactionReceipt> {
+    fun transferFrom(from: String, to: String, tokens: BigInteger): Deferred<TransactionReceipt> = async {
         val function = Function(
                 "transferFrom",
                 Arrays.asList(Address(from), Address(to), Uint256(tokens)),
                 emptyList<TypeReference<*>>())
-        return executeRemoteCallTransaction(function)
+        executeRemoteCallTransaction(function).send()
+    }
+
+    companion object {
+
+        /**
+         * This will create a new instance of the smart contract on the Ethereum blockchain using
+         * the supplied credentials, and constructor parameter values
+         *
+         * @param web3j the web3j object that connects with the network
+         * @param credentials the credentials of the wallet conducting the transaction
+         * @param gasPrice price of gas for this transaction
+         * @param gasLimit gas limit for the transaction
+         * @param binary The binary transaction information. This can be found when the contract
+         * was first deployed.
+         * @return RemoteCall with response of the request
+         */
+        fun deploy(
+                web3j: Web3j,
+                credentials: Credentials,
+                gasPrice: BigInteger,
+                gasLimit: BigInteger,
+                binary: String
+        ) = deployRemoteCall(Erc20Wrapper::class.java, web3j, credentials, gasPrice, gasLimit, binary, "")
+
+        /**
+         * This will create a new instance of the smart contract on the Ethereum blockchain using
+         * the supplied credentials, and constructor parameter values
+         *
+         * @param web3j the web3j object that connects with the network
+         * @param transactionManager the transaction manager with the relevant transaction information
+         * @param gasPrice price of gas for this transaction
+         * @param gasLimit gas limit for the transaction
+         * @param binary The binary transaction information. This can be found when the contract
+         * was first deployed.
+         * @return RemoteCall with response of the reqquest
+         */
+        fun deploy(
+                web3j: Web3j,
+                transactionManager: TransactionManager,
+                gasPrice: BigInteger,
+                gasLimit: BigInteger,
+                binary: String
+        ) = deployRemoteCall(Erc20Wrapper::class.java, web3j, transactionManager, gasPrice, gasLimit, binary, "")
+
+        /**
+         * Constructs an instance of a smart contract wrapper with an existing smart contract
+         *
+         * @param web3j the web3j object that connects with the network
+         * @param credentials the credentials of the wallet conducting the transaction
+         * @param gasPrice price of gas for this transaction
+         * @param gasLimit gas limit for the transaction
+         * @param binary The binary transaction information. This can be found when the contract
+         * was first deployed.
+         * @return RemoteCall with response of the request
+         */
+        fun createWrapper(
+                contractAddress: String,
+                web3j: Web3j,
+                credentials: Credentials,
+                gasPrice: BigInteger,
+                gasLimit: BigInteger,
+                binary: String
+        ) = Erc20Wrapper(contractAddress, web3j, credentials, gasPrice, gasLimit, binary)
+
+        /**
+         * Constructs an instance of a smart contract wrapper with an existing smart contract
+         *
+         * @param web3j the web3j object that connects with the network
+         * @param transactionManager the transaction manager with the relevant transaction information
+         * @param gasPrice price of gas for this transaction
+         * @param gasLimit gas limit for the transaction
+         * @param binary The binary transaction information. This can be found when the contract
+         * was first deployed.
+         * @return RemoteCall with response of the request
+         */
+        fun createWrapper(
+                contractAddress: String,
+                web3j: Web3j,
+                transactionManager: TransactionManager,
+                gasPrice: BigInteger,
+                gasLimit: BigInteger,
+                binary: String
+        ) = Erc20Wrapper(contractAddress, web3j, transactionManager, gasPrice, gasLimit, binary)
+
     }
 
 }

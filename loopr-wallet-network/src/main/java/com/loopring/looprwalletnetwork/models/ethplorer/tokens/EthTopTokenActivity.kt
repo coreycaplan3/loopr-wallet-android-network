@@ -4,6 +4,7 @@ package com.loopring.looprwalletnetwork.models.ethplorer.tokens
  * Created by arknw229 on 3/13/18.
  *
  * Ethplorer API
+ *
  * Gets data on the activity of the top ERC20 tokens
  *
  * @author arknw229

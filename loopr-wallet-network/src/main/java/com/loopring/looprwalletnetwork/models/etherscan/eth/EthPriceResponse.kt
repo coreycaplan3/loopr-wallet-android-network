@@ -6,8 +6,10 @@ import com.google.gson.annotations.SerializedName
  * Created by arknw229 on 3/1/18.
  *
  * Etherscan API
- * API response with Ethereum price data
  *
+ * API response with Ethereum price data:
+ *
+ * ```
  * {
  *   status
  *   message
@@ -18,6 +20,7 @@ import com.google.gson.annotations.SerializedName
  *     ethusd_timestamp
  *   }
  * }
+ * ```
  *
  * @author arknw229
  */

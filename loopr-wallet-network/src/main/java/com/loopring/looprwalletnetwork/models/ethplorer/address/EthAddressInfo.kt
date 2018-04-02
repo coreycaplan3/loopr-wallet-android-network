@@ -1,4 +1,4 @@
-package com.example.arknw229.networkingtests
+package com.loopring.looprwalletnetwork.models.ethplorer.address
 
 import com.google.gson.annotations.SerializedName
 import com.loopring.looprwalletnetwork.models.ethplorer.tokens.EthTokenBalanceInfo
@@ -8,13 +8,16 @@ import com.loopring.looprwalletnetwork.models.ethplorer.tokens.EthTokenInfo
  * Created by arknw229 on 3/12/18.
  *
  * Ethplorer API
+ *
  * Returns list of address transactions
  *
  * limit:   maximum number of operations [1 - 50, default = 10]
+ *
  * showZeroValues:  show transactions with zero ETH value, default = 0
  *
  * token: show balances for specified token address only
  *
+ * ```
  * {
  *   address: # address,
  *   ETH: {   # ETH specific information
@@ -39,6 +42,7 @@ import com.loopring.looprwalletnetwork.models.ethplorer.tokens.EthTokenInfo
  *   ],
  *   countTxs:    # Total count of incoming and outcoming transactions (including creation one),
  * }
+ * ```
  *
  * @author arknw229
  */
@@ -78,13 +82,15 @@ class EthAddressInfo(
     /**
      * Eth specific information
      *
+     * ```
      * {
      *   balance:  # ETH balance
      *   totalIn:  # Total incoming ETH value
      *   totalOut: # Total outgoing ETH value
      * }
+     * ```
      */
-    inner class EthSpecificInfo(
+    class EthSpecificInfo(
 
             /**
              * Ethereum ballance
@@ -105,11 +111,13 @@ class EthAddressInfo(
     /**
      * Exists if the address is for a contract
      *
+     * ```
      * {
      *   creatorAddress:  # contract creator address,
      *   transactionHash: # contract creation transaction hash,
      *   timestamp:       # contract creation timestamp
      * }
+     * ```
      */
     class ContractInfo(
             /**

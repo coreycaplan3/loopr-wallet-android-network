@@ -7,6 +7,7 @@ import java.math.BigDecimal
  * Created by arknw229 on 3/13/18.
  *
  * Ethplorer API
+ *
  * Information about an ERC20 token at a given time
  *
  * @author arknw229

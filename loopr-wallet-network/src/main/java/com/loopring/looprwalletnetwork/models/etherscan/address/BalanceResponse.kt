@@ -6,13 +6,16 @@ import com.google.gson.annotations.SerializedName
  * Created by arknw229 on 2/28/18.
  *
  * Etherscan API
- * Retrieve account balance
  *
+ * Retrieve account balance:
+ *
+ * ```
  * {
  *   status
  *   message
  *   balance
  * }
+ * ```
  *
  * @author arknw229
  */

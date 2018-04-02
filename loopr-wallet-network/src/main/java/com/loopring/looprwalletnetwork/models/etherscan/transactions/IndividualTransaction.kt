@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName
 /**
  * Created by arknw229 on 3/16/18.
  *
+ * Etherscan API
+ *
  * @author arknw229
  */
 class IndividualTransaction(

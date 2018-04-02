@@ -8,14 +8,17 @@ import java.math.BigDecimal
  * Created by arknw229 on 3/12/18.
  *
  * Ethplorer API
+ *
  * Token balance information for a single token
  *
+ * ```
  * {
  *   tokenInfo: # token data (same format as token info),
  *   balance:   # token balance (as is, not reduced to a floating point value),
  *   totalIn:   # total incoming token value
  *   totalOut:  # total outgoing token value
  * }
+ * ```
  *
  * @author arknw229
  */

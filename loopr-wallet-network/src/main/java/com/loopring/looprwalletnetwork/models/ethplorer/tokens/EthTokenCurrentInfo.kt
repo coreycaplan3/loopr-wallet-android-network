@@ -7,6 +7,7 @@ import java.math.BigDecimal
  * Created by arknw229 on 3/13/18.
  *
  * Ethplorer API
+ *
  * Current price and volume data on a token
  *
  * @author arknw229

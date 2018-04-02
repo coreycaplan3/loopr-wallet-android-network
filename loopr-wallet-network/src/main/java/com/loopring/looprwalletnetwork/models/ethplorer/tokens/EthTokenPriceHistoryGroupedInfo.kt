@@ -7,6 +7,7 @@ import com.loopring.looprwalletnetwork.models.ethplorer.address.EthCountedTransa
  * Created by arknw229 on 3/13/18.
  *
  * Ethplorer API
+ *
  * Get grouped historical price data
  *
  * @author arknw229
