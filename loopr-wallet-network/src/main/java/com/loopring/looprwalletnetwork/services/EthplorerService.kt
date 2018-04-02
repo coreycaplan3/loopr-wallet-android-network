@@ -1,6 +1,7 @@
 package com.loopring.looprwalletnetwork.services
 
-import com.example.arknw229.networkingtests.*
+import com.example.arknw229.networkingtests.EthAddressInfo
+import com.example.arknw229.networkingtests.EthTransactionInfo
 import com.google.gson.GsonBuilder
 import com.loopring.looprwalletnetwork.models.etherscan.CoinPriceData
 import com.loopring.looprwalletnetwork.models.etherscan.transactions.EthTransactionOperationInfo
@@ -139,9 +140,13 @@ interface EthplorerService {
     @GET("getTokenPriceHistoryGrouped/{address}")
     fun getTokenPriceHistoryGrouped(@Path("address") address: String, @Query("period") period: String?): Call<EthTokenPriceHistoryGrouped>
 
+    @Suppress("MemberVisibilityCanBePrivate")
     companion object {
 
-        var API_KEY = "freekey"
+        /**
+         * The API key that will be used to access the [EthplorerService]. Defaults to "freekey".
+         */
+        var apiKey = "freekey"
 
         private const val BASE_URL = "https://api.ethplorer.io/"
 
@@ -157,7 +162,7 @@ interface EthplorerService {
                 val request = it.request()
 
                 val httpUrl = it.request().url().newBuilder()
-                        .addQueryParameter("apiKey", API_KEY)
+                        .addQueryParameter("apiKey", apiKey)
                         .build()
 
                 val newRequest = request.newBuilder().url(httpUrl).build()

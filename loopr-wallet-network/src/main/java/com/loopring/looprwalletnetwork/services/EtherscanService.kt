@@ -78,11 +78,11 @@ interface EtherscanService {
 
     companion object {
 
-        //TODO - externalize the API_KEY
-//        var API_KEY = "537ZMY3HV44B111IV29WNPTEAE3ZNSBU5M"
-        var API_KEY = "TODO"
+        // var API_KEY = "537ZMY3HV44B111IV29WNPTEAE3ZNSBU5M" // TODO
+        @Suppress("MemberVisibilityCanBePrivate")
+        var apiKey = "TODO"
 
-        const val BASE_URL = "https://api.etherscan.io/"
+        private const val BASE_URL = "https://api.etherscan.io/"
 
         /**
          * Get a Retrofit reference to use for calling the Etherscan API functions
@@ -91,7 +91,7 @@ interface EtherscanService {
          */
         fun getService(): EthplorerService {
 
-            if (API_KEY == "TODO") {
+            if (apiKey == "TODO") {
                 throw IllegalStateException("You need to set the API key in order to use it")
             }
 
@@ -100,7 +100,7 @@ interface EtherscanService {
                 val request = it.request()
 
                 val httpUrl = it.request().url().newBuilder()
-                        .addQueryParameter("apikey", API_KEY)
+                        .addQueryParameter("apikey", apiKey)
                         .build()
 
                 val newRequest = request.newBuilder().url(httpUrl).build()

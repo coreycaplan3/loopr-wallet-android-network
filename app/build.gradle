@@ -15,7 +15,7 @@ ext {
     siteUrl = 'https://github.com/coreycaplan3/loopr-wallet-android-network'
     gitUrl = 'https://github.com/coreycaplan3/loopr-wallet-android-network.git'
 
-    libraryVersion = '0.0.0'
+    libraryVersion = '0.0.1'
 
     developerId = 'coreycaplan3'
     developerName = 'Corey Caplan'
