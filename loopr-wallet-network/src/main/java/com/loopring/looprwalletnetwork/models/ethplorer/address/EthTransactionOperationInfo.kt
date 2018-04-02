@@ -141,7 +141,7 @@ class EthTransactionOperationInfo(
                 }
                 if (jsonObj.get("tokenInfo") != null && !jsonObj.get("tokenInfo").isJsonNull && !jsonObj.get("tokenInfo").isJsonPrimitive) {
                     val gson = GsonBuilder().registerTypeAdapter(EthTokenInfo::class.java, EthTokenInfo.EthTokenInfoDeserializer()).serializeNulls().create()
-                    operationInfo.tokenInfo = gson.fromJson(jsonObj.get("tokenInfo").asJsonObject, EthTokenInfo::class.java!!)
+                    operationInfo.tokenInfo = gson.fromJson(jsonObj.get("tokenInfo").asJsonObject, EthTokenInfo::class.java)
                 }
 
 

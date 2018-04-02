@@ -15,7 +15,7 @@ ext {
     siteUrl = 'https://github.com/coreycaplan3/loopr-wallet-android-network'
     gitUrl = 'https://github.com/coreycaplan3/loopr-wallet-android-network.git'
 
-    libraryVersion = '0.0.2'
+    libraryVersion = '0.1.0'
 
     developerId = 'coreycaplan3'
     developerName = 'Corey Caplan'
@@ -85,6 +85,12 @@ dependencies {
 
 repositories {
     mavenCentral()
+}
+
+kotlin {
+    experimental {
+        coroutines 'enable'
+    }
 }
 
 // Avoid Kotlin docs error
