@@ -44,177 +44,179 @@ import java.math.BigDecimal
  *
  * @author arknw229
  */
-open class EthTokenInfo(
-        /**
-         * Token address
-         */
-        var address: String? = null,
+open class EthTokenInfo : RealmObject() {
 
-        /**
-         * Name of the token
-         */
-        var name: String? = null,
 
-        /**
-         * Number of decimals the token has
-         */
-        var decimals: Int? = null,
+    /**
+     * Token address
+     */
+    var address: String? = null
 
-        /**
-         * Symbol for the token
-         */
-        var symbol: String? = null,
+    /**
+     * Name of the token
+     */
+    var name: String? = null
 
-        /**
-         * Total supply of the token
-         */
-        var totalSupply: BigDecimal? = null,
+    /**
+     * Number of decimals the token has
+     */
+    var decimals: Int? = null
 
-        /**
-         * Owner of the contract that created the token
-         */
-        var owner: String? = null,
+    /**
+     * Symbol for the token
+     */
+    var symbol: String? = null
 
-        /**
-         * Number of token transfers that have been done with the token
-         */
-        var transfersCount: Long? = null,
+    /**
+     * Total supply of the token
+     */
+    var totalSupply: BigDecimal? = null
 
-        /**
-         * Timestamp of the last update
-         */
-        var lastUpdated: Long? = null,
+    /**
+     * Owner of the contract that created the token
+     */
+    var owner: String? = null
 
-        /**
-         * Total amount of incoming tokens
-         */
-        var totalIn: BigDecimal? = null,
+    /**
+     * Number of token transfers that have been done with the token
+     */
+    var transfersCount: Long? = null
 
-        /**
-         * Total amount of outgoing tokens
-         */
-        var totalOut: BigDecimal? = null,
+    /**
+     * Timestamp of the last update
+     */
+    var lastUpdated: Long? = null
 
-        /**
-         * Issuance count for the token
-         */
-        var issuancesCount: Long? = null,
+    /**
+     * Total amount of incoming tokens
+     */
+    var totalIn: BigDecimal? = null
 
-        /**
-         * Holders count for the token
-         */
-        var holdersCount: Long? = null,
+    /**
+     * Total amount of outgoing tokens
+     */
+    var totalOut: BigDecimal? = null
 
-        /**
-         * Link to an image for the logo of a token (png)
-         */
-        var image: String? = null,
+    /**
+     * Issuance count for the token
+     */
+    var issuancesCount: Long? = null
 
-        /**
-         * Description of the token
-         */
-        var description: String? = null,
+    /**
+     * Holders count for the token
+     */
+    var holdersCount: Long? = null
 
-        /**
-         * [CoinPriceData] object with price data on the token (if available)
-         */
-        var price: CoinPriceData? = null,
+    /**
+     * Link to an image for the logo of a token (png)
+     */
+    var image: String? = null
 
-        /**
-         * Total count of token operations
-         */
-        var countOps: Long? = null,
+    /**
+     * Description of the token
+     */
+    var description: String? = null
 
-        /**
-         * Volume in the current day for the token
-         */
-        @SerializedName("volume-1d-current")
-        var volume1dCurrent: BigDecimal? = null,
+    /**
+     * [CoinPriceData] object with price data on the token (if available)
+     */
+    var price: CoinPriceData? = null
 
-        /**
-         * Volume in the previous day for the token
-         */
-        @SerializedName("volume-1d-previous")
-        var volume1dPrevious: BigDecimal? = null,
+    /**
+     * Total count of token operations
+     */
+    var countOps: Long? = null
 
-        /**
-         * Capitalization for the token from the current day
-         */
-        @SerializedName("cap-1d-current")
-        var cap1dCurrent: BigDecimal? = null,
+    /**
+     * Volume in the current day for the token
+     */
+    @SerializedName("volume-1d-current")
+    var volume1dCurrent: BigDecimal? = null
 
-        /**
-         * Capitalization for the token from the previous day
-         */
-        @SerializedName("cap-1d-previous")
-        var cap1dPrevious: BigDecimal? = null,
+    /**
+     * Volume in the previous day for the token
+     */
+    @SerializedName("volume-1d-previous")
+    var volume1dPrevious: BigDecimal? = null
 
-        /**
-         * Timestamp of the previous 1 day period data
-         */
-        @SerializedName("cap-1d-previous-ts")
-        var cap1dPreviousTs: BigDecimal? = null,
+    /**
+     * Capitalization for the token from the current day
+     */
+    @SerializedName("cap-1d-current")
+    var cap1dCurrent: BigDecimal? = null
 
-        /**
-         * Volume of the current 7 day period for the token
-         */
-        @SerializedName("volume-7d-current")
-        var volume7dCurrent: BigDecimal? = null,
+    /**
+     * Capitalization for the token from the previous day
+     */
+    @SerializedName("cap-1d-previous")
+    var cap1dPrevious: BigDecimal? = null
 
-        /**
-         * Volume of the previous 7 day period for the token
-         */
-        @SerializedName("volume-7d-previous")
-        var volume7dPrevious: BigDecimal? = null,
+    /**
+     * Timestamp of the previous 1 day period data
+     */
+    @SerializedName("cap-1d-previous-ts")
+    var cap1dPreviousTs: BigDecimal? = null
 
-        /**
-         * Capitalization for the current 7 day period
-         */
-        @SerializedName("cap-7d-current")
-        var cap7dCurrent: BigDecimal? = null,
+    /**
+     * Volume of the current 7 day period for the token
+     */
+    @SerializedName("volume-7d-current")
+    var volume7dCurrent: BigDecimal? = null
 
-        /**
-         * Capitalization for the previous 7 day period
-         */
-        @SerializedName("cap-7d-previous")
-        var cap7dPrevious: BigDecimal? = null,
+    /**
+     * Volume of the previous 7 day period for the token
+     */
+    @SerializedName("volume-7d-previous")
+    var volume7dPrevious: BigDecimal? = null
 
-        /**
-         * Timestamp for the previous 7 day period data
-         */
-        @SerializedName("cap-7d-previous-ts")
-        var cap7dPreviousTs: BigDecimal? = null,
+    /**
+     * Capitalization for the current 7 day period
+     */
+    @SerializedName("cap-7d-current")
+    var cap7dCurrent: BigDecimal? = null
 
-        /**
-         * Volume for the current 30 day period
-         */
-        @SerializedName("volume-30d-current")
-        var volume30dCurrent: BigDecimal? = null,
+    /**
+     * Capitalization for the previous 7 day period
+     */
+    @SerializedName("cap-7d-previous")
+    var cap7dPrevious: BigDecimal? = null
 
-        /**
-         * Volume for the previous 30 day period
-         */
-        @SerializedName("volume-30d-previous")
-        var volume30dPrevious: BigDecimal? = null,
+    /**
+     * Timestamp for the previous 7 day period data
+     */
+    @SerializedName("cap-7d-previous-ts")
+    var cap7dPreviousTs: BigDecimal? = null
 
-        /**
-         * Capitalization for the current 30 day period
-         */
-        @SerializedName("cap-30d-current")
-        var cap30dCurrent: BigDecimal? = null,
+    /**
+     * Volume for the current 30 day period
+     */
+    @SerializedName("volume-30d-current")
+    var volume30dCurrent: BigDecimal? = null
 
-        /**
-         * Capitalization for the previous 30 day period
-         */
-        @SerializedName("cap-30d-previous")
-        var cap30dPrevious: BigDecimal? = null,
+    /**
+     * Volume for the previous 30 day period
+     */
+    @SerializedName("volume-30d-previous")
+    var volume30dPrevious: BigDecimal? = null
 
-        /**
-         * Timestamp for the previous 30 day capitalization period
-         */
-        @SerializedName("cap-30d-previous-ts")
-        var cap30dPreviousTs: BigDecimal? = null
-) : RealmObject() {
+    /**
+     * Capitalization for the current 30 day period
+     */
+    @SerializedName("cap-30d-current")
+    var cap30dCurrent: BigDecimal? = null
+
+    /**
+     * Capitalization for the previous 30 day period
+     */
+    @SerializedName("cap-30d-previous")
+    var cap30dPrevious: BigDecimal? = null
+
+    /**
+     * Timestamp for the previous 30 day capitalization period
+     */
+    @SerializedName("cap-30d-previous-ts")
+    var cap30dPreviousTs: BigDecimal? = null
+
     /**
      * Deserializer for [EthTokenInfo]
      * Handles some empty strings and inconsistencies in the API responses

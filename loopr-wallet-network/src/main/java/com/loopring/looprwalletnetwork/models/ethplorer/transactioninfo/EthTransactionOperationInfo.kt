@@ -18,8 +18,7 @@ import java.math.BigInteger
  * @author arknw229
  */
 open class EthTransactionOperationInfo : RealmObject() {
-
-
+    
     /**
      * Timestamp of the operation
      */
