@@ -25,6 +25,7 @@ import io.realm.RealmObject
  * @author arknw229
  */
 open class EthCountedTransaction(
+
         /**
          * Object containing the year, month, and day
          */

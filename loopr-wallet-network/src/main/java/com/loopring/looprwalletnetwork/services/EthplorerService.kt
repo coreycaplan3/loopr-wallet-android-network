@@ -1,14 +1,14 @@
 package com.loopring.looprwalletnetwork.services
 
 import com.google.gson.GsonBuilder
-import com.loopring.looprwalletnetwork.models.ethplorer.eth.CoinPriceData
-import com.loopring.looprwalletnetwork.models.ethplorer.transactioninfo.EthTransactionInfo
 import com.loopring.looprwalletnetwork.models.ethplorer.addressinfo.EthAddressHistory
 import com.loopring.looprwalletnetwork.models.ethplorer.addressinfo.EthAddressInfo
-import com.loopring.looprwalletnetwork.models.ethplorer.transactioninfo.EthAddressTransactions
-import com.loopring.looprwalletnetwork.models.ethplorer.transactioninfo.EthTransactionOperationInfo
 import com.loopring.looprwalletnetwork.models.ethplorer.eth.*
 import com.loopring.looprwalletnetwork.models.ethplorer.transactioninfo.EthAddressTransactionInfo
+import com.loopring.looprwalletnetwork.models.ethplorer.transactioninfo.EthAddressTransactions
+import com.loopring.looprwalletnetwork.models.ethplorer.transactioninfo.EthTransactionInfo
+import com.loopring.looprwalletnetwork.models.ethplorer.transactioninfo.EthTransactionOperationInfo
+import com.loopring.looprwalletnetwork.utilities.DateDeserializer
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -17,6 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
+import java.util.*
 
 /**
  * Created by arknw229 on 2/20/18.
@@ -209,6 +210,7 @@ interface EthplorerService {
             })
 
             val gson = GsonBuilder()
+                    .registerTypeAdapter(Date::class.java, DateDeserializer())
                     .registerTypeAdapter(CoinPriceData::class.java, CoinPriceData.CoinPriceDataDeserializer())
                     .registerTypeAdapter(EthTokenInfo::class.java, EthTokenInfo.EthTokenInfoDeserializer())
                     .registerTypeAdapter(EthTransactionOperationInfo::class.java, EthTransactionOperationInfo.EthTransactionOperationInfoDeserializer())

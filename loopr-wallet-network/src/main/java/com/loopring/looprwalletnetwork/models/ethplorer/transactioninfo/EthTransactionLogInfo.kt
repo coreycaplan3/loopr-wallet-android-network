@@ -13,6 +13,7 @@ import io.realm.RealmObject
  * @author arknw229
  */
 open class EthTransactionLogInfo(
+
         /**
          * Logged addresses
          */

@@ -1,4 +1,4 @@
-package com.loopring.looprwalletnetwork.extensions
+package com.loopring.looprwalletnetwork.utilities
 
 import com.google.gson.JsonObject
 import kotlin.reflect.KMutableProperty

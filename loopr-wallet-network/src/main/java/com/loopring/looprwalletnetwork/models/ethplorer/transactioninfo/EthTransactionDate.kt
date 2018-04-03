@@ -12,6 +12,7 @@ import io.realm.RealmObject
  * @author arknw229
  */
 open class EthTransactionDate(
+
         /**
          * Year the transaction occurred in. IE 2018
          */

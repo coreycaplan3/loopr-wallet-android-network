@@ -1,0 +1,8 @@
+Refactor the BigDecimal backed fields in the following classes:
+* EthTokenHistoryTotals
+* EthTokenInfo
+* EthTokenPriceInfo
+
+Change all timestamp values that deserialize to Longs or Strings to instead deserialize to DATE objects
+* Use the context variable in the deserializer to deserialize the JSON "primitive" to a Date object
+    * It never throws an exception, just returns null when it's unable to parse it

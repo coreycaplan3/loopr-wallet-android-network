@@ -32,8 +32,10 @@ import io.realm.RealmObject
  * @author arknw229
  */
 open class EthAddressHistory(
+
         /**
          * List of [EthTransactionOperationInfo] objects describing the operations in the addresses history
          */
         var operations: RealmList<EthTransactionOperationInfo>? = null
+
 ) : RealmObject()

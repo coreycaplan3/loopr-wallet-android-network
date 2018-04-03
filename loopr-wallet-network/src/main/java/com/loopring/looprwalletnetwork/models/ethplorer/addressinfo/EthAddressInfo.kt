@@ -49,6 +49,7 @@ import io.realm.RealmObject
  * @author arknw229
  */
 open class EthAddressInfo(
+
         /**
          * Address the data is on
          */
@@ -69,6 +70,7 @@ open class EthAddressInfo(
          * Exists if specified address is a token contract address
          */
         var tokenInfo: EthTokenInfo? = null,
+
         /**
          * List of balances for each token
          */

@@ -14,6 +14,7 @@ import io.realm.RealmObject
  * @author arknw229
  */
 open class EthTokenHistory(
+
         /**
          * List of [EthTransactionOperationInfo] objects containing the token history
          */

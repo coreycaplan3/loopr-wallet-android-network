@@ -1,4 +1,4 @@
-package com.loopring.looprwalletnetwork.extensions
+package com.loopring.looprwalletnetwork.utilities
 
 import android.util.Log
 import com.google.gson.JsonObject

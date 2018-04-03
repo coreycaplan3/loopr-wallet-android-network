@@ -20,6 +20,7 @@ import io.realm.RealmObject
  * @author arknw229
  */
 open class AbiResponse(
+
         /**
          * Status of the request. Can be 1 for complete or 0 for failure.
          */
@@ -31,7 +32,7 @@ open class AbiResponse(
         var message: String? = null,
 
         /**
-         * ABI
+         * The contracts ABI
          */
         var abi: String? = null
 

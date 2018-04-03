@@ -26,6 +26,7 @@ import io.realm.RealmObject
  * @author arknw229
  */
 open class EthPriceResponse(
+
         /**
          * Status of the request. Can be 1 for complete or 0 for failure.
          */

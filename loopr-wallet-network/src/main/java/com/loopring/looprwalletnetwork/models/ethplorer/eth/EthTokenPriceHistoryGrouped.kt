@@ -12,6 +12,7 @@ import io.realm.RealmObject
  * @author arknw229
  */
 open class EthTokenPriceHistoryGrouped(
+
         /**
          * Grouped information about token price history
          */

@@ -18,6 +18,7 @@ import io.realm.RealmObject
  * @author arknw229
  */
 open class ContractInfo(
+
         /**
          * Address of the creator of the contract
          */

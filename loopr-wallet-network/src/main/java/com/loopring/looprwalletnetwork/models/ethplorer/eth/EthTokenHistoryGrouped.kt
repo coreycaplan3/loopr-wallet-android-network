@@ -40,6 +40,7 @@ import io.realm.RealmObject
  * @author arknw229
  */
 open class EthTokenHistoryGrouped(
+
         /**
          * A list of [EthCountedTransaction] objects that give data on the number of transactions at given days
          */

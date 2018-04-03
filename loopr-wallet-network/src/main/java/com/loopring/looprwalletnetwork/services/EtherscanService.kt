@@ -7,8 +7,9 @@ import com.loopring.looprwalletnetwork.models.etherscan.address.BalanceResponse
 import com.loopring.looprwalletnetwork.models.etherscan.eth.EthPriceResponse
 import com.loopring.looprwalletnetwork.models.etherscan.eth.EthSupplyResponse
 import com.loopring.looprwalletnetwork.models.etherscan.transactions.TransactionResponse
-import com.loopring.looprwalletnetwork.models.ethplorer.transactioninfo.EthAddressTransactions
 import com.loopring.looprwalletnetwork.models.ethplorer.eth.EthTokenInfo
+import com.loopring.looprwalletnetwork.models.ethplorer.transactioninfo.EthAddressTransactions
+import com.loopring.looprwalletnetwork.utilities.DateDeserializer
 import kotlinx.coroutines.experimental.Deferred
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -16,6 +17,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
+import java.util.*
 
 
 /**
@@ -113,6 +115,7 @@ interface EtherscanService {
             })
 
             val gson = GsonBuilder()
+                    .registerTypeAdapter(Date::class.java, DateDeserializer())
                     .registerTypeAdapter(EthTokenInfo::class.java, EthTokenInfo.EthTokenInfoDeserializer())
                     .registerTypeAdapter(EthAddressTransactions::class.java, EthAddressTransactions.EthAddressTransactionsDeserializer())
                     .enableComplexMapKeySerialization()

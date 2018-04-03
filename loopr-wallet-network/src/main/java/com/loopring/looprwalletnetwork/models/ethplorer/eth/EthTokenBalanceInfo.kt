@@ -2,7 +2,7 @@ package com.loopring.looprwalletnetwork.models.ethplorer.eth
 
 import com.google.gson.*
 import com.google.gson.annotations.SerializedName
-import com.loopring.looprwalletnetwork.extensions.ifNotNullOrEmpty
+import com.loopring.looprwalletnetwork.utilities.ifNotNullOrEmpty
 import io.realm.RealmObject
 import java.lang.reflect.Type
 import java.math.BigDecimal

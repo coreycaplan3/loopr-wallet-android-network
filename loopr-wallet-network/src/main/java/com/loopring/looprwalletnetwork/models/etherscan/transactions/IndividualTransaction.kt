@@ -13,6 +13,7 @@ import io.realm.RealmObject
  * @author arknw229
  */
 open class IndividualTransaction(
+
         /**
          * Block number the transaction is on
          */
@@ -55,7 +56,7 @@ open class IndividualTransaction(
         var to: String? = null,
 
         /**
-         *
+         * The value of the transaction, in Ether
          */
         var value: String? = null,
 

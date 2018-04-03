@@ -5,9 +5,8 @@ import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
 import com.google.gson.annotations.SerializedName
-import com.loopring.looprwalletnetwork.extensions.ifNotNullOrEmpty
+import com.loopring.looprwalletnetwork.utilities.ifNotNullOrEmpty
 import io.realm.RealmObject
-import retrofit2.Response.success
 import java.lang.reflect.Type
 import java.math.BigDecimal
 
@@ -37,7 +36,6 @@ import java.math.BigDecimal
  * @author arknw229
  */
 open class EthAddressTransactionInfo : RealmObject() {
-
 
     /**
      * Timestamp of the transaction
@@ -94,36 +92,36 @@ open class EthAddressTransactionInfo : RealmObject() {
         override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): EthAddressTransactionInfo? {
             if (json.isJsonPrimitive) {
                 return null
-            } else {
-                val jsonObj = json.asJsonObject
-                val addressTransactions = EthAddressTransactionInfo()
-
-                jsonObj.ifNotNullOrEmpty(EthAddressTransactionInfo::timestamp) {
-                    addressTransactions.timestamp = jsonObj.get(it).asString.toLongOrNull()
-                }
-                jsonObj.ifNotNullOrEmpty(EthAddressTransactionInfo::from) {
-                    addressTransactions.from = jsonObj.get(it).asString
-                }
-                jsonObj.ifNotNullOrEmpty(EthAddressTransactionInfo::to) {
-                    addressTransactions.to = jsonObj.get(it).asString
-                }
-                jsonObj.ifNotNullOrEmpty(EthAddressTransactionInfo::hash) {
-                    addressTransactions.hash = jsonObj.get(it).asString
-                }
-                jsonObj.ifNotNullOrEmpty(EthAddressTransactionInfo::value) {
-                    addressTransactions.value = BigDecimal(jsonObj.get(it).asString)
-                }
-                jsonObj.ifNotNullOrEmpty(EthAddressTransactionInfo::input) {
-                    if (jsonObj.get(it).asString != "0x") {
-                        addressTransactions.input = jsonObj.get(it).asString
-                    }
-                }
-                jsonObj.ifNotNullOrEmpty("success") {
-                    addressTransactions.isSuccess = jsonObj.get(it).asString?.toBoolean()
-                }
-
-                return addressTransactions
             }
+
+            val jsonObj = json.asJsonObject
+            val addressTransactions = EthAddressTransactionInfo()
+
+            jsonObj.ifNotNullOrEmpty(EthAddressTransactionInfo::timestamp) {
+                addressTransactions.timestamp = jsonObj.get(it).asString.toLongOrNull()
+            }
+            jsonObj.ifNotNullOrEmpty(EthAddressTransactionInfo::from) {
+                addressTransactions.from = jsonObj.get(it).asString
+            }
+            jsonObj.ifNotNullOrEmpty(EthAddressTransactionInfo::to) {
+                addressTransactions.to = jsonObj.get(it).asString
+            }
+            jsonObj.ifNotNullOrEmpty(EthAddressTransactionInfo::hash) {
+                addressTransactions.hash = jsonObj.get(it).asString
+            }
+            jsonObj.ifNotNullOrEmpty(EthAddressTransactionInfo::value) {
+                addressTransactions.value = BigDecimal(jsonObj.get(it).asString)
+            }
+            jsonObj.ifNotNullOrEmpty(EthAddressTransactionInfo::input) {
+                if (jsonObj.get(it).asString != "0x") {
+                    addressTransactions.input = jsonObj.get(it).asString
+                }
+            }
+            jsonObj.ifNotNullOrEmpty("success") {
+                addressTransactions.isSuccess = jsonObj.get(it).asString?.toBoolean()
+            }
+
+            return addressTransactions
         }
     }
 }

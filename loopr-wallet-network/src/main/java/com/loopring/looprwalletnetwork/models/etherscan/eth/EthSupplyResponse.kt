@@ -15,7 +15,6 @@ import java.math.BigDecimal
  */
 open class EthSupplyResponse : RealmObject() {
 
-
     /**
      * Status of the request. Can be 1 for complete or 0 for failure.
      */

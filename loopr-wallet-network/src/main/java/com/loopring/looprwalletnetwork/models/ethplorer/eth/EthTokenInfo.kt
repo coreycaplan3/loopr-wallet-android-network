@@ -1,14 +1,14 @@
 package com.loopring.looprwalletnetwork.models.ethplorer.eth
 
-import android.util.Log
-import com.google.gson.*
-
+import com.google.gson.JsonDeserializationContext
+import com.google.gson.JsonDeserializer
+import com.google.gson.JsonElement
+import com.google.gson.JsonParseException
 import com.google.gson.annotations.SerializedName
-import com.loopring.looprwalletnetwork.extensions.ifNotNullOrEmpty
-import com.loopring.looprwalletnetwork.extensions.parseBigDecimal
+import com.loopring.looprwalletnetwork.utilities.ifNotNullOrEmpty
+import com.loopring.looprwalletnetwork.utilities.parseBigDecimal
 import io.realm.RealmObject
 import java.lang.reflect.Type
-
 import java.math.BigDecimal
 
 /**
@@ -45,7 +45,6 @@ import java.math.BigDecimal
  * @author arknw229
  */
 open class EthTokenInfo : RealmObject() {
-
 
     /**
      * Token address
@@ -254,11 +253,13 @@ open class EthTokenInfo : RealmObject() {
                     }
                     tokenInfo.symbol = sym
                 }
+
                 jsonObj.ifNotNullOrEmpty(EthTokenInfo::totalSupply) {
                     tokenInfo.totalSupply = parseBigDecimal(jsonObj, it)
                 }
-                // Check for 0x for no owner
+
                 jsonObj.ifNotNullOrEmpty(EthTokenInfo::owner) {
+                    // Check for 0x for no owner
                     if (jsonObj.get(it).asString != "0x") {
                         tokenInfo.owner = jsonObj.get(it).asString
                     }
@@ -294,48 +295,63 @@ open class EthTokenInfo : RealmObject() {
                 jsonObj.ifNotNullOrEmpty(EthTokenInfo::countOps) {
                     tokenInfo.countOps = jsonObj.get(it).asString.toLongOrNull()
                 }
+
                 if (jsonObj.get("volume-1d-current") != null && !jsonObj.get("volume-1d-current").isJsonNull) {
                     tokenInfo.volume1dCurrent = parseBigDecimal(jsonObj, "volume-1d-current")
                 }
+
                 if (jsonObj.get("volume-1d-previous") != null && !jsonObj.get("volume-1d-previous").isJsonNull) {
                     tokenInfo.volume1dPrevious = parseBigDecimal(jsonObj, "volume-1d-previous")
                 }
+
                 if (jsonObj.get("cap-1d-current") != null && !jsonObj.get("cap-1d-current").isJsonNull) {
                     tokenInfo.cap1dCurrent = parseBigDecimal(jsonObj, "cap-1d-current")
                 }
+
                 if (jsonObj.get("cap-1d-previous") != null && !jsonObj.get("cap-1d-previous").isJsonNull) {
                     tokenInfo.cap1dPrevious = parseBigDecimal(jsonObj, "cap-1d-previous")
                 }
+
                 if (jsonObj.get("cap-1d-previous-ts") != null && !jsonObj.get("cap-1d-previous-ts").isJsonNull) {
                     tokenInfo.cap1dPreviousTs = parseBigDecimal(jsonObj, "cap-1d-previous-ts")
                 }
+
                 if (jsonObj.get("volume-7d-current") != null && !jsonObj.get("volume-7d-current").isJsonNull) {
                     tokenInfo.volume7dCurrent = parseBigDecimal(jsonObj, "volume-7d-current")
                 }
+
                 if (jsonObj.get("volume-7d-previous") != null && !jsonObj.get("volume-7d-previous").isJsonNull) {
                     tokenInfo.volume7dPrevious = parseBigDecimal(jsonObj, "volume-7d-previous")
                 }
+
                 if (jsonObj.get("cap-7d-current") != null && !jsonObj.get("cap-7d-current").isJsonNull) {
                     tokenInfo.cap7dCurrent = parseBigDecimal(jsonObj, "cap-7d-current")
                 }
+
                 if (jsonObj.get("cap-7d-previous") != null && !jsonObj.get("cap-7d-previous").isJsonNull) {
                     tokenInfo.cap7dPrevious = parseBigDecimal(jsonObj, "cap-7d-previous")
                 }
+
                 if (jsonObj.get("cap-7d-previous-ts") != null && !jsonObj.get("cap-7d-previous-ts").isJsonNull) {
                     tokenInfo.cap7dPreviousTs = parseBigDecimal(jsonObj, "cap-7d-previous-ts")
                 }
+
                 if (jsonObj.get("volume-30d-current") != null && !jsonObj.get("volume-30d-current").isJsonNull) {
                     tokenInfo.volume30dCurrent = parseBigDecimal(jsonObj, "volume-30d-current")
                 }
+
                 if (jsonObj.get("volume-30d-previous") != null && !jsonObj.get("volume-30d-previous").isJsonNull) {
                     tokenInfo.volume30dPrevious = parseBigDecimal(jsonObj, "volume-30d-previous")
                 }
+
                 if (jsonObj.get("cap-30d-current") != null && !jsonObj.get("cap-30d-current").isJsonNull) {
                     tokenInfo.cap30dCurrent = parseBigDecimal(jsonObj, "cap-30d-current")
                 }
+
                 if (jsonObj.get("cap-30d-previous") != null && !jsonObj.get("cap-30d-previous").isJsonNull) {
                     tokenInfo.cap30dPrevious = parseBigDecimal(jsonObj, "cap-30d-previous")
                 }
+
                 if (jsonObj.get("cap-30d-previous-ts") != null && !jsonObj.get("cap-30d-previous-ts").isJsonNull) {
                     tokenInfo.cap30dPreviousTs = parseBigDecimal(jsonObj, "cap-30d-previous-ts")
                 }

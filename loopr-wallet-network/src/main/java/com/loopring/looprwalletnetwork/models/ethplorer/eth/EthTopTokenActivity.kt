@@ -13,6 +13,7 @@ import io.realm.RealmObject
  * @author arknw229
  */
 open class EthTopTokenActivity(
+
         /**
          * A list of [EthTokenInfo] objects each with data on a token
          */

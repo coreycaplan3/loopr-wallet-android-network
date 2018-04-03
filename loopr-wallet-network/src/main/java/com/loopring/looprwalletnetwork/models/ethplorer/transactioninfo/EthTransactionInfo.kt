@@ -13,6 +13,7 @@ import io.realm.RealmObject
  * @author arknw229
  */
 open class EthTransactionInfo(
+
         /**
          * Hash of the transaction
          */
@@ -49,7 +50,7 @@ open class EthTransactionInfo(
         var to: String? = null,
 
         /**
-         * Transaction value
+         * Transaction value, measured as Ether
          */
         var value: Long? = null,
 
@@ -59,12 +60,12 @@ open class EthTransactionInfo(
         var input: String? = null,
 
         /**
-         * The gas limit of the transaction
+         * The gas limit of the transaction, in GWEI
          */
         var gasLimit: Long? = null,
 
         /**
-         * The gas used in the transaction
+         * The gas used in the transaction, in GWEI
          */
         var gasUsed: Long? = null,
 

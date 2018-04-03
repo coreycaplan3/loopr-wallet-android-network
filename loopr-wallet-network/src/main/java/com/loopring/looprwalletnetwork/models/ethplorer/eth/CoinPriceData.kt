@@ -1,12 +1,15 @@
 package com.loopring.looprwalletnetwork.models.ethplorer.eth
 
-import com.google.gson.*
+import com.google.gson.JsonDeserializationContext
+import com.google.gson.JsonDeserializer
+import com.google.gson.JsonElement
+import com.google.gson.JsonParseException
 import com.google.gson.annotations.SerializedName
-import com.loopring.looprwalletnetwork.extensions.ifNotNullOrEmpty
+import com.loopring.looprwalletnetwork.utilities.ifNotNullOrEmpty
 import io.realm.RealmObject
 import java.lang.reflect.Type
 import java.math.BigDecimal
-import kotlin.reflect.KMutableProperty
+import java.util.*
 
 /**
  * Created by arknw229 on 3/12/18.
@@ -16,7 +19,6 @@ import kotlin.reflect.KMutableProperty
  * @author arknw229
  */
 open class CoinPriceData : RealmObject() {
-
 
     /**
      * Price of the coin in [currency]. The scale is of size 2, so $100 is formatted as
@@ -58,7 +60,7 @@ open class CoinPriceData : RealmObject() {
     /**
      * Timestamp of when the data was retrieved
      */
-    var ts: Long? = null
+    var ts: Date? = null
 
     /**
      * Market capitalization of the coin. IE 209,300,726.0 is formatted as 209300726.0
@@ -76,7 +78,9 @@ open class CoinPriceData : RealmObject() {
      * Available supply of the coin. IE 572074043 is formatted as 572074043.0
      */
     var availableSupply: BigDecimal?
-        get() = mAvailableSupply?.let { BigDecimal(it) }
+        get() = mAvailableSupply?.let {
+            BigDecimal(it)
+        }
         set(value) {
             mAvailableSupply = value?.toPlainString()
         }
@@ -109,41 +113,40 @@ open class CoinPriceData : RealmObject() {
 
         @Throws(JsonParseException::class)
         override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): CoinPriceData? {
-
             if (json.isJsonNull || json.isJsonPrimitive) {
                 return null
-            } else {
-                val jsonObj = json.asJsonObject
-                val priceData = CoinPriceData()
-
-
-                jsonObj.ifNotNullOrEmpty(CoinPriceData::rate) {
-                    priceData.mRate = jsonObj.get(it).asString
-                }
-                jsonObj.ifNotNullOrEmpty(CoinPriceData::diff) {
-                    priceData.mDiff = jsonObj.get(it).asString
-                }
-                jsonObj.ifNotNullOrEmpty(CoinPriceData::diff7d) {
-                    priceData.mDiff7d = jsonObj.get(it).asString
-                }
-                jsonObj.ifNotNullOrEmpty(CoinPriceData::ts) {
-                    priceData.ts = jsonObj.get(it).asString.toLongOrNull()
-                }
-                jsonObj.ifNotNullOrEmpty(CoinPriceData::marketCapUsd) {
-                    priceData.mMarketCapUsd = jsonObj.get(it).asString
-                }
-                jsonObj.ifNotNullOrEmpty(CoinPriceData::availableSupply) {
-                    priceData.mAvailableSupply = jsonObj.get(it).asString
-                }
-                jsonObj.ifNotNullOrEmpty(CoinPriceData::volume24h) {
-                    priceData.mVolume24h = jsonObj.get(it).asString
-                }
-                jsonObj.ifNotNullOrEmpty(CoinPriceData::currency) {
-                    priceData.currency = jsonObj.get(it).asString
-                }
-
-                return priceData
             }
+
+            val jsonObj = json.asJsonObject
+            val priceData = CoinPriceData()
+
+
+            jsonObj.ifNotNullOrEmpty(CoinPriceData::rate) {
+                priceData.mRate = jsonObj.get(it).asString
+            }
+            jsonObj.ifNotNullOrEmpty(CoinPriceData::diff) {
+                priceData.mDiff = jsonObj.get(it).asString
+            }
+            jsonObj.ifNotNullOrEmpty(CoinPriceData::diff7d) {
+                priceData.mDiff7d = jsonObj.get(it).asString
+            }
+
+            priceData.ts = context.deserialize(jsonObj.get(CoinPriceData::ts.name), Date::class.java)
+
+            jsonObj.ifNotNullOrEmpty(CoinPriceData::marketCapUsd) {
+                priceData.mMarketCapUsd = jsonObj.get(it).asString
+            }
+            jsonObj.ifNotNullOrEmpty(CoinPriceData::availableSupply) {
+                priceData.mAvailableSupply = jsonObj.get(it).asString
+            }
+            jsonObj.ifNotNullOrEmpty(CoinPriceData::volume24h) {
+                priceData.mVolume24h = jsonObj.get(it).asString
+            }
+            jsonObj.ifNotNullOrEmpty(CoinPriceData::currency) {
+                priceData.currency = jsonObj.get(it).asString
+            }
+
+            return priceData
         }
 
     }

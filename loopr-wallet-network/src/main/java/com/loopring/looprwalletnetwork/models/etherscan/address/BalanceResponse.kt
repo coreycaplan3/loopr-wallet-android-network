@@ -23,7 +23,6 @@ import java.math.BigDecimal
  */
 open class BalanceResponse : RealmObject() {
 
-
     /**
      * Status of the request. Can be 1 for complete or 0 for failure.
      */
