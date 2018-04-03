@@ -1,6 +1,8 @@
-package com.loopring.looprwalletnetwork.models.ethplorer.address
+package com.loopring.looprwalletnetwork.models.ethplorer.transactioninfo
 
 import com.google.gson.*
+import io.realm.RealmList
+import io.realm.RealmObject
 import java.lang.reflect.Type
 
 /**
@@ -8,7 +10,7 @@ import java.lang.reflect.Type
  *
  * Ethplorer API
  *
- * List of [EthAddressInfo] objects for a given address
+ * List of [EthAddressTransactionInfo] objects for a given address
  *
  * limit:   maximum number of operations [1 - 50, default = 10]
  *
@@ -30,12 +32,12 @@ import java.lang.reflect.Type
  *
  * @author arknw229
  */
-class EthAddressTransactions(
+open class EthAddressTransactions(
         /**
-         * List of [EthAddressInfo] objects for a given address
+         * List of [EthAddressTransactionInfo] objects for a given address
          */
-        var transactions: MutableList<EthAddressTransactionInfo>? = null
-) {
+        var transactions: RealmList<EthAddressTransactionInfo>? = null
+) : RealmObject() {
     /**
      * Deserializer for [EthAddressTransactions]
      * Handles some empty strings and inconsistencies in the API responses
@@ -46,17 +48,15 @@ class EthAddressTransactions(
             if (json.isJsonNull || json.isJsonPrimitive) {
                 return null
             } else {
-                val jsonTransactions = json.asJsonArray
+                val jsonArray = json.asJsonArray
                 val transactions = EthAddressTransactions()
 
-                val transactionList = mutableListOf<EthAddressTransactionInfo>()
-
-                jsonTransactions.forEach {
-                    val gson = GsonBuilder().registerTypeAdapter(EthAddressTransactionInfo::class.java, EthAddressTransactionInfo.EthAddressTransactionInfoDeserializer()).serializeNulls().create()
-                    transactionList.add(gson.fromJson<EthAddressTransactionInfo>(it, EthAddressTransactionInfo::class.java))
+                transactions.transactions = RealmList()
+                jsonArray.forEach {
+                    val transactionInfo: EthAddressTransactionInfo
+                            = context.deserialize(it, EthAddressTransactionInfo::class.java)
+                    transactions.transactions?.add(transactionInfo)
                 }
-
-                transactions.transactions = transactionList
 
                 return transactions
             }

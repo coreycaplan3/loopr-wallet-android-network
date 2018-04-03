@@ -1,6 +1,8 @@
 package com.loopring.looprwalletnetwork.models.etherscan.eth
 
 import com.google.gson.annotations.SerializedName
+import io.realm.RealmObject
+import java.math.BigDecimal
 
 /**
  * Created by arknw229 on 3/1/18.
@@ -11,20 +13,29 @@ import com.google.gson.annotations.SerializedName
  *
  * @author arknw229
  */
-class EthSupplyResponse (
-    /**
-     * The status of the request
-     */
-    var status: Int? = null,
+open class EthSupplyResponse : RealmObject() {
+
 
     /**
-     * The message of the status of the request
+     * Status of the request. Can be 1 for complete or 0 for failure.
      */
-    var message: String? = null,
+    var status: Int? = null
+
+    /**
+     * Status message. Can be "OK" for successful calls or "NOTOK" for failures
+     */
+    var message: String? = null
 
     /**
      * The supply
      */
+    var supply: BigDecimal?
+        get() = mSupply?.let { BigDecimal(it) }
+        set(value) {
+            mSupply = value?.toPlainString()
+        }
+
     @SerializedName("result")
-    var supply: String? = null
-)
+    private var mSupply: String? = null
+
+}

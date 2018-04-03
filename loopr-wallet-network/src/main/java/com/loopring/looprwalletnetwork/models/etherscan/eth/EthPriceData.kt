@@ -1,5 +1,9 @@
 package com.loopring.looprwalletnetwork.models.etherscan.eth
 
+import com.google.gson.annotations.SerializedName
+import io.realm.RealmObject
+import java.math.BigDecimal
+
 /**
  * Created by arknw229 on 3/1/18.
  *
@@ -16,24 +20,42 @@ package com.loopring.looprwalletnetwork.models.etherscan.eth
  *
  * @author arknw229
  */
-class EthPriceData(
-        /**
-         * ETH/BTC ratio
-         */
-        var ethbtc: String? = null,
+open class EthPriceData : RealmObject() {
 
-        /**
-         * Timestamp the ETH/BTC ratio was taken from
-         */
-        var ethbtcTimestamp: String? = null,
+    /**
+     * ETH/BTC ratio
+     */
+    var ethToBtc: BigDecimal?
+        get() = mEthToBtc?.let { BigDecimal(it) }
+        set(value) {
+            mEthToBtc = value?.toPlainString()
+        }
 
-        /**
-         * ETH/USD ratio
-         */
-        var ethusd: String? = null,
+    @SerializedName("ethbtc")
+    private var mEthToBtc: String? = null
 
-        /**
-         * Timestamp the ETH/USD ratio was taken from
-         */
-        var ethusdTimestamp: String? = null
-)
+    /**
+     * Timestamp the ETH/BTC ratio was taken from
+     */
+    @SerializedName("ethbtc_timestamp")
+    var ethToBtcTimestamp: String? = null
+
+    /**
+     * ETH/USD ratio
+     */
+    var ethToUsd: BigDecimal?
+        get() = mEthToUsd?.let { BigDecimal(it) }
+        set(value) {
+            mEthToUsd = value?.toPlainString()
+        }
+
+    @SerializedName("ethusd")
+    var mEthToUsd: String? = null
+
+    /**
+     * Timestamp the ETH/USD ratio was taken from
+     */
+    @SerializedName("ethusd_timestamp")
+    var ethToUsdTimestamp: String? = null
+
+}

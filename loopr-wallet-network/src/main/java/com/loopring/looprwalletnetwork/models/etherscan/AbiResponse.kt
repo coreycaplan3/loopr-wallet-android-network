@@ -1,5 +1,7 @@
 package com.loopring.looprwalletnetwork.models.etherscan
 
+import io.realm.RealmObject
+
 /**
  * Created by arknw229 on 3/13/18.
  *
@@ -17,20 +19,20 @@ package com.loopring.looprwalletnetwork.models.etherscan
  *
  * @author arknw229
  */
-class AbiResponse(
+open class AbiResponse(
         /**
-         * Status of the request
+         * Status of the request. Can be 1 for complete or 0 for failure.
          */
-        val status: Int? = null,
+        var status: Int? = null,
 
         /**
-         * Status message
+         * Status message. Can be "OK" for successful calls or "NOTOK" for failures
          */
-        val message: String? = null,
+        var message: String? = null,
 
         /**
          * ABI
          */
-        val abi: String? = null
+        var abi: String? = null
 
-)
+) : RealmObject()

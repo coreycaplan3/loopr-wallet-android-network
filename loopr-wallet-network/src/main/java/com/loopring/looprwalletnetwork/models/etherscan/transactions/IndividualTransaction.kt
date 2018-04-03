@@ -1,15 +1,18 @@
 package com.loopring.looprwalletnetwork.models.etherscan.transactions
 
 import com.google.gson.annotations.SerializedName
+import io.realm.RealmObject
 
 /**
  * Created by arknw229 on 3/16/18.
  *
  * Etherscan API
  *
+ * Represents a single transaction on the Ethereum chain
+ *
  * @author arknw229
  */
-class IndividualTransaction(
+open class IndividualTransaction(
         /**
          * Block number the transaction is on
          */
@@ -96,4 +99,4 @@ class IndividualTransaction(
          */
         var confirmations: String? = null
 
-)
+) : RealmObject()

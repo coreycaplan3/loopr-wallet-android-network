@@ -1,7 +1,9 @@
-package com.loopring.looprwalletnetwork.models.ethplorer.tokens
+package com.loopring.looprwalletnetwork.models.ethplorer.eth
 
 import com.google.gson.annotations.SerializedName
-import com.loopring.looprwalletnetwork.models.ethplorer.address.EthCountedTransaction
+import com.loopring.looprwalletnetwork.models.ethplorer.transactioninfo.EthCountedTransaction
+import io.realm.RealmList
+import io.realm.RealmObject
 
 /**
  * Created by arknw229 on 3/13/18.
@@ -37,15 +39,15 @@ import com.loopring.looprwalletnetwork.models.ethplorer.address.EthCountedTransa
  *
  * @author arknw229
  */
-class EthTokenHistoryGrouped(
+open class EthTokenHistoryGrouped(
         /**
          * A list of [EthCountedTransaction] objects that give data on the number of transactions at given days
          */
         @SerializedName("countTxs")
-        var countedTransactions: MutableList<EthCountedTransaction>? = null,
+        var countedTransactions: RealmList<EthCountedTransaction>? = null,
 
         /**
          * Cumulative transaction history data over the given time period
          */
         var totals: EthTokenHistoryTotals? = null
-)
+) : RealmObject()

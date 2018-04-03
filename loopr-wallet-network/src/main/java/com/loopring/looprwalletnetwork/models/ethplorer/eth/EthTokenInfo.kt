@@ -1,10 +1,12 @@
-package com.loopring.looprwalletnetwork.models.ethplorer.tokens
+package com.loopring.looprwalletnetwork.models.ethplorer.eth
 
 import android.util.Log
 import com.google.gson.*
 
 import com.google.gson.annotations.SerializedName
-import com.loopring.looprwalletnetwork.models.etherscan.CoinPriceData
+import com.loopring.looprwalletnetwork.extensions.ifNotNullOrEmpty
+import com.loopring.looprwalletnetwork.extensions.parseBigDecimal
+import io.realm.RealmObject
 import java.lang.reflect.Type
 
 import java.math.BigDecimal
@@ -20,29 +22,29 @@ import java.math.BigDecimal
  *
  * ```
  * {
- *   address:        # token address,
- *   totalSupply:    # total token supply,
- *   name:           # token name,
- *   symbol:         # token symbol,
- *   decimals:       # number of significant digits,
- *   price: {        # token price (false, if not available)
- *     rate:       # current rate
- *     currency:   # token price currency (USD)
- *     diff:       # 24 hour rate difference (in percent)
- *     ts:         # last rate update timestamp
+ *   address:       # token address,
+ *   totalSupply:   # total token supply,
+ *   name:          # token name,
+ *   symbol:        # token symbol,
+ *   decimals:      # number of significant digits,
+ *   price: {       # token price (false, if not available)
+ *     rate:        # current rate
+ *     currency:    # token price currency (USD)
+ *     diff:        # 24 hour rate difference (in percent)
+ *     ts:          # last rate update timestamp
  *   },
- *   owner:          # token owner address,
- *   countOps:       # total count of token operations
- *   totalIn:        # total amount of incoming tokens
- *   totalOut:       # total amount of outgoing tokens
- *   holdersCount:   # total numnber of token holders
- *   issuancesCount: # total count of token issuances
+ *   owner:         # token owner address,
+ *   countOps:      # total count of token operations
+ *   totalIn:       # total amount of incoming tokens
+ *   totalOut:      # total amount of outgoing tokens
+ *   holdersCount:  # total number of token holders
+ *   issuancesCount:# total count of token issuances
  * }
  * ```
  *
  * @author arknw229
  */
-class EthTokenInfo(
+open class EthTokenInfo(
         /**
          * Token address
          */
@@ -94,7 +96,7 @@ class EthTokenInfo(
         var totalOut: BigDecimal? = null,
 
         /**
-         * Issuances count for the token
+         * Issuance count for the token
          */
         var issuancesCount: Long? = null,
 
@@ -166,7 +168,7 @@ class EthTokenInfo(
         var volume7dPrevious: BigDecimal? = null,
 
         /**
-         * Capitalziation for the current 7 day period
+         * Capitalization for the current 7 day period
          */
         @SerializedName("cap-7d-current")
         var cap7dCurrent: BigDecimal? = null,
@@ -212,7 +214,7 @@ class EthTokenInfo(
          */
         @SerializedName("cap-30d-previous-ts")
         var cap30dPreviousTs: BigDecimal? = null
-) {
+) : RealmObject() {
     /**
      * Deserializer for [EthTokenInfo]
      * Handles some empty strings and inconsistencies in the API responses
@@ -227,14 +229,14 @@ class EthTokenInfo(
                 val tokenInfo = EthTokenInfo()
 
                 // Check for empty string for no address
-                if (jsonObj.get("address") != null && !jsonObj.get("address").isJsonNull && jsonObj.get("address").asString != "") {
-                    tokenInfo.address = jsonObj.get("address").asString
+                jsonObj.ifNotNullOrEmpty(EthTokenInfo::address) {
+                    tokenInfo.address = jsonObj.get(it).asString
                 }
                 // Check for empty string for no name
-                if (jsonObj.get("name") != null && !jsonObj.get("name").isJsonNull && jsonObj.get("name").asString != "") {
-                    tokenInfo.name = jsonObj.get("name").asString
+                jsonObj.ifNotNullOrEmpty(EthTokenInfo::name) {
+                    tokenInfo.name = jsonObj.get(it).asString
                 }
-                if (jsonObj.get("decimals") != null && !jsonObj.get("decimals").isJsonNull) {
+                jsonObj.ifNotNullOrEmpty(EthTokenInfo::decimals) {
                     try {
                         tokenInfo.decimals = Integer.parseInt(jsonObj.get("decimals").asString)
                     } catch (e: UnsupportedOperationException) {
@@ -243,117 +245,100 @@ class EthTokenInfo(
                 }
                 // Check that the symbol is 7 or fewer character, if it's longer cut it to 7
                 // Check for empty string for no symbol
-                if (jsonObj.get("symbol") != null && !jsonObj.get("symbol").isJsonNull && jsonObj.get("symbol").asString != "") {
-                    var sym = jsonObj.get("symbol").asString
+                jsonObj.ifNotNullOrEmpty(EthTokenInfo::symbol) {
+                    var sym = jsonObj.get(it).asString
                     if (sym.length > 7) {
                         sym = sym.substring(0, 8)
                     }
                     tokenInfo.symbol = sym
                 }
-                if (jsonObj.get("totalSupply") != null && !jsonObj.get("totalSupply").isJsonNull) {
-                    tokenInfo.totalSupply = parseBigDecimal(jsonObj.get("totalSupply").asString, "totalSupply")
+                jsonObj.ifNotNullOrEmpty(EthTokenInfo::totalSupply) {
+                    tokenInfo.totalSupply = parseBigDecimal(jsonObj, it)
                 }
                 // Check for 0x for no owner
-                if (jsonObj.get("owner") != null && !jsonObj.get("owner").isJsonNull && jsonObj.get("owner").asString != "0x") {
-                    tokenInfo.owner = jsonObj.get("owner").asString
+                jsonObj.ifNotNullOrEmpty(EthTokenInfo::owner) {
+                    if (jsonObj.get(it).asString != "0x") {
+                        tokenInfo.owner = jsonObj.get(it).asString
+                    }
                 }
-                if (jsonObj.get("transfersCount") != null && !jsonObj.get("transfersCount").isJsonNull) {
-                    tokenInfo.transfersCount = parseLong(jsonObj.get("transfersCount"), "transfersCount")
+                jsonObj.ifNotNullOrEmpty(EthTokenInfo::transfersCount) {
+                    tokenInfo.transfersCount = jsonObj.get(it).asString.toLongOrNull()
                 }
-                if (jsonObj.get("lastUpdated") != null && !jsonObj.get("lastUpdated").isJsonNull) {
-                    tokenInfo.lastUpdated = parseLong(jsonObj.get("lastUpdated"), "lastUpdated")
+                jsonObj.ifNotNullOrEmpty(EthTokenInfo::lastUpdated) {
+                    tokenInfo.lastUpdated = jsonObj.get(it).asString.toLongOrNull()
                 }
-                if (jsonObj.get("totalIn") != null && !jsonObj.get("totalIn").isJsonNull) {
-                    tokenInfo.totalIn = parseBigDecimal(jsonObj.get("totalIn").asString, "totalIn")//.replace('e', 'E'))
+                jsonObj.ifNotNullOrEmpty(EthTokenInfo::totalIn) {
+                    tokenInfo.totalIn = parseBigDecimal(jsonObj, it)
                 }
-                if (jsonObj.get("totalOut") != null && !jsonObj.get("totalOut").isJsonNull) {
-                    tokenInfo.totalOut = parseBigDecimal(jsonObj.get("totalOut").asString, "totalOut")//.replace('e', 'E'))
+                jsonObj.ifNotNullOrEmpty(EthTokenInfo::totalOut) {
+                    tokenInfo.totalOut = parseBigDecimal(jsonObj, it)
                 }
-                if (jsonObj.get("issuancesCount") != null && !jsonObj.get("issuancesCount").isJsonNull) {
-                    tokenInfo.issuancesCount = parseLong(jsonObj.get("issuancesCount"), "issuancesCount")
+                jsonObj.ifNotNullOrEmpty(EthTokenInfo::issuancesCount) {
+                    tokenInfo.issuancesCount = jsonObj.get(it).asString.toLongOrNull()
                 }
-                if (jsonObj.get("holdersCount") != null && !jsonObj.get("holdersCount").isJsonNull) {
-                    tokenInfo.holdersCount = parseLong(jsonObj.get("holdersCount"), "holdersCount")
+                jsonObj.ifNotNullOrEmpty(EthTokenInfo::holdersCount) {
+                    tokenInfo.holdersCount = jsonObj.get(it).asString.toLongOrNull()
                 }
-                if (jsonObj.get("image") != null && !jsonObj.get("image").isJsonNull) {
-                    tokenInfo.image = jsonObj.get("image").asString
+                jsonObj.ifNotNullOrEmpty(EthTokenInfo::image) {
+                    tokenInfo.image = jsonObj.get(it).asString
                 }
                 // Check for empty string for no description
-                if (jsonObj.get("description") != null && !jsonObj.get("description").isJsonNull && jsonObj.get("description").asString != "") {
-                    tokenInfo.description = jsonObj.get("description").asString
+                jsonObj.ifNotNullOrEmpty(EthTokenInfo::description) {
+                    tokenInfo.description = jsonObj.get(it).asString
                 }
                 if (jsonObj.get("price") != null && !jsonObj.get("price").isJsonNull && !jsonObj.get("price").isJsonPrimitive) {
-                    val gson = GsonBuilder().registerTypeAdapter(CoinPriceData::class.java, CoinPriceData.CoinPriceDataDeserializer()).serializeNulls().create()
-                    tokenInfo.price = gson.fromJson(jsonObj.get("price").asJsonObject, CoinPriceData::class.java)
+                    tokenInfo.price = context.deserialize(jsonObj.get("price"), CoinPriceData::class.java)
                 }
-                if (jsonObj.get("countOps") != null && !jsonObj.get("countOps").isJsonNull) {
-                    tokenInfo.countOps = parseLong(jsonObj.get("countOps"), "countOps")
+                jsonObj.ifNotNullOrEmpty(EthTokenInfo::countOps) {
+                    tokenInfo.countOps = jsonObj.get(it).asString.toLongOrNull()
                 }
                 if (jsonObj.get("volume-1d-current") != null && !jsonObj.get("volume-1d-current").isJsonNull) {
-                    tokenInfo.volume1dCurrent = parseBigDecimal(jsonObj.get("volume-1d-current").asString, "volume-1d-current")
+                    tokenInfo.volume1dCurrent = parseBigDecimal(jsonObj, "volume-1d-current")
                 }
                 if (jsonObj.get("volume-1d-previous") != null && !jsonObj.get("volume-1d-previous").isJsonNull) {
-                    tokenInfo.volume1dPrevious = parseBigDecimal(jsonObj.get("volume-1d-previous").asString, "volume-1d-previous")
+                    tokenInfo.volume1dPrevious = parseBigDecimal(jsonObj, "volume-1d-previous")
                 }
                 if (jsonObj.get("cap-1d-current") != null && !jsonObj.get("cap-1d-current").isJsonNull) {
-                    tokenInfo.cap1dCurrent = parseBigDecimal(jsonObj.get("cap-1d-current").asString, "cap-1d-current")
+                    tokenInfo.cap1dCurrent = parseBigDecimal(jsonObj, "cap-1d-current")
                 }
                 if (jsonObj.get("cap-1d-previous") != null && !jsonObj.get("cap-1d-previous").isJsonNull) {
-                    tokenInfo.cap1dPrevious = parseBigDecimal(jsonObj.get("cap-1d-previous").asString, "cap-1d-previous")
+                    tokenInfo.cap1dPrevious = parseBigDecimal(jsonObj, "cap-1d-previous")
                 }
                 if (jsonObj.get("cap-1d-previous-ts") != null && !jsonObj.get("cap-1d-previous-ts").isJsonNull) {
-                    tokenInfo.cap1dPreviousTs = parseBigDecimal(jsonObj.get("cap-1d-previous-ts").asString, "cap-1d-previous-ts")
+                    tokenInfo.cap1dPreviousTs = parseBigDecimal(jsonObj, "cap-1d-previous-ts")
                 }
                 if (jsonObj.get("volume-7d-current") != null && !jsonObj.get("volume-7d-current").isJsonNull) {
-                    tokenInfo.volume7dCurrent = parseBigDecimal(jsonObj.get("volume-7d-current").asString, "volume-7d-current")
+                    tokenInfo.volume7dCurrent = parseBigDecimal(jsonObj, "volume-7d-current")
                 }
                 if (jsonObj.get("volume-7d-previous") != null && !jsonObj.get("volume-7d-previous").isJsonNull) {
-                    tokenInfo.volume7dPrevious = parseBigDecimal(jsonObj.get("volume-7d-previous").asString, "volume-7d-previous")
+                    tokenInfo.volume7dPrevious = parseBigDecimal(jsonObj, "volume-7d-previous")
                 }
                 if (jsonObj.get("cap-7d-current") != null && !jsonObj.get("cap-7d-current").isJsonNull) {
-                    tokenInfo.cap7dCurrent = parseBigDecimal(jsonObj.get("cap-7d-current").asString, "cap-7d-current")
+                    tokenInfo.cap7dCurrent = parseBigDecimal(jsonObj, "cap-7d-current")
                 }
                 if (jsonObj.get("cap-7d-previous") != null && !jsonObj.get("cap-7d-previous").isJsonNull) {
-                    tokenInfo.cap7dPrevious = parseBigDecimal(jsonObj.get("cap-7d-previous").asString, "cap-7d-previous")
+                    tokenInfo.cap7dPrevious = parseBigDecimal(jsonObj, "cap-7d-previous")
                 }
                 if (jsonObj.get("cap-7d-previous-ts") != null && !jsonObj.get("cap-7d-previous-ts").isJsonNull) {
-                    tokenInfo.cap7dPreviousTs = parseBigDecimal(jsonObj.get("cap-7d-previous-ts").asString, "cap-7d-previous-ts")
+                    tokenInfo.cap7dPreviousTs = parseBigDecimal(jsonObj, "cap-7d-previous-ts")
                 }
                 if (jsonObj.get("volume-30d-current") != null && !jsonObj.get("volume-30d-current").isJsonNull) {
-                    tokenInfo.volume30dCurrent = parseBigDecimal(jsonObj.get("volume-30d-current").asString, "volume-30d-current")
+                    tokenInfo.volume30dCurrent = parseBigDecimal(jsonObj, "volume-30d-current")
                 }
                 if (jsonObj.get("volume-30d-previous") != null && !jsonObj.get("volume-30d-previous").isJsonNull) {
-                    tokenInfo.volume30dPrevious = parseBigDecimal(jsonObj.get("volume-30d-previous").asString, "volume-30d-previous")
+                    tokenInfo.volume30dPrevious = parseBigDecimal(jsonObj, "volume-30d-previous")
                 }
                 if (jsonObj.get("cap-30d-current") != null && !jsonObj.get("cap-30d-current").isJsonNull) {
-                    tokenInfo.cap30dCurrent = parseBigDecimal(jsonObj.get("cap-30d-current").asString, "cap-30d-current")
+                    tokenInfo.cap30dCurrent = parseBigDecimal(jsonObj, "cap-30d-current")
                 }
                 if (jsonObj.get("cap-30d-previous") != null && !jsonObj.get("cap-30d-previous").isJsonNull) {
-                    tokenInfo.cap30dPrevious = parseBigDecimal(jsonObj.get("cap-30d-previous").asString, "cap-30d-previous")
+                    tokenInfo.cap30dPrevious = parseBigDecimal(jsonObj, "cap-30d-previous")
                 }
                 if (jsonObj.get("cap-30d-previous-ts") != null && !jsonObj.get("cap-30d-previous-ts").isJsonNull) {
-                    tokenInfo.cap30dPreviousTs = parseBigDecimal(jsonObj.get("cap-30d-previous-ts").asString, "cap-30d-previous-ts")
+                    tokenInfo.cap30dPreviousTs = parseBigDecimal(jsonObj, "cap-30d-previous-ts")
                 }
 
                 return tokenInfo
-            }
-        }
-
-        private fun parseLong(value: JsonElement, name: String): Long? {
-            try {
-                return value.asLong
-            } catch (e: UnsupportedOperationException) {
-                Log.w("EthTokenInfo", "Warning: json element '$name' could not be parsed as a Long, variable set to null")
-                return null
-            }
-        }
-
-        private fun parseBigDecimal(value: String, name: String): BigDecimal? {
-            try {
-                return BigDecimal(value)
-            } catch (e: NumberFormatException) {
-                Log.w("EthTokenInfo", "Warning: json element '$name' could not be parsed as a BigDecimal, variable set to null")
-                return null
             }
         }
 

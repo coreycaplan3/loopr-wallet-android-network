@@ -1,6 +1,8 @@
 package com.loopring.looprwalletnetwork.models.etherscan.address
 
 import com.google.gson.annotations.SerializedName
+import io.realm.RealmList
+import io.realm.RealmObject
 
 /**
  * Created by arknw229 on 2/28/18.
@@ -22,20 +24,20 @@ import com.google.gson.annotations.SerializedName
  *
  * @author arknw229
  */
-class BalanceListResponse(
+open class BalanceListResponse(
         /**
-         * Status of the request
+         * Status of the request. Can be 1 for complete or 0 for failure.
          */
-        val status: Int = 0,
+        var status: Int = 0,
 
         /**
-         * Status message
+         * Status message. Can be "OK" for successful calls or "NOTOK" for failures
          */
-        val message: String? = null,
+        var message: String? = null,
 
         /**
          * List of account balances
          */
         @SerializedName("result")
-        val balances: List<AccountBalance>? = null
-)
+        var balanceList: RealmList<AccountBalance>? = null
+) : RealmObject()

@@ -1,4 +1,8 @@
-package com.loopring.looprwalletnetwork.models.ethplorer.address
+package com.loopring.looprwalletnetwork.models.ethplorer.addressinfo
+
+import com.loopring.looprwalletnetwork.models.ethplorer.transactioninfo.EthTransactionOperationInfo
+import io.realm.RealmList
+import io.realm.RealmObject
 
 /**
  * Ethplorer API
@@ -27,9 +31,9 @@ package com.loopring.looprwalletnetwork.models.ethplorer.address
  *
  * @author arknw229
  */
-class EthAddressHistory(
+open class EthAddressHistory(
         /**
          * List of [EthTransactionOperationInfo] objects describing the operations in the addresses history
          */
-        var operations: MutableList<EthTransactionOperationInfo>? = null
-)
+        var operations: RealmList<EthTransactionOperationInfo>? = null
+) : RealmObject()

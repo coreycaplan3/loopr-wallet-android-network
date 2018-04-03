@@ -1,4 +1,4 @@
-package com.loopring.looprwalletnetwork.models.ethereum
+package com.loopring.looprwalletnetwork.services
 
 import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.async
@@ -22,7 +22,7 @@ import java.util.Collections.emptyList
  * This class is used to wrap around the functionality of ERC20 tokens
  * @author arknw229
  */
-class Erc20Wrapper : Contract {
+class Erc20Service : Contract {
 
     private constructor(contractAddress: String,
                         web3j: Web3j,
@@ -40,16 +40,16 @@ class Erc20Wrapper : Contract {
                         binary: String
     ) : super(binary, contractAddress, web3j, transactionManager, gasPrice, gasLimit)
 
-
     /**
      * The total supply of an ERC20 token
      *
-     * @return Returns a remoteCall with a BigInteger repesenting the supply
+     * @return Returns a remoteCall with a BigInteger representing the supply
      */
     fun totalSupply(): Deferred<BigInteger> = async {
         val function = Function("totalSupply",
                 Arrays.asList(),
                 Arrays.asList<TypeReference<*>>(object : TypeReference<Uint256>() {}))
+
         executeRemoteCallSingleValueReturn(function, BigInteger::class.java).send()
     }
 
@@ -64,6 +64,7 @@ class Erc20Wrapper : Contract {
         val function = Function("balanceOf",
                 Arrays.asList<Type<*>>(Address(tokenOwner)),
                 Arrays.asList<TypeReference<*>>(object : TypeReference<Uint256>() {}))
+
         executeRemoteCallSingleValueReturn(function, BigInteger::class.java).send()
     }
 
@@ -78,6 +79,7 @@ class Erc20Wrapper : Contract {
         val function = Function("allowance",
                 Arrays.asList<Type<*>>(Address(tokenOwner), Address(spender)),
                 Arrays.asList<TypeReference<*>>(object : TypeReference<Uint256>() {}))
+
         executeRemoteCallSingleValueReturn(function, BigInteger::class.java).send()
     }
 
@@ -160,7 +162,7 @@ class Erc20Wrapper : Contract {
                 gasPrice: BigInteger,
                 gasLimit: BigInteger,
                 binary: String
-        ) = deployRemoteCall(Erc20Wrapper::class.java, web3j, credentials, gasPrice, gasLimit, binary, "")
+        ) = deployRemoteCall(Erc20Service::class.java, web3j, credentials, gasPrice, gasLimit, binary, "")
 
         /**
          * This will create a new instance of the smart contract on the Ethereum blockchain using
@@ -180,7 +182,7 @@ class Erc20Wrapper : Contract {
                 gasPrice: BigInteger,
                 gasLimit: BigInteger,
                 binary: String
-        ) = deployRemoteCall(Erc20Wrapper::class.java, web3j, transactionManager, gasPrice, gasLimit, binary, "")
+        ) = deployRemoteCall(Erc20Service::class.java, web3j, transactionManager, gasPrice, gasLimit, binary, "")
 
         /**
          * Constructs an instance of a smart contract wrapper with an existing smart contract
@@ -193,14 +195,14 @@ class Erc20Wrapper : Contract {
          * was first deployed.
          * @return RemoteCall with response of the request
          */
-        fun createWrapper(
+        fun getService(
                 contractAddress: String,
                 web3j: Web3j,
                 credentials: Credentials,
                 gasPrice: BigInteger,
                 gasLimit: BigInteger,
                 binary: String
-        ) = Erc20Wrapper(contractAddress, web3j, credentials, gasPrice, gasLimit, binary)
+        ) = Erc20Service(contractAddress, web3j, credentials, gasPrice, gasLimit, binary)
 
         /**
          * Constructs an instance of a smart contract wrapper with an existing smart contract
@@ -213,14 +215,14 @@ class Erc20Wrapper : Contract {
          * was first deployed.
          * @return RemoteCall with response of the request
          */
-        fun createWrapper(
+        fun getService(
                 contractAddress: String,
                 web3j: Web3j,
                 transactionManager: TransactionManager,
                 gasPrice: BigInteger,
                 gasLimit: BigInteger,
                 binary: String
-        ) = Erc20Wrapper(contractAddress, web3j, transactionManager, gasPrice, gasLimit, binary)
+        ) = Erc20Service(contractAddress, web3j, transactionManager, gasPrice, gasLimit, binary)
 
     }
 

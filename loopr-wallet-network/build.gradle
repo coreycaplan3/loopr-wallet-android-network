@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+apply plugin: 'realm-android'
 
 ext {
     bintrayRepo = 'maven'
@@ -15,7 +16,7 @@ ext {
     siteUrl = 'https://github.com/coreycaplan3/loopr-wallet-android-network'
     gitUrl = 'https://github.com/coreycaplan3/loopr-wallet-android-network.git'
 
-    libraryVersion = '0.1.0'
+    libraryVersion = '0.2.0'
 
     developerId = 'coreycaplan3'
     developerName = 'Corey Caplan'

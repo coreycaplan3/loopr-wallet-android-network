@@ -1,5 +1,6 @@
-package com.loopring.looprwalletnetwork.models.ethplorer.tokens
+package com.loopring.looprwalletnetwork.models.ethplorer.eth
 
+import io.realm.RealmObject
 import java.math.BigDecimal
 
 /**
@@ -22,7 +23,7 @@ import java.math.BigDecimal
  *
  * @author arknw229
  */
-class EthTokenHistoryTotals(
+open class EthTokenHistoryTotals(
         /**
          * Total number of tokens listed
          */
@@ -52,4 +53,4 @@ class EthTokenHistoryTotals(
          * Previous cumulative volume on the tokens listed
          */
         var volumePrevious: BigDecimal? = null
-)
+) : RealmObject()

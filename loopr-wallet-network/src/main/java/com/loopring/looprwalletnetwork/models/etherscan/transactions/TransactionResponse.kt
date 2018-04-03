@@ -1,6 +1,8 @@
 package com.loopring.looprwalletnetwork.models.etherscan.transactions
 
 import com.google.gson.annotations.SerializedName
+import io.realm.RealmList
+import io.realm.RealmObject
 
 /**
  * Created by arknw229 on 3/1/18.
@@ -11,14 +13,14 @@ import com.google.gson.annotations.SerializedName
  *
  * @author arknw229
  */
-class TransactionResponse(
+open class TransactionResponse(
         /**
-         * Status of the transaction
+         * Status of the request. Can be 1 for complete or 0 for failure.
          */
         var status: Int? = null,
 
         /**
-         * Message on the status of the transaction
+         * Status message. Can be "OK" for successful calls or "NOTOK" for failures
          */
         var message: String? = null,
 
@@ -26,5 +28,6 @@ class TransactionResponse(
          * List of results of the transaction
          */
         @SerializedName("result")
-        var transactions: List<IndividualTransaction>? = null
-)
+        var transactionList: RealmList<IndividualTransaction>? = null
+
+) : RealmObject()

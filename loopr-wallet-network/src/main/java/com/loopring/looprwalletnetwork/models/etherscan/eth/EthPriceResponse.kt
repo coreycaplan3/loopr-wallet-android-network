@@ -1,6 +1,7 @@
 package com.loopring.looprwalletnetwork.models.etherscan.eth
 
 import com.google.gson.annotations.SerializedName
+import io.realm.RealmObject
 
 /**
  * Created by arknw229 on 3/1/18.
@@ -24,21 +25,20 @@ import com.google.gson.annotations.SerializedName
  *
  * @author arknw229
  */
-class EthPriceResponse (
-    /**
-     * Status of the response
-     */
-    var status: Int? = null,
+open class EthPriceResponse(
+        /**
+         * Status of the request. Can be 1 for complete or 0 for failure.
+         */
+        var status: Int? = null,
 
-    /**
-     * Message describing the status of the response
-     */
-    var message: String? = null,
+        /**
+         * Status message. Can be "OK" for successful calls or "NOTOK" for failures
+         */
+        var message: String? = null,
 
-    /**
-     * [EthPriceData] price data response
-     */
-    @SerializedName("result")
-    var priceData: EthPriceData? = null
-) {
-}
+        /**
+         * [EthPriceData] price data response
+         */
+        @SerializedName("result")
+        var priceData: EthPriceData? = null
+) : RealmObject()

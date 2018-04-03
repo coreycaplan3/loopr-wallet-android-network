@@ -1,4 +1,6 @@
-package com.loopring.looprwalletnetwork.models.ethplorer.tokens
+package com.loopring.looprwalletnetwork.models.ethplorer.eth
+
+import io.realm.RealmObject
 
 /**
  * Created by arknw229 on 3/13/18.
@@ -9,9 +11,9 @@ package com.loopring.looprwalletnetwork.models.ethplorer.tokens
  *
  * @author arknw229
  */
-class EthTokenPriceHistoryGrouped(
+open class EthTokenPriceHistoryGrouped(
         /**
          * Grouped information about token price history
          */
         var history: EthTokenPriceHistoryGroupedInfo? = null
-)
+) : RealmObject()

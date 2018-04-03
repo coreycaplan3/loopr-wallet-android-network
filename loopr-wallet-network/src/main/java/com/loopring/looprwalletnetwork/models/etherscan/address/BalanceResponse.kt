@@ -1,6 +1,8 @@
 package com.loopring.looprwalletnetwork.models.etherscan.address
 
 import com.google.gson.annotations.SerializedName
+import io.realm.RealmObject
+import java.math.BigDecimal
 
 /**
  * Created by arknw229 on 2/28/18.
@@ -19,21 +21,29 @@ import com.google.gson.annotations.SerializedName
  *
  * @author arknw229
  */
-data class BalanceResponse(
-    /**
-     * Status of the transaction
-     */
-    val status: Int? = null,
+open class BalanceResponse : RealmObject() {
+
 
     /**
-     * Transaction message
+     * Status of the request. Can be 1 for complete or 0 for failure.
      */
-    val message: String? = null,
+    var status: Int? = null
+
+    /**
+     * Status message. Can be "OK" for successful calls or "NOTOK" for failures
+     */
+    var message: String? = null
 
     /**
      * Balance
      */
-    @SerializedName("result")
-    val balance: String? = null
+    var balance: BigDecimal?
+        get() = mBalance?.let { BigDecimal(it) }
+        set(value) {
+            mBalance = value?.toPlainString()
+        }
 
-)
+    @SerializedName("result")
+    private var mBalance: String? = null
+
+}

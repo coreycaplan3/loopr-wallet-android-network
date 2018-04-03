@@ -1,5 +1,9 @@
 package com.loopring.looprwalletnetwork.models.etherscan.address
 
+import com.google.gson.annotations.SerializedName
+import io.realm.RealmObject
+import java.math.BigDecimal
+
 /**
  * Etherscan API
  *
@@ -13,14 +17,26 @@ package com.loopring.looprwalletnetwork.models.etherscan.address
  *
  * @author arknw229
  */
-class AccountBalance {
-    /**
-     * Account ID
-     */
-    val account: String? = null
+open class AccountBalance : RealmObject() {
 
     /**
-     * balance of the account
+     * The address of the account whose balance was retrieved
      */
-    val balance: String? = null
+    @SerializedName("account")
+    var address: String? = null
+
+    /**
+     * The balance of the account
+     */
+    var balance: BigDecimal?
+        get() {
+            return mBalance?.let { BigDecimal(it) }
+        }
+        set(value) {
+            mBalance = value?.toPlainString()
+        }
+
+    @SerializedName("balance")
+    private var mBalance: String? = null
+
 }

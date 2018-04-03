@@ -1,8 +1,10 @@
-package com.loopring.looprwalletnetwork.models.ethplorer.address
+package com.loopring.looprwalletnetwork.models.ethplorer.transactioninfo
 
 import android.util.Log
 import com.google.gson.*
-import com.loopring.looprwalletnetwork.models.ethplorer.tokens.EthTokenInfo
+import com.loopring.looprwalletnetwork.models.ethplorer.eth.EthTokenInfo
+import io.realm.RealmList
+import io.realm.RealmObject
 import java.lang.reflect.Type
 import java.math.BigInteger
 
@@ -15,57 +17,65 @@ import java.math.BigInteger
  *
  * @author arknw229
  */
-class EthTransactionOperationInfo(
-        /**
-         * Timestamp of the operation
-         */
-        var timestamp: Long? = null,
+open class EthTransactionOperationInfo : RealmObject() {
 
-        /**
-         * Hash of the transaction
-         */
-        var transactionHash: String? = null,
 
-        /**
-         * Value of the operation
-         */
-        var value: BigInteger? = null,
+    /**
+     * Timestamp of the operation
+     */
+    var timestamp: Long? = null
 
-        /**
-         *
-         */
-        var intValue: Int? = null,
+    /**
+     * Hash of the transaction
+     */
+    var transactionHash: String? = null
 
-        /**
-         * operation type (transfer, approve, issuance, mint, burn, etc)
-         */
-        var type: String? = null,
+    /**
+     * Ether value of the operation
+     */
+    var value: BigInteger?
+        get() = mValue?.let { BigInteger(it) }
+        set(value) {
+            mValue = value?.toString()
+        }
 
-        /**
-         * Priority of the transaction
-         */
-        var priority: Int? = null,
+    private var mValue: String? = null
 
-        /**
-         * Source address (if two addresses involved)
-         */
-        var from: String? = null,
+    /**
+     *
+     */
+    var intValue: Int? = null
 
-        /**
-         * Destination address (if two addresses involved)
-         */
-        var to: String? = null,
+    /**
+     * operation type (transfer, approve, issuance, mint, burn, etc)
+     */
+    var type: String? = null
 
-        /**
-         * Array of addresses involved in the transaction
-         */
-        var addresses: Array<String>? = null,
+    /**
+     * Priority of the transaction
+     */
+    var priority: Int? = null
 
-        /**
-         * Information about the ERC20 token involved
-         */
-        var tokenInfo: EthTokenInfo? = null
-) {
+    /**
+     * Source address (if two addresses involved)
+     */
+    var from: String? = null
+
+    /**
+     * Destination address (if two addresses involved)
+     */
+    var to: String? = null
+
+    /**
+     * Array of addresses involved in the transaction
+     */
+    var addresses: RealmList<String>? = null
+
+    /**
+     * Information about the ERC20 token involved
+     */
+    var tokenInfo: EthTokenInfo? = null
+
     /**
      * Deserializer for [EthTransactionOperationInfo]
      * Handles some empty strings and inconsistencies in the API responses
@@ -129,7 +139,7 @@ class EthTransactionOperationInfo(
                 }
                 if (jsonObj.get("addresses") != null && !jsonObj.get("addresses").isJsonNull) {
                     val addressList = jsonObj.get("addresses").asJsonArray
-                    val addresses = mutableListOf<String>()
+                    val addresses = RealmList<String>()
 
                     addressList.forEach {
                         if (it != null && !it.isJsonNull && it.asString != "") {
@@ -137,7 +147,7 @@ class EthTransactionOperationInfo(
                         }
                     }
 
-                    operationInfo.addresses = addresses.toTypedArray()
+                    operationInfo.addresses = addresses
                 }
                 if (jsonObj.get("tokenInfo") != null && !jsonObj.get("tokenInfo").isJsonNull && !jsonObj.get("tokenInfo").isJsonPrimitive) {
                     val gson = GsonBuilder().registerTypeAdapter(EthTokenInfo::class.java, EthTokenInfo.EthTokenInfoDeserializer()).serializeNulls().create()
