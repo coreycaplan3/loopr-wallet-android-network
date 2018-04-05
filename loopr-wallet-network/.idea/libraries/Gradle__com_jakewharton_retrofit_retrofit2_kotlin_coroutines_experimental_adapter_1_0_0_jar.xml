@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.jakewharton.retrofit:retrofit2-kotlin-coroutines-experimental-adapter:1.0.0@jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jakewharton.retrofit/retrofit2-kotlin-coroutines-experimental-adapter/1.0.0/b3d6fa5c1325f041d53f171160703799e15ecf0/retrofit2-kotlin-coroutines-experimental-adapter-1.0.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jakewharton.retrofit/retrofit2-kotlin-coroutines-experimental-adapter/1.0.0/ad04d2a80c7e3718e811f858a19f43ec7fee5176/retrofit2-kotlin-coroutines-experimental-adapter-1.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

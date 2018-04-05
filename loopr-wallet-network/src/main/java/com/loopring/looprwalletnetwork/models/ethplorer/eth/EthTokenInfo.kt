@@ -66,10 +66,19 @@ open class EthTokenInfo : RealmObject() {
      */
     var symbol: String? = null
 
+    var totalSupply: BigDecimal?
+        get() {
+            return mTotalSupply?.let { BigDecimal(it) }
+        }
+    set(value) {
+        mTotalSupply = value?.toPlainString()
+    }
+
     /**
      * Total supply of the token
      */
-    var totalSupply: BigDecimal? = null
+    @SerializedName("totalSupply")
+    private var mTotalSupply: String? = null
 
     /**
      * Owner of the contract that created the token
