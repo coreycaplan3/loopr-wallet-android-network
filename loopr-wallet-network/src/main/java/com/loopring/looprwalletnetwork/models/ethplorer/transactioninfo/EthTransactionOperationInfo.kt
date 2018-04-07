@@ -8,6 +8,7 @@ import io.realm.RealmList
 import io.realm.RealmObject
 import java.lang.reflect.Type
 import java.math.BigInteger
+import java.util.*
 
 /**
  * Created by arknw229 on 3/13/18.
@@ -23,7 +24,7 @@ open class EthTransactionOperationInfo : RealmObject() {
     /**
      * Timestamp of the operation
      */
-    var timestamp: Long? = null
+    var timestamp: Date? = null
 
     /**
      * Hash of the transaction
@@ -93,9 +94,9 @@ open class EthTransactionOperationInfo : RealmObject() {
             val operationInfo = EthTransactionOperationInfo()
             if (jsonObj.get("timestamp") != null && !jsonObj.get("timestamp").isJsonNull) {
                 try {
-                    operationInfo.timestamp = jsonObj.get("timestamp").asLong
+                    operationInfo.timestamp = Date(jsonObj.get("timestamp").asLong)
                 } catch (e: UnsupportedOperationException) {
-                    Log.w("EthTransactionOpInfo", "Warning: json element 'timestamp' could not be parsed as a Long, variable set to null")
+                    Log.w("EthTransactionOpInfo", "Warning: json element 'timestamp' could not be parsed as a Long or Date, variable set to null")
                     operationInfo.timestamp = null
                 }
             }

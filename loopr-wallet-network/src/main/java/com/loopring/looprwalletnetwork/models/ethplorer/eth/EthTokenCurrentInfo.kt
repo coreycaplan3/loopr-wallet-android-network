@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName
 import io.realm.RealmObject
 import io.realm.annotations.Ignore
 import java.math.BigDecimal
+import java.util.*
 
 /**
  * Created by arknw229 on 3/13/18.
@@ -104,5 +105,5 @@ open class EthTokenCurrentInfo : RealmObject() {
      * Timestamp of when the market data was taken from
      */
     @SerializedName("ts")
-    var timestamp: Long? = null
+    var timestamp: Date? = null
 }

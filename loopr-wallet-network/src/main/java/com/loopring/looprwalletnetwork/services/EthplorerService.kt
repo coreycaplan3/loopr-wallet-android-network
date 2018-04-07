@@ -216,6 +216,7 @@ interface EthplorerService {
                     .registerTypeAdapter(EthTransactionOperationInfo::class.java, EthTransactionOperationInfo.EthTransactionOperationInfoDeserializer())
                     .registerTypeAdapter(EthAddressTransactions::class.java, EthAddressTransactions.EthAddressTransactionsDeserializer())
                     .registerTypeAdapter(EthAddressTransactionInfo::class.java, EthAddressTransactionInfo.EthAddressTransactionInfoDeserializer())
+                    .registerTypeAdapter(DateDeserializer::class.java,DateDeserializer())
                     .enableComplexMapKeySerialization()
                     .serializeNulls()
                     .create()

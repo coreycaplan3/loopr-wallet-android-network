@@ -26,7 +26,7 @@ open class AccountBalance : RealmObject() {
     var address: String? = null
 
     /**
-     * The balance of the account
+     * The balance of the account in wei, example output - 670456215218885498951364 would be 670,456.21... eth
      */
     var balance: BigDecimal?
         get() {

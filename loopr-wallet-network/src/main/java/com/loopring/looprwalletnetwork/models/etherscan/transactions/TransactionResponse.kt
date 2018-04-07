@@ -26,7 +26,7 @@ open class TransactionResponse(
         var message: String? = null,
 
         /**
-         * List of results of the transaction
+         * List of results of the transaction in a [transactionList] object
          */
         @SerializedName("result")
         var transactionList: RealmList<IndividualTransaction>? = null

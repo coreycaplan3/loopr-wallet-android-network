@@ -20,17 +20,17 @@ import io.realm.RealmObject
 open class EtherInfo(
 
         /**
-         * Ethereum balance
+         * Ethereum balance in eth
          */
         var balance: String? = null,
 
         /**
-         * Total Ethereum in
+         * Total Ethereum sent into the address in eth
          */
         var totalIn: String? = null,
 
         /**
-         * Total Ethereum out
+         * Total Ethereum sent out of the address in eth
          */
         var totalOut: String? = null
 

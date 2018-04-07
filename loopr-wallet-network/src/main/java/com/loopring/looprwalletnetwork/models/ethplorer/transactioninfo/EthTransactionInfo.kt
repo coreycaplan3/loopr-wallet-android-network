@@ -2,6 +2,7 @@ package com.loopring.looprwalletnetwork.models.ethplorer.transactioninfo
 
 import io.realm.RealmList
 import io.realm.RealmObject
+import java.util.*
 
 /**
  * Created by arknw229 on 3/13/18.
@@ -22,7 +23,7 @@ open class EthTransactionInfo(
         /**
          * Timestamp from when the transaction occurred
          */
-        var timestamp: Long? = null,
+        var timestamp: Date? = null,
 
         /**
          * Block number of the block the transaction was mined onto

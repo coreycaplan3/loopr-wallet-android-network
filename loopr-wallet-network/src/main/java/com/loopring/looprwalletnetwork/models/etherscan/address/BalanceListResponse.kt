@@ -36,7 +36,7 @@ open class BalanceListResponse(
         var message: String? = null,
 
         /**
-         * List of account balances
+         * List of account balances in [AccountBalance] objects
          */
         @SerializedName("result")
         var balanceList: RealmList<AccountBalance>? = null

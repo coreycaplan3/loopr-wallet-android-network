@@ -2,6 +2,7 @@ package com.loopring.looprwalletnetwork.models.ethplorer.transactioninfo
 
 import com.google.gson.annotations.SerializedName
 import io.realm.RealmObject
+import java.util.*
 
 /**
  * Created by arknw229 on 3/13/18.
@@ -36,7 +37,7 @@ open class EthCountedTransaction(
          * Timestamp of the transaction
          */
         @SerializedName("ts")
-        var timestamp: Long? = null,
+        var timestamp: Date? = null,
 
         /**
          * Count of the transactions

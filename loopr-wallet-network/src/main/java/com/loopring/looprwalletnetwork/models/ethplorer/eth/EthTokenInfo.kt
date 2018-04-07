@@ -10,6 +10,7 @@ import com.loopring.looprwalletnetwork.utilities.parseBigDecimal
 import io.realm.RealmObject
 import java.lang.reflect.Type
 import java.math.BigDecimal
+import java.util.*
 
 /**
  * Created by arknw229 on 3/11/18.
@@ -93,7 +94,7 @@ open class EthTokenInfo : RealmObject() {
     /**
      * Timestamp of the last update
      */
-    var lastUpdated: Long? = null
+    var lastUpdated: Date? = null
 
     /**
      * Total amount of incoming tokens
@@ -212,16 +213,8 @@ open class EthTokenInfo : RealmObject() {
     /**
      * Timestamp of the previous 1 day period data
      */
-    var cap1dPreviousTs: BigDecimal?
-        get() {
-            return mCap1dPreviousTs?.let { BigDecimal(it) }
-        }
-        set(value) {
-            mCap1dPreviousTs = value?.toPlainString()
-        }
-
     @SerializedName("cap-1d-previous-ts")
-    var mCap1dPreviousTs: String? = null
+    var cap1dPreviousTs: Date? = null
 
     /**
      * Volume of the current 7 day period for the token
@@ -282,16 +275,8 @@ open class EthTokenInfo : RealmObject() {
     /**
      * Timestamp for the previous 7 day period data
      */
-    var cap7dPreviousTs: BigDecimal?
-        get() {
-            return mCap7dPreviousTs?.let { BigDecimal(it) }
-        }
-        set(value) {
-            mCap7dPreviousTs = value?.toPlainString()
-        }
-
     @SerializedName("cap-7d-previous-ts")
-    var mCap7dPreviousTs: String? = null
+    var cap7dPreviousTs: Date? = null
 
     /**
      * Volume for the current 30 day period
@@ -352,16 +337,8 @@ open class EthTokenInfo : RealmObject() {
     /**
      * Timestamp for the previous 30 day capitalization period
      */
-    var cap30dPreviousTs: BigDecimal?
-        get() {
-            return mCap30dPreviousTs?.let { BigDecimal(it) }
-        }
-        set(value) {
-            mCap30dPreviousTs = value?.toPlainString()
-        }
-
     @SerializedName("cap-30d-previous-ts")
-    var mCap30dPreviousTs: String? = null
+    var cap30dPreviousTs: Date? = null
 
     /**
      * Deserializer for [EthTokenInfo]
@@ -415,7 +392,7 @@ open class EthTokenInfo : RealmObject() {
                     tokenInfo.transfersCount = jsonObj.get(it).asString.toLongOrNull()
                 }
                 jsonObj.ifNotNullOrEmpty(EthTokenInfo::lastUpdated) {
-                    tokenInfo.lastUpdated = jsonObj.get(it).asString.toLongOrNull()
+                    tokenInfo.lastUpdated = Date(jsonObj.get(it).asString.toLong())
                 }
                 jsonObj.ifNotNullOrEmpty(EthTokenInfo::totalIn) {
                     tokenInfo.totalIn = parseBigDecimal(jsonObj, it)
@@ -460,7 +437,7 @@ open class EthTokenInfo : RealmObject() {
                 }
 
                 if (jsonObj.get("cap-1d-previous-ts") != null && !jsonObj.get("cap-1d-previous-ts").isJsonNull) {
-                    tokenInfo.cap1dPreviousTs = parseBigDecimal(jsonObj, "cap-1d-previous-ts")
+                    tokenInfo.cap1dPreviousTs = Date(jsonObj.get("cap-1d-previous-ts").asString.toLong())
                 }
 
                 if (jsonObj.get("volume-7d-current") != null && !jsonObj.get("volume-7d-current").isJsonNull) {
@@ -480,7 +457,7 @@ open class EthTokenInfo : RealmObject() {
                 }
 
                 if (jsonObj.get("cap-7d-previous-ts") != null && !jsonObj.get("cap-7d-previous-ts").isJsonNull) {
-                    tokenInfo.cap7dPreviousTs = parseBigDecimal(jsonObj, "cap-7d-previous-ts")
+                    tokenInfo.cap7dPreviousTs = Date(jsonObj.get("cap-7d-previous-ts").asString.toLong())
                 }
 
                 if (jsonObj.get("volume-30d-current") != null && !jsonObj.get("volume-30d-current").isJsonNull) {
@@ -500,7 +477,7 @@ open class EthTokenInfo : RealmObject() {
                 }
 
                 if (jsonObj.get("cap-30d-previous-ts") != null && !jsonObj.get("cap-30d-previous-ts").isJsonNull) {
-                    tokenInfo.cap30dPreviousTs = parseBigDecimal(jsonObj, "cap-30d-previous-ts")
+                    tokenInfo.cap30dPreviousTs = Date(jsonObj.get("cap-30d-previous-ts").asString.toLong())
                 }
 
                 return tokenInfo

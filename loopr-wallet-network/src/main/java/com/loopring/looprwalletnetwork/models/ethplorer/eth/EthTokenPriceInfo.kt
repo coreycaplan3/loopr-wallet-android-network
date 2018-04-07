@@ -3,6 +3,7 @@ package com.loopring.looprwalletnetwork.models.ethplorer.eth
 import com.google.gson.annotations.SerializedName
 import io.realm.RealmObject
 import java.math.BigDecimal
+import java.util.*
 
 /**
  * Created by arknw229 on 3/13/18.
@@ -19,7 +20,7 @@ open class EthTokenPriceInfo : RealmObject() {
      * UNIX timestamp of when the price was last updated
      */
     @SerializedName("ts")
-    var timestamp: Long? = null
+    var timestamp: Date? = null
 
     /**
      * String representation of the timestamp, in YYYY-MM-DD format

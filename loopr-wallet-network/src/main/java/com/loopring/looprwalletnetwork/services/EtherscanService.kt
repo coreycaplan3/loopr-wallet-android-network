@@ -118,6 +118,7 @@ interface EtherscanService {
                     .registerTypeAdapter(Date::class.java, DateDeserializer())
                     .registerTypeAdapter(EthTokenInfo::class.java, EthTokenInfo.EthTokenInfoDeserializer())
                     .registerTypeAdapter(EthAddressTransactions::class.java, EthAddressTransactions.EthAddressTransactionsDeserializer())
+                    .registerTypeAdapter(DateDeserializer::class.java,DateDeserializer())
                     .enableComplexMapKeySerialization()
                     .serializeNulls()
                     .create()
