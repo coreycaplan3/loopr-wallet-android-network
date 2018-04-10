@@ -6,6 +6,7 @@ import com.loopring.looprwalletnetwork.models.etherscan.eth.EthSupplyResponse
 import com.loopring.looprwalletnetwork.models.ethplorer.eth.EthTokenInfo
 import com.loopring.looprwalletnetwork.models.ethplorer.transactioninfo.EthAddressTransactions
 import com.loopring.looprwalletnetwork.models.loopring.LooprBalance
+import com.loopring.looprwalletnetwork.models.loopring.LooprDepth
 import com.loopring.looprwalletnetwork.models.loopring.LooprOrderList
 import com.loopring.looprwalletnetwork.models.loopring.LooprOrderResponse
 import com.loopring.looprwalletnetwork.utilities.DateDeserializer
@@ -54,6 +55,18 @@ open interface LoopringServiceInternal {
                     @Field("method") method: String,
                     @Field("params") params: String,
                     @Field("id") id: String): Deferred<LooprOrderList>
+
+    /**
+     * Get depth and accuracy by token pair
+     *
+     * @return [LooprDepth]
+     */
+    @FormUrlEncoded
+    @POST("/")
+    fun getDepth(@Field("jsonrpc") jsonRpc: String,
+                     @Field("method") method: String,
+                     @Field("params") params: String,
+                     @Field("id") id: String): Deferred<LooprDepth>
 
 
     companion object {

@@ -84,14 +84,13 @@ class LoopringService(contractVer: String) {
      * @param owner - The address, if is null, will query all orders
      * @param orderHash - The order hash
      * @param status - order status enum string.(status collection is : ORDER_OPENED(include ORDER_NEW and ORDER_PARTIAL), ORDER_NEW, ORDER_PARTIAL, ORDER_FINISHED, ORDER_CANCEL, ORDER_CUTOFF)
-     * @param contractVersion - the loopring contract version you selected. Example - "v1.2"
      * @param market - The market of the order.(format is LRC-WETH)
      * @param side - The side of order. only support "buy" and "sell"
      * @param pageIndex - The page you want to query, default is 1
      * @param pageSize - The size per page, default is 50
      *
      */
-    fun getOrders(owner: String, orderHash: String, status: String, contractVersion: String,
+    fun getOrders(owner: String, orderHash: String, status: String,
                     market: String, side: String, pageIndex: Integer,
                     pageSize: Integer): Deferred<LooprOrderList> {
         val service = LoopringServiceInternal.getService()
@@ -104,6 +103,22 @@ class LoopringService(contractVer: String) {
         jsonParams.addProperty("side", side)
         jsonParams.addProperty("pageIndex", pageIndex)
         jsonParams.addProperty("pageSize", pageSize)
+
+        return service.getOrderList(this.jsonRpcVersion,"loopring_getOrderByHash", jsonParams.toString(),this.id)
+    }
+
+    /**
+     * Get depth and accuracy by token pair
+     * @param market - The market pair, example - "LRC-WETH"
+     * @param length - The length of the depth data, example - 10
+     *
+     */
+    fun getOrders(market: String, length: String): Deferred<LooprOrderList> {
+        val service = LoopringServiceInternal.getService()
+        var jsonParams = JsonObject() //TODO - it may take this as array of objects, find out through testing
+        jsonParams.addProperty("market", market)
+        jsonParams.addProperty("contractVersion", contractVersion)
+        jsonParams.addProperty("length", length)
 
         return service.getOrderList(this.jsonRpcVersion,"loopring_getOrderByHash", jsonParams.toString(),this.id)
     }
