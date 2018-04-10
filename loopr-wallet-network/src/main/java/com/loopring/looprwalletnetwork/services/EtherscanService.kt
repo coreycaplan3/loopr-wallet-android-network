@@ -1,6 +1,7 @@
 package com.loopring.looprwalletnetwork.services
 
 import com.google.gson.GsonBuilder
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.CoroutineCallAdapterFactory
 import com.loopring.looprwalletnetwork.models.etherscan.AbiResponse
 import com.loopring.looprwalletnetwork.models.etherscan.address.BalanceListResponse
 import com.loopring.looprwalletnetwork.models.etherscan.address.BalanceResponse
@@ -126,6 +127,7 @@ interface EtherscanService {
             val retrofit = Retrofit.Builder()
                     .client(httpClient)
                     .baseUrl(EtherscanService.BASE_URL)
+                    .addCallAdapterFactory(CoroutineCallAdapterFactory())
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build()
 

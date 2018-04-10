@@ -1,6 +1,7 @@
 package com.loopring.looprwalletnetwork.services
 
 import com.google.gson.GsonBuilder
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.CoroutineCallAdapterFactory
 import com.loopring.looprwalletnetwork.models.ethplorer.addressinfo.EthAddressHistory
 import com.loopring.looprwalletnetwork.models.ethplorer.addressinfo.EthAddressInfo
 import com.loopring.looprwalletnetwork.models.ethplorer.eth.*
@@ -223,6 +224,7 @@ interface EthplorerService {
 
             val retrofit = Retrofit.Builder()
                     .baseUrl(EthplorerService.BASE_URL)
+                    .addCallAdapterFactory(CoroutineCallAdapterFactory())
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build()
 
