@@ -73,9 +73,9 @@ open interface LoopringServiceInternal {
     @FormUrlEncoded
     @POST("/")
     fun getTicker(@Field("jsonrpc") jsonRpc: String,
-                 @Field("method") method: String,
-                 @Field("params") params: String,
-                 @Field("id") id: String): Deferred<LooprTickerList>
+                  @Field("method") method: String,
+                  @Field("params") params: String,
+                  @Field("id") id: String): Deferred<LooprTickerList>
 
     /**
      * Get all market 24hr merged tickers info from loopring relay
@@ -85,9 +85,21 @@ open interface LoopringServiceInternal {
     @FormUrlEncoded
     @POST("/")
     fun getTickers(@Field("jsonrpc") jsonRpc: String,
-                  @Field("method") method: String,
-                  @Field("params") params: String,
-                  @Field("id") id: String): Deferred<LooprTickerExchangeList>
+                   @Field("method") method: String,
+                   @Field("params") params: String,
+                   @Field("id") id: String): Deferred<LooprTickerExchangeList>
+
+    /**
+     * Get order fill history. This history consists of OrderFilled events
+     *
+     * @return [LooprFillsList]
+     */
+    @FormUrlEncoded
+    @POST("/")
+    fun getFills(@Field("jsonrpc") jsonRpc: String,
+                 @Field("method") method: String,
+                 @Field("params") params: String,
+                 @Field("id") id: String): Deferred<LooprFillsList>
 
 
     companion object {

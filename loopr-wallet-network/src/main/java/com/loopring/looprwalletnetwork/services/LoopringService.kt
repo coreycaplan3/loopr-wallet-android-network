@@ -15,7 +15,7 @@ class LoopringService(contractVer: String) {
 
 
     val jsonRpcVersion = "2.0"
-    var contractVersion = "v1.0"
+    var contractVersion = "v1.2"
     val loopringContractAddress = "0xEF68e7C694F40c8202821eDF525dE3782458639f"
     val id = "64"
 
@@ -147,6 +147,32 @@ class LoopringService(contractVer: String) {
         jsonParams.addProperty("market", market)
 
         return service.getTickers(this.jsonRpcVersion,"loopring_getTickers", jsonParams.toString(),this.id)
+    }
+
+    /**
+     * Get order fill history. This history consists of OrderFilled events
+     * @param market - The market of the order. Example input - "LRC-WETH"
+     * @param contractVersion - the loopring contract version you selected. Example input - "v1.2"
+     * @param owner - The address, if is null, will query all orders. Example input - "0x8888f1f195afa192cfee860698584c030f4c9db1"
+     * @param orderHash - The order hash. Example input - "0xee0b482d9b704070c970df1e69297392a8bb73f4ed91213ae5c1725d4d1923fd"
+     * @param ringHash - The order fill related ring's hash - "0x2794f8e4d2940a2695c7ecc68e10e4f479b809601fa1d07f5b4ce03feec289d5"
+     * @param pageIndex - The page want to query. Example input - 2
+     * @param pageSize - The size per page. Example input - 20
+     *
+     */
+    fun getFills(market: String, owner: String, orderHash: String, ringHash: String,
+                   pageIndex: Integer, pageSize: Integer): Deferred<LooprFillsList> {
+        val service = LoopringServiceInternal.getService()
+        var jsonParams = JsonObject()
+        jsonParams.addProperty("market", market)
+        jsonParams.addProperty("contractVersion", contractVersion)
+        jsonParams.addProperty("owner", owner)
+        jsonParams.addProperty("orderHash", orderHash)
+        jsonParams.addProperty("ringHash", ringHash)
+        jsonParams.addProperty("pageIndex", pageIndex)
+        jsonParams.addProperty("pageSize", pageSize)
+
+        return service.getFills(this.jsonRpcVersion,"loopring_getTickers", jsonParams.toString(),this.id)
     }
 
 
