@@ -132,6 +132,18 @@ open interface LoopringServiceInternal {
                      @Field("params") params: String,
                      @Field("id") id: String): Deferred<LooprCutoff>
 
+    /**
+     * Get the total frozen amount of all unfinished orders
+     *
+     * @return [LooprEstimatedAllocatedAllowance]
+     */
+    @FormUrlEncoded
+    @POST("/")
+    fun getEstimatedAllocatedAllowance(@Field("jsonrpc") jsonRpc: String,
+                  @Field("method") method: String,
+                  @Field("params") params: String,
+                  @Field("id") id: String): Deferred<LooprEstimatedAllocatedAllowance>
+
 
     companion object {
 

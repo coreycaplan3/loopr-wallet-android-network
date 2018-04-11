@@ -223,4 +223,27 @@ class LoopringService(contractVer: String) {
     }
 
 
+
+
+
+
+
+
+
+
+
+    /**
+     * Get the total frozen amount of all unfinished orders
+     * @param owner - The address. Example input - "0x8888f1f195afa192cfee860698584c030f4c9db1"
+     * @param tokens - The specific token which you want to get. Example input - "WETH"
+     *
+     */
+    fun getEstimatedAllocatedAllowance(owner: String, tokens: String): Deferred<LooprEstimatedAllocatedAllowance> {
+        val service = LoopringServiceInternal.getService()
+        var jsonParams = JsonObject()
+        jsonParams.addProperty("owner", owner)
+        jsonParams.addProperty("tokens", tokens)
+
+        return service.getEstimatedAllocatedAllowance(this.jsonRpcVersion,"loopring_getEstimatedAllocatedAllowance", jsonParams.toString(),this.id)
+    }
 }
