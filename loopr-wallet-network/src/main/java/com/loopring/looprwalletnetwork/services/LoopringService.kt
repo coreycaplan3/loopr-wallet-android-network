@@ -172,7 +172,7 @@ class LoopringService(contractVer: String) {
         jsonParams.addProperty("pageIndex", pageIndex)
         jsonParams.addProperty("pageSize", pageSize)
 
-        return service.getFills(this.jsonRpcVersion,"loopring_getTickers", jsonParams.toString(),this.id)
+        return service.getFills(this.jsonRpcVersion,"loopring_getFills", jsonParams.toString(),this.id)
     }
 
 
