@@ -9,7 +9,7 @@ import io.realm.RealmList
 import io.realm.RealmObject
 import java.lang.reflect.Type
 
-class LooprTickerList : RealmObject() {
+class LooprTrendList : RealmObject() {
 
     /**
      * TODO - figure out what this id is
@@ -26,44 +26,45 @@ class LooprTickerList : RealmObject() {
     var jsonrpc : String? = null
 
     /**
-     * Ticker results from various exchanges
+     * A list of [LooprTrend] objects with trend data
      */
-    var tickers : RealmList<LooprTicker>? = null
+    var trends : RealmList<LooprTrend>? = null
 
     /**
      * Custom class deserializer
      */
-    class LooprTickerListDeserializer : JsonDeserializer<LooprTickerList> {
+    class LooprTrendListDeserializer : JsonDeserializer<LooprTrendList> {
         @Throws(JsonParseException::class)
-        override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): LooprTickerList? {
+        override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): LooprTrendList? {
             if (json.isJsonNull || json.isJsonPrimitive) {
                 return null
             } else {
-                val jsonObj = json.asJsonObject
-                val tickerList = LooprTickerList()
+                val trendsList = LooprTrendList()
+                var trendsJsonObject = json.asJsonObject
 
                 //TODO - check if this code is enough to handle normally encountered errors
-                //if (!jsonObj.get("id").isJsonNull && jsonObj.get("id").isJsonPrimitive) {
-                jsonObj.get("id")?.let {
-                    tickerList.id = it.asString.toIntOrNull()
+                trendsJsonObject.get("id")?.let {
+                    trendsList.id = it.asString.toIntOrNull()
                 }
-                //}
 
-                jsonObj.get("jsonrpc")?.let {
-                    tickerList.jsonrpc  = it.asString
+                trendsJsonObject.get("jsonrpc")?.let {
+                    trendsList.jsonrpc  = it.asString
                 }
 
 
-                var tickerJsonArray = jsonObj.get("result").asJsonArray
+                var trendsJsonArray = trendsJsonObject.get("result").asJsonObject.get("data").asJsonArray
 
-                tickerList.tickers = RealmList()
-                tickerJsonArray.forEach {
-                    tickerList.tickers?.add(context.deserialize(it,LooprTicker::class.java))
+                trendsList.trends = RealmList()
+                trendsJsonArray.forEach {
+                    trendsList.trends?.add(context.deserialize(it,LooprTrend::class.java))
                 }
 
-                return tickerList
+                return trendsList
             }
         }
 
     }
+
+
+
 }

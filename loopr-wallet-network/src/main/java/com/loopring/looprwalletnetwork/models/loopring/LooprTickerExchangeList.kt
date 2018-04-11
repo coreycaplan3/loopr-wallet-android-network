@@ -33,7 +33,7 @@ class LooprTickerExchangeList {
     /**
      * Custom class deserializer
      */
-    class EthTokenInfoDeserializer : JsonDeserializer<LooprTickerExchangeList> {
+    class LooprTickerExchangeListDeserializer : JsonDeserializer<LooprTickerExchangeList> {
         @Throws(JsonParseException::class)
         override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): LooprTickerExchangeList? {
             if (json.isJsonNull || json.isJsonPrimitive) {

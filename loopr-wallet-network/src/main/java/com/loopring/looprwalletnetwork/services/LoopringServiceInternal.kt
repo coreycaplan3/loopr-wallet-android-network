@@ -2,15 +2,10 @@ package com.loopring.looprwalletnetwork.services
 
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.CoroutineCallAdapterFactory
-import com.loopring.looprwalletnetwork.models.etherscan.eth.EthSupplyResponse
-import com.loopring.looprwalletnetwork.models.ethplorer.eth.EthTokenInfo
-import com.loopring.looprwalletnetwork.models.ethplorer.transactioninfo.EthAddressTransactions
 import com.loopring.looprwalletnetwork.models.loopring.*
 import com.loopring.looprwalletnetwork.utilities.DateDeserializer
 import kotlinx.coroutines.experimental.Deferred
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
@@ -100,6 +95,30 @@ open interface LoopringServiceInternal {
                  @Field("method") method: String,
                  @Field("params") params: String,
                  @Field("id") id: String): Deferred<LooprFillsList>
+
+    /**
+     * Get order fill history. This history consists of OrderFilled events
+     *
+     * @return [LooprTrendList]
+     */
+    @FormUrlEncoded
+    @POST("/")
+    fun getTrend(@Field("jsonrpc") jsonRpc: String,
+                 @Field("method") method: String,
+                 @Field("params") params: String,
+                 @Field("id") id: String): Deferred<LooprTrendList>
+
+    /**
+     * Get all mined rings
+     *
+     * @return [LooprMinedRingList]
+     */
+    @FormUrlEncoded
+    @POST("/")
+    fun getRingMined(@Field("jsonrpc") jsonRpc: String,
+                 @Field("method") method: String,
+                 @Field("params") params: String,
+                 @Field("id") id: String): Deferred<LooprMinedRingList>
 
 
     companion object {

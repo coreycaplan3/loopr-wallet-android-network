@@ -53,7 +53,7 @@ open class LooprDepth : RealmObject() {
     /**
      * Custom class deserializer
      */
-    class LooprOrderListDeserializer : JsonDeserializer<LooprDepth> {
+    class LooprDepthDeserializer : JsonDeserializer<LooprDepth> {
         @Throws(JsonParseException::class)
         override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): LooprDepth? {
             if (json.isJsonNull || json.isJsonPrimitive) {

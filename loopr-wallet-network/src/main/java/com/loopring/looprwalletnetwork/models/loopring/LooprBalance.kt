@@ -39,7 +39,7 @@ open class LooprBalance : RealmObject() {
     /**
      * Custom class deserializer
      */
-    class EthTokenInfoDeserializer : JsonDeserializer<LooprBalance> {
+    class LooprBalanceDeserializer : JsonDeserializer<LooprBalance> {
         @Throws(JsonParseException::class)
         override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): LooprBalance? {
             if (json.isJsonNull || json.isJsonPrimitive) {

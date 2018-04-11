@@ -1,13 +1,9 @@
 package com.loopring.looprwalletnetwork.services
 
-import android.util.Log
 import com.google.gson.JsonObject
-import com.loopring.looprwalletnetwork.models.etherscan.eth.EthSupplyResponse
 import com.loopring.looprwalletnetwork.models.loopring.*
 import kotlinx.coroutines.experimental.Deferred
 import org.web3j.crypto.Credentials
-import retrofit2.Call
-import java.math.BigDecimal
 import java.math.BigInteger
 import java.util.*
 
@@ -173,6 +169,40 @@ class LoopringService(contractVer: String) {
         jsonParams.addProperty("pageSize", pageSize)
 
         return service.getFills(this.jsonRpcVersion,"loopring_getFills", jsonParams.toString(),this.id)
+    }
+
+    /**
+     * Get trend info per market
+     * @param market - The market type. Example input - "LRC-WETH"
+     * @param interval - The interval. Example inputs - "1Hr", "2Hr", "4Hr", "1Day", "1Week"
+     *
+     */
+    fun getTrend(market: String, interval: String): Deferred<LooprTrendList> {
+        val service = LoopringServiceInternal.getService()
+        var jsonParams = JsonObject()
+        jsonParams.addProperty("market", market)
+        jsonParams.addProperty("interval",  interval)
+
+        return service.getTrend(this.jsonRpcVersion,"loopring_getFills", jsonParams.toString(),this.id)
+    }
+
+    /**
+     * Get all mined rings
+     * @param ringHash - The ring hash, if is null, will query all rings. Example input - "0xb903239f8543d04b5dc1ba6579132b143087c68db1b2168786408fcbce568238"
+     * @param contractVersion - The loopring contract version. Example input - "v1.2"
+     * @param pageIndex - The page want to query. Example input - 2
+     * @param pageSize - The size per page. Example input - 20
+     *
+     */
+    fun getRingMined(ringHash: String, contractVersion: String, pageIndex: Int, pageSize: Int): Deferred<LooprMinedRingList> {
+        val service = LoopringServiceInternal.getService()
+        var jsonParams = JsonObject()
+        jsonParams.addProperty("ringHash", ringHash)
+        jsonParams.addProperty("contractVersion", contractVersion)
+        jsonParams.addProperty("pageIndex", pageIndex)
+        jsonParams.addProperty("pageSize", pageSize)
+
+        return service.getRingMined(this.jsonRpcVersion,"loopring_getFills", jsonParams.toString(),this.id)
     }
 
 

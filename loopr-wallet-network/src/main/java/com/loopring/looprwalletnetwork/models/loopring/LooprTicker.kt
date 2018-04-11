@@ -134,7 +134,7 @@ class LooprTicker : RealmObject() {
     /**
      * Custom class deserializer
      */
-    class LooprOrderListDeserializer : JsonDeserializer<LooprTicker> {
+    class LooprTickerDeserializer : JsonDeserializer<LooprTicker> {
         @Throws(JsonParseException::class)
         override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): LooprTicker? {
             if (json.isJsonNull || json.isJsonPrimitive) {
