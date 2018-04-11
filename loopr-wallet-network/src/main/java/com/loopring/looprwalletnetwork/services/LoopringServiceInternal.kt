@@ -120,6 +120,18 @@ open interface LoopringServiceInternal {
                  @Field("params") params: String,
                  @Field("id") id: String): Deferred<LooprMinedRingList>
 
+    /**
+     * Get cut off time of the address
+     *
+     * @return [LooprCutoff]
+     */
+    @FormUrlEncoded
+    @POST("/")
+    fun getCutoff(@Field("jsonrpc") jsonRpc: String,
+                     @Field("method") method: String,
+                     @Field("params") params: String,
+                     @Field("id") id: String): Deferred<LooprCutoff>
+
 
     companion object {
 

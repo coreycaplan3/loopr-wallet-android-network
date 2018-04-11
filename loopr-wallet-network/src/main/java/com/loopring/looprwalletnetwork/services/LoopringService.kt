@@ -205,5 +205,22 @@ class LoopringService(contractVer: String) {
         return service.getRingMined(this.jsonRpcVersion,"loopring_getFills", jsonParams.toString(),this.id)
     }
 
+    /**
+     * Get cut off time of the address
+     * @param address - The address. Example input - "0x8888f1f195afa192cfee860698584c030f4c9db1"
+     * @param contractVersion - The loopring contract version. Example input - "v1.2"
+     * @param blockNumber - The page want to query. Example input - 2
+     *
+     */
+    fun getCutoff(address: String, contractVersion: String, blockNumber: Int): Deferred<LooprCutoff> {
+        val service = LoopringServiceInternal.getService()
+        var jsonParams = JsonObject()
+        jsonParams.addProperty("address", address)
+        jsonParams.addProperty("contractVersion", contractVersion)
+        jsonParams.addProperty("blockNumber", blockNumber)
+
+        return service.getCutoff(this.jsonRpcVersion,"loopring_getFills", jsonParams.toString(),this.id)
+    }
+
 
 }
