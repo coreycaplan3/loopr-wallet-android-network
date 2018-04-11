@@ -5,10 +5,7 @@ import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.Coroutin
 import com.loopring.looprwalletnetwork.models.etherscan.eth.EthSupplyResponse
 import com.loopring.looprwalletnetwork.models.ethplorer.eth.EthTokenInfo
 import com.loopring.looprwalletnetwork.models.ethplorer.transactioninfo.EthAddressTransactions
-import com.loopring.looprwalletnetwork.models.loopring.LooprBalance
-import com.loopring.looprwalletnetwork.models.loopring.LooprDepth
-import com.loopring.looprwalletnetwork.models.loopring.LooprOrderList
-import com.loopring.looprwalletnetwork.models.loopring.LooprOrderResponse
+import com.loopring.looprwalletnetwork.models.loopring.*
 import com.loopring.looprwalletnetwork.utilities.DateDeserializer
 import kotlinx.coroutines.experimental.Deferred
 import okhttp3.Interceptor
@@ -52,9 +49,9 @@ open interface LoopringServiceInternal {
     @FormUrlEncoded
     @POST("/")
     fun getOrderList(@Field("jsonrpc") jsonRpc: String,
-                    @Field("method") method: String,
-                    @Field("params") params: String,
-                    @Field("id") id: String): Deferred<LooprOrderList>
+                     @Field("method") method: String,
+                     @Field("params") params: String,
+                     @Field("id") id: String): Deferred<LooprOrderList>
 
     /**
      * Get depth and accuracy by token pair
@@ -64,9 +61,33 @@ open interface LoopringServiceInternal {
     @FormUrlEncoded
     @POST("/")
     fun getDepth(@Field("jsonrpc") jsonRpc: String,
-                     @Field("method") method: String,
-                     @Field("params") params: String,
-                     @Field("id") id: String): Deferred<LooprDepth>
+                 @Field("method") method: String,
+                 @Field("params") params: String,
+                 @Field("id") id: String): Deferred<LooprDepth>
+
+    /**
+     * Get all market 24hr merged tickers info from loopring relay
+     *
+     * @return [LooprTickerList]
+     */
+    @FormUrlEncoded
+    @POST("/")
+    fun getTicker(@Field("jsonrpc") jsonRpc: String,
+                 @Field("method") method: String,
+                 @Field("params") params: String,
+                 @Field("id") id: String): Deferred<LooprTickerList>
+
+    /**
+     * Get all market 24hr merged tickers info from loopring relay
+     *
+     * @return [LooprTickerList]
+     */
+    @FormUrlEncoded
+    @POST("/")
+    fun getTickers(@Field("jsonrpc") jsonRpc: String,
+                  @Field("method") method: String,
+                  @Field("params") params: String,
+                  @Field("id") id: String): Deferred<LooprTickerExchangeList>
 
 
     companion object {

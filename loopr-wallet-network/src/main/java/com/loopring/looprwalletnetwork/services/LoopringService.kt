@@ -3,8 +3,7 @@ package com.loopring.looprwalletnetwork.services
 import android.util.Log
 import com.google.gson.JsonObject
 import com.loopring.looprwalletnetwork.models.etherscan.eth.EthSupplyResponse
-import com.loopring.looprwalletnetwork.models.loopring.LooprBalance
-import com.loopring.looprwalletnetwork.models.loopring.LooprOrderList
+import com.loopring.looprwalletnetwork.models.loopring.*
 import kotlinx.coroutines.experimental.Deferred
 import org.web3j.crypto.Credentials
 import retrofit2.Call
@@ -113,14 +112,41 @@ class LoopringService(contractVer: String) {
      * @param length - The length of the depth data, example - 10
      *
      */
-    fun getOrders(market: String, length: String): Deferred<LooprOrderList> {
+    fun getDepth(market: String, length: String): Deferred<LooprDepth> {
         val service = LoopringServiceInternal.getService()
-        var jsonParams = JsonObject() //TODO - it may take this as array of objects, find out through testing
+        var jsonParams = JsonObject()
         jsonParams.addProperty("market", market)
         jsonParams.addProperty("contractVersion", contractVersion)
         jsonParams.addProperty("length", length)
 
-        return service.getOrderList(this.jsonRpcVersion,"loopring_getOrderByHash", jsonParams.toString(),this.id)
+        return service.getDepth(this.jsonRpcVersion,"loopring_getDepth", jsonParams.toString(),this.id)
+    }
+
+    /**
+     * Get all market 24hr merged tickers info from loopring relay
+     * @param market - The market pair, example - "LRC-WETH"
+     *
+     */
+    fun getTicker(market: String): Deferred<LooprTickerList> {
+        val service = LoopringServiceInternal.getService()
+        var jsonParams = JsonObject()
+        jsonParams.addProperty("market", market)
+
+        return service.getTicker(this.jsonRpcVersion,"loopring_getTicker", jsonParams.toString(),this.id)
+    }
+
+    /**
+     * Get all market 24hr merged tickers info from loopring relay
+     * @param market - The market pair, example - "LRC-WETH"
+     * //TODO - find out how this is any different from getTicker
+     *
+     */
+    fun getTickers(market: String): Deferred<LooprTickerExchangeList> {
+        val service = LoopringServiceInternal.getService()
+        var jsonParams = JsonObject()
+        jsonParams.addProperty("market", market)
+
+        return service.getTickers(this.jsonRpcVersion,"loopring_getTickers", jsonParams.toString(),this.id)
     }
 
 
