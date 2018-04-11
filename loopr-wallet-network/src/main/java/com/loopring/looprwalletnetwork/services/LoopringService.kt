@@ -246,4 +246,17 @@ class LoopringService(contractVer: String) {
 
         return service.getEstimatedAllocatedAllowance(this.jsonRpcVersion,"loopring_getEstimatedAllocatedAllowance", jsonParams.toString(),this.id)
     }
+
+    /**
+     * Get the total frozen lrcFee of all unfinished orders
+     * @param owner - The address, if is null, will query all orders. Example input - "0x8888f1f195afa192cfee860698584c030f4c9db1"
+     * TODO - check if the two gets in the name are a type (they come from the API docs)
+     */
+    fun getGetFrozenLRCFee(owner: String): Deferred<LooprGetGetFrozenLRCFee> {
+        val service = LoopringServiceInternal.getService()
+        var jsonParams = JsonObject()
+        jsonParams.addProperty("owner", owner)
+
+        return service.getGetFrozenLRCFee(this.jsonRpcVersion,"loopring_getGetFrozenLRCFee", jsonParams.toString(),this.id)
+    }
 }
