@@ -168,6 +168,18 @@ open interface LoopringServiceInternal {
                       @Field("params") params: String,
                       @Field("id") id: String): Deferred<LooprPriceQuote>
 
+    /**
+     * Get relay supported all market pairs
+     *
+     * @return [LooprMarketPairs]
+     */
+    @FormUrlEncoded
+    @POST("/")
+    fun getSupportedMarket(@Field("jsonrpc") jsonRpc: String,
+                           @Field("method") method: String,
+                           @Field("params") params: String,
+                           @Field("id") id: String): Deferred<LooprMarketPairs>
+
 
     companion object {
 

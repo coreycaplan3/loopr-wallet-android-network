@@ -235,13 +235,6 @@ class LoopringService(contractVer: String) {
         return service.getPriceQuote(this.jsonRpcVersion,"loopring_getFills", jsonParams.toString(),this.id)
     }
 
-
-
-
-
-
-
-
     /**
      * Get the total frozen amount of all unfinished orders
      * @param owner - The address. Example input - "0x8888f1f195afa192cfee860698584c030f4c9db1"
@@ -268,5 +261,17 @@ class LoopringService(contractVer: String) {
         jsonParams.addProperty("owner", owner)
 
         return service.getGetFrozenLRCFee(this.jsonRpcVersion,"loopring_getGetFrozenLRCFee", jsonParams.toString(),this.id)
+    }
+
+    /**
+     * Get relay supported all market pairs
+     * No parameters
+     *
+     */
+    fun getSupportedMarket(): Deferred<LooprMarketPairs> {
+        val service = LoopringServiceInternal.getService()
+        var jsonParams = JsonObject()
+
+        return service.getSupportedMarket(this.jsonRpcVersion,"loopring_getSupportedMarket", jsonParams.toString(),this.id)
     }
 }
