@@ -156,6 +156,18 @@ open interface LoopringServiceInternal {
                            @Field("params") params: String,
                            @Field("id") id: String): Deferred<LooprGetGetFrozenLRCFee>
 
+    /**
+     * Get the USD/CNY/BTC quoted price of tokens
+     *
+     * @return [LooprPriceQuote]
+     */
+    @FormUrlEncoded
+    @POST("/")
+    fun getPriceQuote(@Field("jsonrpc") jsonRpc: String,
+                      @Field("method") method: String,
+                      @Field("params") params: String,
+                      @Field("id") id: String): Deferred<LooprPriceQuote>
+
 
     companion object {
 

@@ -222,8 +222,18 @@ class LoopringService(contractVer: String) {
         return service.getCutoff(this.jsonRpcVersion,"loopring_getFills", jsonParams.toString(),this.id)
     }
 
+    /**
+     * Get the USD/CNY/BTC quoted price of tokens
+     * @param currency - The base currency want to query, supported types is CNY, USD
+     *
+     */
+    fun getPriceQuote(currency: String): Deferred<LooprPriceQuote> {
+        val service = LoopringServiceInternal.getService()
+        var jsonParams = JsonObject()
+        jsonParams.addProperty("currency", currency)
 
-
+        return service.getPriceQuote(this.jsonRpcVersion,"loopring_getFills", jsonParams.toString(),this.id)
+    }
 
 
 
