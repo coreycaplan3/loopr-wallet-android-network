@@ -274,4 +274,16 @@ class LoopringService(contractVer: String) {
 
         return service.getSupportedMarket(this.jsonRpcVersion,"loopring_getSupportedMarket", jsonParams.toString(),this.id)
     }
+
+    /**
+     * Get relay supported all tokens
+     * No parameters
+     *
+     */
+    fun getSupportedTokens(): Deferred<LooprSupportedToken> {
+        val service = LoopringServiceInternal.getService()
+        var jsonParams = JsonObject()
+
+        return service.getSupportedTokens(this.jsonRpcVersion,"loopring_getSupportedTokens", jsonParams.toString(),this.id)
+    }
 }

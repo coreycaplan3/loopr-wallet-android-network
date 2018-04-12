@@ -180,6 +180,18 @@ open interface LoopringServiceInternal {
                            @Field("params") params: String,
                            @Field("id") id: String): Deferred<LooprMarketPairs>
 
+    /**
+     * Get relay supported all tokens
+     *
+     * @return [LooprSupportedToken]
+     */
+    @FormUrlEncoded
+    @POST("/")
+    fun getSupportedTokens(@Field("jsonrpc") jsonRpc: String,
+                           @Field("method") method: String,
+                           @Field("params") params: String,
+                           @Field("id") id: String): Deferred<LooprSupportedToken>
+
 
     companion object {
 
