@@ -183,7 +183,7 @@ class LoopringService(contractVer: String) {
         jsonParams.addProperty("market", market)
         jsonParams.addProperty("interval",  interval)
 
-        return service.getTrend(this.jsonRpcVersion,"loopring_getFills", jsonParams.toString(),this.id)
+        return service.getTrend(this.jsonRpcVersion,"loopring_getTrend", jsonParams.toString(),this.id)
     }
 
     /**
@@ -202,7 +202,7 @@ class LoopringService(contractVer: String) {
         jsonParams.addProperty("pageIndex", pageIndex)
         jsonParams.addProperty("pageSize", pageSize)
 
-        return service.getRingMined(this.jsonRpcVersion,"loopring_getFills", jsonParams.toString(),this.id)
+        return service.getRingMined(this.jsonRpcVersion,"loopring_getRingMined", jsonParams.toString(),this.id)
     }
 
     /**
@@ -219,7 +219,7 @@ class LoopringService(contractVer: String) {
         jsonParams.addProperty("contractVersion", contractVersion)
         jsonParams.addProperty("blockNumber", blockNumber)
 
-        return service.getCutoff(this.jsonRpcVersion,"loopring_getFills", jsonParams.toString(),this.id)
+        return service.getCutoff(this.jsonRpcVersion,"loopring_getCutoff", jsonParams.toString(),this.id)
     }
 
     /**
@@ -232,7 +232,7 @@ class LoopringService(contractVer: String) {
         var jsonParams = JsonObject()
         jsonParams.addProperty("currency", currency)
 
-        return service.getPriceQuote(this.jsonRpcVersion,"loopring_getFills", jsonParams.toString(),this.id)
+        return service.getPriceQuote(this.jsonRpcVersion,"loopring_getPriceQuote", jsonParams.toString(),this.id)
     }
 
     /**
