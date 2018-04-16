@@ -195,7 +195,7 @@ class Erc20Service : Contract {
          * was first deployed.
          * @return RemoteCall with response of the request
          */
-        fun getService(
+        fun getInstance(
                 contractAddress: String,
                 web3j: Web3j,
                 credentials: Credentials,
@@ -215,7 +215,7 @@ class Erc20Service : Contract {
          * was first deployed.
          * @return RemoteCall with response of the request
          */
-        fun getService(
+        fun getInstance(
                 contractAddress: String,
                 web3j: Web3j,
                 transactionManager: TransactionManager,

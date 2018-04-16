@@ -19,25 +19,39 @@ compile 'com.loopring.android:loopr-wallet-network:0.1.0'
 
 ### Using the ETH Wrapper
 
-Sending ETH is really simple. It only requires the following:
+Sending ETH is really simple.
+BigIntegers are used, so no decimals are ever needed. Instead the number should be formatted as 
+follows:
+- amount = amountAsInteger * 10^(decimalPlaces)
+- Meaning, the *amount* is calculated using the decimal value (as seen in the UI) times the 
+10^(18; number of decimal places that ETH has)
 
 ```kotlin
-fun sendMyEther(
+fun sendEther(
+        web3j: Web3j,
         amount: BigDecimal, 
         destAddress: String, 
-        web3j: Web3j, 
-        credentials: Credentials
+        credentials: Credentials,
+        gasPrice: BigInteger,
+        gasLimit: BigInteger
 ) = runBlocking {
-    sendEth(amount, destAddress, web3j, credentials).await()
+    EthService.getInstance(web3j)
+        .sendEth(amount, destAddress, credentials, gasPrice, gasLimit)
+        .await()
 }
 ```
 
 ### Using the ERC-20 Token Wrapper
 
 Sending an ERC-20 token is also easy, with the help of the wrapper class.
+BigIntegers are used, so no decimals are ever needed. Instead the number should be formatted as 
+follows:
+- tokenAmount = tokenAmountAsDecimal * 10^(decimalPlaces)
+- Meaning, the *tokenAmount* is calculated using the integer value (as seen in the UI) times the 
+10^(number of decimal places the token has)
 
 ```kotlin
-fun sendMyToken(
+fun sendToken(
         contractAddress: String,
         web3j: Web3j,
         credentials: Credentials,
@@ -47,7 +61,7 @@ fun sendMyToken(
         receiverAddress: String,
         tokenAmount: BigInteger
 ) = runBlocking {
-    Erc20Wrapper.createWrapper(contractAddress, web3j, credentials, gasPrice, gasLimit, binary)
+    Erc20Wrapper.getInstance(contractAddress, web3j, credentials, gasPrice, gasLimit, binary)
             .transfer(receiverAddress, tokenAmount)
             .await()
 }
@@ -87,7 +101,7 @@ fun getTransactions(address: String) = runBlocking {
 ```
 
 ### Thanks and Credits
-- [Adam Knuckey](https://github.com/aknuck) of *New Market Elements* for creating this library
+- [Adam Knuckey](https://github.com/aknuck) of *Leavitt Innovations* for creating this library
 - The [Loopring Foundation](https://loopring.org) and everyone working on its ecosystem
 - The team working on the [Web3j](https://github.com/web3j/web3j) library, and advancing its 
 capabilities 
