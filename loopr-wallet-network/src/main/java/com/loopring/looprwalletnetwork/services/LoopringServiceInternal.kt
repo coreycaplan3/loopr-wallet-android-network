@@ -228,6 +228,18 @@ open interface LoopringServiceInternal {
                      @Field("params") params: String,
                      @Field("id") id: String): Deferred<LooprUnlockResponse>
 
+    /**
+     * Wallet should notify relay there was a transaction sending to eth network, then relay will get and save the pending transaction immediately
+     *
+     * @return [LooprTransactionSubmittedResponse]
+     */
+    @FormUrlEncoded
+    @POST("/")
+    fun notifyTransactionSubmitted(@Field("jsonrpc") jsonRpc: String,
+                                   @Field("method") method: String,
+                                   @Field("params") params: String,
+                                   @Field("id") id: String): Deferred<LooprTransactionSubmittedResponse>
+
 
     companion object {
 

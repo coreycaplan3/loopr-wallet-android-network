@@ -332,4 +332,17 @@ class LoopringService(contractVer: String) {
         return service.unlockWallet(this.jsonRpcVersion,"loopring_unlockWallet", jsonParams.toString(),this.id)
     }
 
+    /**
+     * Wallet should notify relay there was a transaction sending to eth network, then relay will get and save the pending transaction immediately
+     * @param txHash - The transaction hash. Example input - "0xf462c63f46a4e1dc87a7256d40c5e2ec8262cd006fe98ac0839d1aae61818f84"
+     *
+     */
+    fun notifyTransactionSubmitted(txHash: String): Deferred<LooprTransactionSubmittedResponse> {
+        val service = LoopringServiceInternal.getService()
+        var jsonParams = JsonObject()
+        jsonParams.addProperty("txHash", txHash)
+
+        return service.notifyTransactionSubmitted(this.jsonRpcVersion,"loopring_notifyTransactionSubmitted", jsonParams.toString(),this.id)
+    }
+
 }
