@@ -2,6 +2,7 @@ package org.loopring.looprwalletnetwork.models.etherscan.transactions
 
 import com.google.gson.annotations.SerializedName
 import io.realm.RealmObject
+import java.util.*
 
 /**
  * Created by arknw229 on 3/16/18.
@@ -23,7 +24,7 @@ open class IndividualTransaction(
         /**
          * Timestamp the transaction occurred at
          */
-        var timeStamp: String? = null,
+        var timeStamp: Date? = null,
 
         /**
          * Hash of the transaction
@@ -61,23 +62,24 @@ open class IndividualTransaction(
         var value: String? = null,
 
         /**
-         * Gas used for the transaction
+         * Gas used for the transaction in Gwei
          */
         var gas: String? = null,
 
         /**
-         * Gas price used for the transaction
+         * Gas price used for the transaction in Gwei
          */
         var gasPrice: String? = null,
 
         /**
-         * Check if there's an error
+         * Check if there's an error. 0 for no error, 1 for an error
          */
         var isError: String? = null,
 
         /**
          * Status on the receipt of the transaction
          */
+        @SerializedName("txreceipt_status")
         var txReceiptStatus: String? = null,
 
         /**
@@ -86,12 +88,12 @@ open class IndividualTransaction(
         var input: String? = null,
 
         /**
-         * Cumulative gas used
+         * Cumulative gas used in Gwei
          */
         var cumulativeGasUsed: String? = null,
 
         /**
-         * Gas used for the transaction
+         * Gas used for the transaction in Gwei
          */
         var gasUsed: String? = null,
 

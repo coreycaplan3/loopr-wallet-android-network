@@ -34,7 +34,7 @@ open class BalanceResponse : RealmObject() {
     var message: String? = null
 
     /**
-     * Balance
+     * The balance of the account in wei, example output - 670456215218885498951364 would be 670,456.21... eth
      */
     var balance: BigDecimal?
         get() = mBalance?.let { BigDecimal(it) }

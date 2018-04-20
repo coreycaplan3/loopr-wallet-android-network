@@ -10,6 +10,7 @@ import org.loopring.looprwalletnetwork.utilities.parseBigDecimal
 import io.realm.RealmObject
 import java.lang.reflect.Type
 import java.math.BigDecimal
+import java.util.*
 
 /**
  * Created by arknw229 on 3/11/18.
@@ -69,7 +70,16 @@ open class EthTokenInfo : RealmObject() {
     /**
      * Total supply of the token
      */
-    var totalSupply: BigDecimal? = null
+    var totalSupply: BigDecimal?
+        get() {
+            return mTotalSupply?.let { BigDecimal(it) }
+        }
+        set(value) {
+            mTotalSupply = value?.toPlainString()
+        }
+
+    @SerializedName("totalSupply")
+    private var mTotalSupply: String? = null
 
     /**
      * Owner of the contract that created the token
@@ -84,17 +94,35 @@ open class EthTokenInfo : RealmObject() {
     /**
      * Timestamp of the last update
      */
-    var lastUpdated: Long? = null
+    var lastUpdated: Date? = null
 
     /**
      * Total amount of incoming tokens
      */
-    var totalIn: BigDecimal? = null
+    var totalIn: BigDecimal?
+        get() {
+            return mTotalIn?.let { BigDecimal(it) }
+        }
+        set(value) {
+            mTotalIn = value?.toPlainString()
+        }
+
+    @SerializedName("totalIn")
+    var mTotalIn: String? = null
 
     /**
      * Total amount of outgoing tokens
      */
-    var totalOut: BigDecimal? = null
+    var totalOut: BigDecimal?
+        get() {
+            return mTotalOut?.let { BigDecimal(it) }
+        }
+        set(value) {
+            mTotalOut = value?.toPlainString()
+        }
+
+    @SerializedName("totalOut")
+    var mTotalOut: String? = null
 
     /**
      * Issuance count for the token
@@ -129,92 +157,188 @@ open class EthTokenInfo : RealmObject() {
     /**
      * Volume in the current day for the token
      */
+    var volume1dCurrent: BigDecimal?
+        get() {
+            return mVolume1dCurrent?.let { BigDecimal(it) }
+        }
+        set(value) {
+            mVolume1dCurrent = value?.toPlainString()
+        }
+
     @SerializedName("volume-1d-current")
-    var volume1dCurrent: BigDecimal? = null
+    var mVolume1dCurrent: String? = null
 
     /**
      * Volume in the previous day for the token
      */
+    var volume1dPrevious: BigDecimal?
+        get() {
+            return mVolume1dPrevious?.let { BigDecimal(it) }
+        }
+        set(value) {
+            mVolume1dPrevious = value?.toPlainString()
+        }
+
     @SerializedName("volume-1d-previous")
-    var volume1dPrevious: BigDecimal? = null
+    var mVolume1dPrevious: String? = null
 
     /**
      * Capitalization for the token from the current day
      */
+    var cap1dCurrent: BigDecimal?
+        get() {
+            return mCap1dCurrent?.let { BigDecimal(it) }
+        }
+        set(value) {
+            mCap1dCurrent = value?.toPlainString()
+        }
+
     @SerializedName("cap-1d-current")
-    var cap1dCurrent: BigDecimal? = null
+    var mCap1dCurrent: String? = null
 
     /**
      * Capitalization for the token from the previous day
      */
+    var cap1dPrevious: BigDecimal?
+        get() {
+            return mCap1dPrevious?.let { BigDecimal(it) }
+        }
+        set(value) {
+            mCap1dPrevious = value?.toPlainString()
+        }
+
     @SerializedName("cap-1d-previous")
-    var cap1dPrevious: BigDecimal? = null
+    var mCap1dPrevious: String? = null
 
     /**
      * Timestamp of the previous 1 day period data
      */
     @SerializedName("cap-1d-previous-ts")
-    var cap1dPreviousTs: BigDecimal? = null
+    var cap1dPreviousTs: Date? = null
 
     /**
      * Volume of the current 7 day period for the token
      */
+    var volume7dCurrent: BigDecimal?
+        get() {
+            return mVolume7dCurrent?.let { BigDecimal(it) }
+        }
+        set(value) {
+            mVolume7dCurrent = value?.toPlainString()
+        }
+
     @SerializedName("volume-7d-current")
-    var volume7dCurrent: BigDecimal? = null
+    var mVolume7dCurrent: String? = null
 
     /**
      * Volume of the previous 7 day period for the token
      */
+    var volume7dPrevious: BigDecimal?
+        get() {
+            return mVolume7dPrevious?.let { BigDecimal(it) }
+        }
+        set(value) {
+            mVolume7dPrevious = value?.toPlainString()
+        }
+
     @SerializedName("volume-7d-previous")
-    var volume7dPrevious: BigDecimal? = null
+    var mVolume7dPrevious: String? = null
 
     /**
      * Capitalization for the current 7 day period
      */
+    var cap7dCurrent: BigDecimal?
+        get() {
+            return mCap7dCurrent?.let { BigDecimal(it) }
+        }
+        set(value) {
+            mCap7dCurrent = value?.toPlainString()
+        }
+
     @SerializedName("cap-7d-current")
-    var cap7dCurrent: BigDecimal? = null
+    var mCap7dCurrent: String? = null
 
     /**
      * Capitalization for the previous 7 day period
      */
+    var cap7dPrevious: BigDecimal?
+        get() {
+            return mCap7dPrevious?.let { BigDecimal(it) }
+        }
+        set(value) {
+            mCap7dPrevious = value?.toPlainString()
+        }
+
     @SerializedName("cap-7d-previous")
-    var cap7dPrevious: BigDecimal? = null
+    var mCap7dPrevious: String? = null
 
     /**
      * Timestamp for the previous 7 day period data
      */
     @SerializedName("cap-7d-previous-ts")
-    var cap7dPreviousTs: BigDecimal? = null
+    var cap7dPreviousTs: Date? = null
 
     /**
      * Volume for the current 30 day period
      */
+    var volume30dCurrent: BigDecimal?
+        get() {
+            return mVolume30dCurrent?.let { BigDecimal(it) }
+        }
+        set(value) {
+            mVolume30dCurrent = value?.toPlainString()
+        }
+
     @SerializedName("volume-30d-current")
-    var volume30dCurrent: BigDecimal? = null
+    var mVolume30dCurrent: String? = null
 
     /**
      * Volume for the previous 30 day period
      */
+    var volume30dPrevious: BigDecimal?
+        get() {
+            return mVolume30dPrevious?.let { BigDecimal(it) }
+        }
+        set(value) {
+            mVolume30dPrevious = value?.toPlainString()
+        }
+
     @SerializedName("volume-30d-previous")
-    var volume30dPrevious: BigDecimal? = null
+    var mVolume30dPrevious: String? = null
 
     /**
      * Capitalization for the current 30 day period
      */
+    var cap30dCurrent: BigDecimal?
+        get() {
+            return mCap30dCurrent?.let { BigDecimal(it) }
+        }
+        set(value) {
+            mCap30dCurrent = value?.toPlainString()
+        }
+
     @SerializedName("cap-30d-current")
-    var cap30dCurrent: BigDecimal? = null
+    var mCap30dCurrent: String? = null
 
     /**
      * Capitalization for the previous 30 day period
      */
+    var cap30dPrevious: BigDecimal?
+        get() {
+            return mCap30dPrevious?.let { BigDecimal(it) }
+        }
+        set(value) {
+            mCap30dPrevious = value?.toPlainString()
+        }
+
     @SerializedName("cap-30d-previous")
-    var cap30dPrevious: BigDecimal? = null
+    var mCap30dPrevious: String? = null
 
     /**
      * Timestamp for the previous 30 day capitalization period
      */
     @SerializedName("cap-30d-previous-ts")
-    var cap30dPreviousTs: BigDecimal? = null
+    var cap30dPreviousTs: Date? = null
 
     /**
      * Deserializer for [EthTokenInfo]
@@ -268,7 +392,7 @@ open class EthTokenInfo : RealmObject() {
                     tokenInfo.transfersCount = jsonObj.get(it).asString.toLongOrNull()
                 }
                 jsonObj.ifNotNullOrEmpty(EthTokenInfo::lastUpdated) {
-                    tokenInfo.lastUpdated = jsonObj.get(it).asString.toLongOrNull()
+                    tokenInfo.lastUpdated = Date(jsonObj.get(it).asString.toLong())
                 }
                 jsonObj.ifNotNullOrEmpty(EthTokenInfo::totalIn) {
                     tokenInfo.totalIn = parseBigDecimal(jsonObj, it)
@@ -313,7 +437,7 @@ open class EthTokenInfo : RealmObject() {
                 }
 
                 if (jsonObj.get("cap-1d-previous-ts") != null && !jsonObj.get("cap-1d-previous-ts").isJsonNull) {
-                    tokenInfo.cap1dPreviousTs = parseBigDecimal(jsonObj, "cap-1d-previous-ts")
+                    tokenInfo.cap1dPreviousTs = Date(jsonObj.get("cap-1d-previous-ts").asString.toLong())
                 }
 
                 if (jsonObj.get("volume-7d-current") != null && !jsonObj.get("volume-7d-current").isJsonNull) {
@@ -333,7 +457,7 @@ open class EthTokenInfo : RealmObject() {
                 }
 
                 if (jsonObj.get("cap-7d-previous-ts") != null && !jsonObj.get("cap-7d-previous-ts").isJsonNull) {
-                    tokenInfo.cap7dPreviousTs = parseBigDecimal(jsonObj, "cap-7d-previous-ts")
+                    tokenInfo.cap7dPreviousTs = Date(jsonObj.get("cap-7d-previous-ts").asString.toLong())
                 }
 
                 if (jsonObj.get("volume-30d-current") != null && !jsonObj.get("volume-30d-current").isJsonNull) {
@@ -353,7 +477,7 @@ open class EthTokenInfo : RealmObject() {
                 }
 
                 if (jsonObj.get("cap-30d-previous-ts") != null && !jsonObj.get("cap-30d-previous-ts").isJsonNull) {
-                    tokenInfo.cap30dPreviousTs = parseBigDecimal(jsonObj, "cap-30d-previous-ts")
+                    tokenInfo.cap30dPreviousTs = Date(jsonObj.get("cap-30d-previous-ts").asString.toLong())
                 }
 
                 return tokenInfo

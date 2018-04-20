@@ -10,6 +10,7 @@ import org.loopring.looprwalletnetwork.models.etherscan.transactions.Transaction
 import org.loopring.looprwalletnetwork.models.ethplorer.eth.EthTokenInfo
 import org.loopring.looprwalletnetwork.models.ethplorer.transactioninfo.EthAddressTransactions
 import org.loopring.looprwalletnetwork.utilities.DateDeserializer
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.CoroutineCallAdapterFactory
 import kotlinx.coroutines.experimental.Deferred
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -118,6 +119,7 @@ interface EtherscanService {
                     .registerTypeAdapter(Date::class.java, DateDeserializer())
                     .registerTypeAdapter(EthTokenInfo::class.java, EthTokenInfo.EthTokenInfoDeserializer())
                     .registerTypeAdapter(EthAddressTransactions::class.java, EthAddressTransactions.EthAddressTransactionsDeserializer())
+                    .registerTypeAdapter(DateDeserializer::class.java, DateDeserializer())
                     .enableComplexMapKeySerialization()
                     .serializeNulls()
                     .create()
@@ -125,6 +127,7 @@ interface EtherscanService {
             val retrofit = Retrofit.Builder()
                     .client(httpClient)
                     .baseUrl(EtherscanService.BASE_URL)
+                    .addCallAdapterFactory(CoroutineCallAdapterFactory())
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build()
 

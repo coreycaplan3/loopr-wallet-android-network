@@ -26,7 +26,7 @@ open class EthSupplyResponse : RealmObject() {
     var message: String? = null
 
     /**
-     * The supply
+     * The supply of eth
      */
     var supply: BigDecimal?
         get() = mSupply?.let { BigDecimal(it) }

@@ -72,7 +72,7 @@ open class EthAddressInfo(
         var tokenInfo: EthTokenInfo? = null,
 
         /**
-         * List of balances for each token
+         * List of balances for each token in number of tokens
          */
         var tokens: RealmList<EthTokenBalanceInfo>? = null,
 

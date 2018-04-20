@@ -9,6 +9,7 @@ import org.loopring.looprwalletnetwork.models.ethplorer.transactioninfo.EthAddre
 import org.loopring.looprwalletnetwork.models.ethplorer.transactioninfo.EthTransactionInfo
 import org.loopring.looprwalletnetwork.models.ethplorer.transactioninfo.EthTransactionOperationInfo
 import org.loopring.looprwalletnetwork.utilities.DateDeserializer
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.CoroutineCallAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -216,12 +217,14 @@ interface EthplorerService {
                     .registerTypeAdapter(EthTransactionOperationInfo::class.java, EthTransactionOperationInfo.EthTransactionOperationInfoDeserializer())
                     .registerTypeAdapter(EthAddressTransactions::class.java, EthAddressTransactions.EthAddressTransactionsDeserializer())
                     .registerTypeAdapter(EthAddressTransactionInfo::class.java, EthAddressTransactionInfo.EthAddressTransactionInfoDeserializer())
+                    .registerTypeAdapter(DateDeserializer::class.java, DateDeserializer())
                     .enableComplexMapKeySerialization()
                     .serializeNulls()
                     .create()
 
             val retrofit = Retrofit.Builder()
                     .baseUrl(EthplorerService.BASE_URL)
+                    .addCallAdapterFactory(CoroutineCallAdapterFactory())
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build()
 

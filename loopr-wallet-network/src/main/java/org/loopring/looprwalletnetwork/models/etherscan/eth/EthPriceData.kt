@@ -3,6 +3,7 @@ package org.loopring.looprwalletnetwork.models.etherscan.eth
 import com.google.gson.annotations.SerializedName
 import io.realm.RealmObject
 import java.math.BigDecimal
+import java.util.*
 
 /**
  * Created by arknw229 on 3/1/18.
@@ -38,7 +39,7 @@ open class EthPriceData : RealmObject() {
      * Timestamp the ETH/BTC ratio was taken from
      */
     @SerializedName("ethbtc_timestamp")
-    var ethToBtcTimestamp: String? = null
+    var ethToBtcTimestamp: Date? = null
 
     /**
      * ETH/USD ratio
@@ -56,6 +57,6 @@ open class EthPriceData : RealmObject() {
      * Timestamp the ETH/USD ratio was taken from
      */
     @SerializedName("ethusd_timestamp")
-    var ethToUsdTimestamp: String? = null
+    var ethToUsdTimestamp: Date? = null
 
 }

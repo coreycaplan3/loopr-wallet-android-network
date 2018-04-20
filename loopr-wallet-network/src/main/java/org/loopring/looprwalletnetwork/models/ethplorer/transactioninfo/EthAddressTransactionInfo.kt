@@ -9,6 +9,7 @@ import org.loopring.looprwalletnetwork.utilities.ifNotNullOrEmpty
 import io.realm.RealmObject
 import java.lang.reflect.Type
 import java.math.BigDecimal
+import java.util.*
 
 /**
  * Created by arknw229 on 3/13/18.
@@ -40,7 +41,7 @@ open class EthAddressTransactionInfo : RealmObject() {
     /**
      * Timestamp of the transaction
      */
-    var timestamp: Long? = null
+    var timestamp: Date? = null
 
     /**
      * Who the transaction is from (if there is more than one address involved)
@@ -98,7 +99,7 @@ open class EthAddressTransactionInfo : RealmObject() {
             val addressTransactions = EthAddressTransactionInfo()
 
             jsonObj.ifNotNullOrEmpty(EthAddressTransactionInfo::timestamp) {
-                addressTransactions.timestamp = jsonObj.get(it).asString.toLongOrNull()
+                addressTransactions.timestamp = Date(jsonObj.get(it).asString.toLong())
             }
             jsonObj.ifNotNullOrEmpty(EthAddressTransactionInfo::from) {
                 addressTransactions.from = jsonObj.get(it).asString
