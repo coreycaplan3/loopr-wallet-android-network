@@ -25,7 +25,7 @@ open class LooprDepthList : RealmObject() {
      * List of buy or sell depths. Each depth pair is a price and quantity at that price
      * Example output - ["0x000313", "0x013"], ["0x1", "0x2"], ["0x000123", "0x12"]
      */
-    var list : RealmList<RealmList<String>>? = null
+    var list : RealmList<String>? = null
 
     /**
      * Custom class deserializer

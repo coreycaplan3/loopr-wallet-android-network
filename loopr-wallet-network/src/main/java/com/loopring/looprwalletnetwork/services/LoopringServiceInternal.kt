@@ -274,7 +274,7 @@ open interface LoopringServiceInternal {
             val retrofit = Retrofit.Builder()
                     .client(httpClient)
                     .baseUrl(LoopringServiceInternal.BASE_URL)
-                    .addCallAdapterFactory(CoroutineCallAdapterFactory())
+                    .addCallAdapterFactory(CoroutineCallAdapterFactory()) //TODO - add the rest of the deserializers
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build()
 
