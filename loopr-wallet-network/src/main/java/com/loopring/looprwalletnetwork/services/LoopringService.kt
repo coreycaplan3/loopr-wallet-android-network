@@ -308,7 +308,7 @@ class LoopringService(contractVer: String) {
      * @param pageSize - The size per page, default is 10. Example input - 20
      *
      */
-    fun getTransactions(owner: String, txHash: String, pageIndex: Int, pageSize: Int): Deferred<LooprPortfolio> {
+    fun getTransactions(owner: String, txHash: String, pageIndex: Int, pageSize: Int): Deferred<LooprTransactionList> {
         val service = LoopringServiceInternal.getService()
         var jsonParams = JsonObject()
         jsonParams.addProperty("owner", owner)
@@ -316,7 +316,20 @@ class LoopringService(contractVer: String) {
         jsonParams.addProperty("pageIndex", pageIndex)
         jsonParams.addProperty("pageSize", pageSize)
 
-        return service.getPortfolio(this.jsonRpcVersion,"loopring_getTransactions", jsonParams.toString(),this.id)
+        return service.getTransactions(this.jsonRpcVersion,"loopring_getTransactions", jsonParams.toString(),this.id)
+    }
+
+    /**
+     * Tell the relay the unlocked wallet info
+     * @param owner - The owner address, must be applied. Example input - "0x847983c3a34afa192cfee860698584c030f4c9db1"
+     *
+     */
+    fun unlockWallet(owner: String): Deferred<LooprUnlockResponse> {
+        val service = LoopringServiceInternal.getService()
+        var jsonParams = JsonObject()
+        jsonParams.addProperty("owner", owner)
+
+        return service.unlockWallet(this.jsonRpcVersion,"loopring_unlockWallet", jsonParams.toString(),this.id)
     }
 
 }

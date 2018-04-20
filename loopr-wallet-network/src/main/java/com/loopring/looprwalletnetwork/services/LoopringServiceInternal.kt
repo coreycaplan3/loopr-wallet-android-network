@@ -216,6 +216,18 @@ open interface LoopringServiceInternal {
                         @Field("params") params: String,
                         @Field("id") id: String): Deferred<LooprTransactionList>
 
+    /**
+     * Tell the relay the unlocked wallet info
+     *
+     * @return [LooprUnlockResponse]
+     */
+    @FormUrlEncoded
+    @POST("/")
+    fun unlockWallet(@Field("jsonrpc") jsonRpc: String,
+                     @Field("method") method: String,
+                     @Field("params") params: String,
+                     @Field("id") id: String): Deferred<LooprUnlockResponse>
+
 
     companion object {
 
