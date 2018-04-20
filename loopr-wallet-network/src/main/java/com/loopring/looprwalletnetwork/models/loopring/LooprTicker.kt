@@ -10,7 +10,7 @@ import io.realm.RealmObject
 import java.lang.reflect.Type
 import java.math.BigDecimal
 
-class LooprTicker : RealmObject() {
+open class LooprTicker : RealmObject() {
 
     /**
      * Exchange the data comes from

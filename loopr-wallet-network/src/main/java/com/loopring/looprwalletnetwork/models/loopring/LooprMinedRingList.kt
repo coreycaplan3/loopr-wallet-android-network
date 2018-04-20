@@ -9,7 +9,7 @@ import io.realm.RealmList
 import io.realm.RealmObject
 import java.lang.reflect.Type
 
-class LooprMinedRingList : RealmObject() {
+open class LooprMinedRingList : RealmObject() {
 
     /**
      * TODO - figure out what this id is

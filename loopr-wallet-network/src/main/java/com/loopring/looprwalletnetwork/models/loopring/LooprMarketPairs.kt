@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import io.realm.RealmList
 import io.realm.RealmObject
 
-class LooprMarketPairs : RealmObject() {
+open class LooprMarketPairs : RealmObject() {
 
     /**
      * TODO - figure out what this id is

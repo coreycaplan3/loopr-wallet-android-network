@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import io.realm.RealmObject
 import java.math.BigInteger
 
-class LooprPortfolioToken : RealmObject() {
+open class LooprPortfolioToken : RealmObject() {
 
     /**
      *

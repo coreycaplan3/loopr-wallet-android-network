@@ -5,9 +5,10 @@ import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
 import com.google.gson.annotations.SerializedName
+import io.realm.RealmObject
 import java.lang.reflect.Type
 
-class LooprOrderResponse {
+open class LooprOrderResponse : RealmObject() {
     /**
      * TODO - figure out what this id is
      * Example output - 64

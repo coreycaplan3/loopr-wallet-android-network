@@ -3,7 +3,7 @@ package com.loopring.looprwalletnetwork.models.loopring
 import com.google.gson.annotations.SerializedName
 import io.realm.RealmObject
 
-class LooprTokenPriceQuote : RealmObject() {
+open class LooprTokenPriceQuote : RealmObject() {
 
     /**
      * The token the [price] data is for

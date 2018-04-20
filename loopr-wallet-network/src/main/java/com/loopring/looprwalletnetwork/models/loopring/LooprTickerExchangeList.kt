@@ -9,7 +9,7 @@ import io.realm.RealmList
 import java.lang.reflect.Type
 
 
-class LooprTickerExchangeList {
+open class LooprTickerExchangeList {
 
     /**
      * TODO - figure out what this id is

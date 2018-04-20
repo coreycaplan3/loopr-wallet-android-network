@@ -9,7 +9,7 @@ import io.realm.RealmList
 import io.realm.RealmObject
 import java.lang.reflect.Type
 
-class LooprTrendList : RealmObject() {
+open class LooprTrendList : RealmObject() {
 
     /**
      * TODO - figure out what this id is

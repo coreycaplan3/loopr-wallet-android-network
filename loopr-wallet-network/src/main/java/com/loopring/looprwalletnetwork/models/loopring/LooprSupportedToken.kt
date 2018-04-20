@@ -3,7 +3,7 @@ package com.loopring.looprwalletnetwork.models.loopring
 import com.google.gson.annotations.SerializedName
 import io.realm.RealmObject
 
-class LooprSupportedToken : RealmObject() {
+open class LooprSupportedToken : RealmObject() {
 
     //TODO - expand documentation for each of these
 

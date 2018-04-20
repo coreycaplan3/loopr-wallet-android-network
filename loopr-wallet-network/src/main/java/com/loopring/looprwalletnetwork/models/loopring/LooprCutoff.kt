@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import io.realm.RealmObject
 import java.util.*
 
-class LooprCutoff : RealmObject() {
+open class LooprCutoff : RealmObject() {
 
     /**
      * TODO - figure out what this id is

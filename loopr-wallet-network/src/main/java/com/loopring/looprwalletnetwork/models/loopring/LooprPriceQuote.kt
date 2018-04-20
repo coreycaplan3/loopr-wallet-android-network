@@ -9,7 +9,7 @@ import io.realm.RealmList
 import io.realm.RealmObject
 import java.lang.reflect.Type
 
-class LooprPriceQuote : RealmObject() {
+open class LooprPriceQuote : RealmObject() {
 
     /**
      * TODO - figure out what this id is

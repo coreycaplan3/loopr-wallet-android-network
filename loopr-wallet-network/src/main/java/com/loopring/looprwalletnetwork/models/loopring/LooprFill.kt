@@ -10,7 +10,7 @@ import java.lang.reflect.Type
 import java.math.BigInteger
 import java.util.*
 
-class LooprFill : RealmObject() {
+open class LooprFill : RealmObject() {
 
     /**
      * The loopring contract address

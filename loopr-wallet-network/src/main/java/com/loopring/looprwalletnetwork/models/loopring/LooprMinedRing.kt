@@ -12,7 +12,7 @@ import java.math.BigDecimal
 import java.math.BigInteger
 import java.util.*
 
-class LooprMinedRing : RealmObject() {
+open class LooprMinedRing : RealmObject() {
 
     /**
      * The ring hash

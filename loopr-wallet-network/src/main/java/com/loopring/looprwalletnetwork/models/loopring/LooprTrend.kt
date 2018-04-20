@@ -11,7 +11,7 @@ import java.lang.reflect.Type
 import java.math.BigDecimal
 import java.util.*
 
-class LooprTrend : RealmObject() {
+open class LooprTrend : RealmObject() {
 
     /**
      * The market type
