@@ -286,4 +286,37 @@ class LoopringService(contractVer: String) {
 
         return service.getSupportedTokens(this.jsonRpcVersion,"loopring_getSupportedTokens", jsonParams.toString(),this.id)
     }
+
+    /**
+     * Get user's portfolio info
+     * @param owner - The owner address, must be applied.  Example input - "0x847983c3a34afa192cfee860698584c030f4c9db1"
+     *
+     */
+    fun getGetPortfolio(owner: String): Deferred<LooprPortfolio> {
+        val service = LoopringServiceInternal.getService()
+        var jsonParams = JsonObject()
+        jsonParams.addProperty("owner", owner)
+
+        return service.getPortfolio(this.jsonRpcVersion,"loopring_getPortfolio", jsonParams.toString(),this.id)
+    }
+
+    /**
+     * Get user's latest transactions by owner
+     * @param owner - The owner address, must be applied. Example input - "0x847983c3a34afa192cfee860698584c030f4c9db1"
+     * @param txHash - The transaction hash. Example input - "0xc7756d5d556383b2f965094464bdff3ebe658f263f552858cc4eff4ed0aeafeb"
+     * @param pageIndex - The page want to query, default is 1. Example input - 2
+     * @param pageSize - The size per page, default is 10. Example input - 20
+     *
+     */
+    fun getTransactions(owner: String, txHash: String, pageIndex: Int, pageSize: Int): Deferred<LooprPortfolio> {
+        val service = LoopringServiceInternal.getService()
+        var jsonParams = JsonObject()
+        jsonParams.addProperty("owner", owner)
+        jsonParams.addProperty("txHash", txHash)
+        jsonParams.addProperty("pageIndex", pageIndex)
+        jsonParams.addProperty("pageSize", pageSize)
+
+        return service.getPortfolio(this.jsonRpcVersion,"loopring_getTransactions", jsonParams.toString(),this.id)
+    }
+
 }

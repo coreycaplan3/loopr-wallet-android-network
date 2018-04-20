@@ -192,6 +192,30 @@ open interface LoopringServiceInternal {
                            @Field("params") params: String,
                            @Field("id") id: String): Deferred<LooprSupportedToken>
 
+    /**
+     * Get user's portfolio info
+     *
+     * @return [LooprPortfolio]
+     */
+    @FormUrlEncoded
+    @POST("/")
+    fun getPortfolio(@Field("jsonrpc") jsonRpc: String,
+                     @Field("method") method: String,
+                     @Field("params") params: String,
+                     @Field("id") id: String): Deferred<LooprPortfolio>
+
+    /**
+     * Get user's latest transactions by owner
+     *
+     * @return [LooprTransactionList]
+     */
+    @FormUrlEncoded
+    @POST("/")
+    fun getTransactions(@Field("jsonrpc") jsonRpc: String,
+                        @Field("method") method: String,
+                        @Field("params") params: String,
+                        @Field("id") id: String): Deferred<LooprTransactionList>
+
 
     companion object {
 
