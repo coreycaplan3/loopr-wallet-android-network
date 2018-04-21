@@ -23,6 +23,7 @@ open class LooprSupportedTokenList : RealmObject() {
     /**
      * A list of [LooprSupportedToken] objects with token support data
      */
+    @SerializedName("result")
     var tokens : RealmList<LooprSupportedToken>? = null
 
 }

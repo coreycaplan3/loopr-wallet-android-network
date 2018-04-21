@@ -26,10 +26,10 @@ open class LooprBalance : RealmObject() {
     var jsonrpc : String? = null
 
     /**
-     * Version of the LoopringContract. Should match the one used in the request
-     * Example output - "v1.0"
+     * The loopring TokenTransferDelegate Protocol
+     * Example output - "0x5567ee920f7E62274284985D793344351A00142B"
      */
-    var contractVersion : String? = null
+    var delegateAddress : String? = null
 
     /**
      * List of [LooprTokenInfo] objects with information about the token
@@ -55,20 +55,18 @@ open class LooprBalance : RealmObject() {
                     }
                 //}
 
-
                 jsonObj.get("jsonrpc")?.let {
                     balanceInfo.jsonrpc  = it.asString
                 }
 
-                jsonObj.get("result").asJsonObject.get("contractVersion")?.let {
-                    balanceInfo.contractVersion = it.asString
-                }
+                jsonObj.get("result")?.let {
+                    balanceInfo.delegateAddress = it.asJsonObject.get("delegateAddress").asString
+                    val tokenArray = it.asJsonObject.get("tokens").asJsonArray
 
-                var tokenJsonArray = jsonObj.get("result").asJsonObject.get("tokens").asJsonArray
-
-                balanceInfo.tokens = RealmList()
-                tokenJsonArray.forEach {
-                    balanceInfo.tokens?.add(context.deserialize(it,LooprTokenInfo::class.java))
+                    balanceInfo.tokens = RealmList()
+                    tokenArray.forEach {
+                        balanceInfo.tokens?.add(context.deserialize(it,LooprTokenInfo::class.java))
+                    }
                 }
 
                 return balanceInfo

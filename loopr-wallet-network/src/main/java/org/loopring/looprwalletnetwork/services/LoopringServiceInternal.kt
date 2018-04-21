@@ -151,14 +151,14 @@ internal interface LoopringServiceInternal {
     /**
      * Get the total frozen lrcFee of all unfinished orders
      *
-     * @return [LooprGetGetFrozenLRCFee]
+     * @return [LooprFrozenLRCFee]
      */
     @FormUrlEncoded
     @POST("/")
     fun getGetFrozenLRCFee(@Field("jsonrpc") jsonRpc: String,
                            @Field("method") method: String,
                            @Field("params") params: String,
-                           @Field("id") id: String): Deferred<LooprGetGetFrozenLRCFee>
+                           @Field("id") id: String): Deferred<LooprFrozenLRCFee>
 
     /**
      * Get the USD/CNY/BTC quoted price of tokens
@@ -187,14 +187,14 @@ internal interface LoopringServiceInternal {
     /**
      * Get relay supported all tokens
      *
-     * @return [LooprSupportedToken]
+     * @return [LooprSupportedTokenList]
      */
     @FormUrlEncoded
     @POST("/")
     fun getSupportedTokens(@Field("jsonrpc") jsonRpc: String,
                            @Field("method") method: String,
                            @Field("params") params: String,
-                           @Field("id") id: String): Deferred<LooprSupportedToken>
+                           @Field("id") id: String): Deferred<LooprSupportedTokenList>
 
     /**
      * Get user's portfolio info
@@ -271,6 +271,28 @@ internal interface LoopringServiceInternal {
 
             val gson = GsonBuilder()
                     .registerTypeAdapter(Date::class.java, DateDeserializer())
+                    .registerTypeAdapter(LooprBalance::class.java, LooprBalance.LooprBalanceDeserializer())
+                    .registerTypeAdapter(LooprDepth::class.java, LooprDepth.LooprDepthDeserializer())
+                    .registerTypeAdapter(LooprOrderResponse::class.java, LooprOrderResponse.LooprOrderResponseDeserializer())
+                    .registerTypeAdapter(LooprOrder::class.java, LooprOrder.LooprOrderDeserializer())
+                    .registerTypeAdapter(LooprOrderList::class.java, LooprOrderList.LooprOrderListDeserializer())
+                    .registerTypeAdapter(LooprOrderItem::class.java, LooprOrderItem.LooprOrderItemDeserializer())
+                    .registerTypeAdapter(LooprDepthListItem::class.java, LooprDepthListItem.LooprDepthListItemDeserializer())
+                    .registerTypeAdapter(LooprTickerList::class.java, LooprTickerList.LooprTickerListDeserializer())
+                    .registerTypeAdapter(LooprTicker::class.java, LooprTicker.LooprTickerDeserializer())
+                    .registerTypeAdapter(LooprTickerExchangeList::class.java, LooprTickerExchangeList.LooprTickerExchangeListDeserializer())
+                    .registerTypeAdapter(LooprFillsList::class.java, LooprFillsList.LooprFillsListDeserializer())
+                    .registerTypeAdapter(LooprTrendList::class.java, LooprTrendList.LooprTrendListDeserializer())
+                    .registerTypeAdapter(LooprTrend::class.java, LooprTrend.LooprTrendDeserializer())
+                    .registerTypeAdapter(LooprMinedRingList::class.java, LooprMinedRingList.LooprMinedRingListDeserializer())
+                    .registerTypeAdapter(LooprMinedRing::class.java, LooprMinedRing.LooprMinedRingDeserializer())
+                    .registerTypeAdapter(LooprPriceQuote::class.java, LooprPriceQuote.LooprPriceQuoteDeserializer())
+                    .registerTypeAdapter(LooprTokenPriceQuote::class.java, LooprTokenPriceQuote.LooprTokenPriceQuoteDeserializer())
+                    .registerTypeAdapter(LooprEstimatedAllocatedAllowance::class.java, LooprEstimatedAllocatedAllowance.LooprEstimatedAllocatedAllowanceDeserializer())
+                    .registerTypeAdapter(LooprFrozenLRCFee::class.java, LooprFrozenLRCFee.LooprFrozenLRCFeeDeserializer())
+                    .registerTypeAdapter(LooprPortfolioToken::class.java, LooprPortfolioToken.LooprPortfolioTokenDeserializer())
+                    .registerTypeAdapter(LooprTransactionList::class.java, LooprTransactionList.LooprTransactionListDeserializer())
+                    .registerTypeAdapter(LooprTransaction::class.java, LooprTransaction.LooprTransactionDeserializer())
                     .enableComplexMapKeySerialization()
                     .serializeNulls()
                     .create()
@@ -278,7 +300,7 @@ internal interface LoopringServiceInternal {
             val retrofit = Retrofit.Builder()
                     .client(httpClient)
                     .baseUrl(LoopringServiceInternal.BASE_URL)
-                    .addCallAdapterFactory(CoroutineCallAdapterFactory()) //TODO - add the rest of the deserializers
+                    .addCallAdapterFactory(CoroutineCallAdapterFactory())
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build()
 

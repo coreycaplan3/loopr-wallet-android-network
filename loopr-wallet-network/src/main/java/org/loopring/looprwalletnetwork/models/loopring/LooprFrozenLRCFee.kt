@@ -10,7 +10,7 @@ import io.realm.RealmObject
 import java.lang.reflect.Type
 import java.math.BigInteger
 
-open class LooprEstimatedAllocatedAllowance : RealmObject() {
+open class LooprFrozenLRCFee : RealmObject() {
 
     /**
      * TODO - figure out what this id is
@@ -29,59 +29,59 @@ open class LooprEstimatedAllocatedAllowance : RealmObject() {
     /**
      * The frozen amount in hex format
      * Example output - ["0x2347ad6c"]
-     * TODO - check if this ever returns more than one list item, if not then go straight to string
+     * TODO - find out if this ever returns more than one string. If not deserialize straight to string
      */
-    var allowance: RealmList<BigInteger>?
+    var frozenFees: RealmList<BigInteger>?
         get() {
             val response = RealmList<BigInteger>()
-            val allowanceList = mAllowance //Have to get mAllowance at a moment in time in case of changes
-            allowanceList?.let {
-                for (element in allowanceList) {
+            val feesList = mFrozenFees //Have to get mFrozenFees at a moment in time in case of changes
+            feesList?.let {
+                for (element in feesList) {
                     response.add(BigInteger(element,10))
                 }
             }
             return response
         }
         set(value) {
-            mAllowance = RealmList()
+            mFrozenFees = RealmList()
             value?.let {
                 for (element in value) {
-                    mAllowance?.add(element.toString(10))
+                    mFrozenFees?.add(element.toString(10))
                 }
             }
         }
 
-    private var mAllowance : RealmList<String>? = null
+    private var mFrozenFees : RealmList<String>? = null
 
     /**
      * Custom class deserializer
      */
-    class LooprEstimatedAllocatedAllowanceDeserializer : JsonDeserializer<LooprEstimatedAllocatedAllowance> {
+    class LooprFrozenLRCFeeDeserializer : JsonDeserializer<LooprFrozenLRCFee> {
         @Throws(JsonParseException::class)
-        override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): LooprEstimatedAllocatedAllowance? {
+        override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): LooprFrozenLRCFee? {
             if (json.isJsonNull || json.isJsonPrimitive) {
                 return null
             } else {
-                val allocatedAllowance = LooprEstimatedAllocatedAllowance()
+                val frozenFee = LooprFrozenLRCFee()
                 val jsonObj = json.asJsonObject
 
                 //TODO - check if this code is enough to handle normally encountered errors
                 jsonObj.get("id")?.let {
-                    allocatedAllowance.id = it.asString.toIntOrNull()
+                    frozenFee.id = it.asString.toIntOrNull()
                 }
 
                 jsonObj.get("jsonrpc")?.let {
-                    allocatedAllowance.jsonrpc  = it.asString
+                    frozenFee.jsonrpc  = it.asString
                 }
 
                 jsonObj.get("result")?.let {
-                    allocatedAllowance.mAllowance = RealmList()
+                    frozenFee.mFrozenFees = RealmList()
                     it.asJsonArray.forEach {
-                        allocatedAllowance.mAllowance?.add(BigInteger(it.asString,16).toString(10))
+                        frozenFee.mFrozenFees?.add(BigInteger(it.asString,16).toString(10))
                     }
                 }
 
-                return allocatedAllowance
+                return frozenFee
             }
         }
 

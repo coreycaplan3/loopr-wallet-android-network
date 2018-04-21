@@ -5,7 +5,6 @@ import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
 import com.google.gson.annotations.SerializedName
-import io.realm.RealmList
 import io.realm.RealmObject
 import java.lang.reflect.Type
 import java.math.BigInteger
@@ -16,12 +15,12 @@ open class LooprOrderItem : RealmObject() {
      * The original [LooprOrder] order info when submitting
      */
     @SerializedName("orginalOrder")
-    var id : LooprOrder?  = null
+    var originalOrder : LooprOrder?  = null
 
     /**
      * The current order status
-     * //TODO - find all potential outputs
      * Example output - "ORDER_CANCEL"
+     * Possible Outputs - ORDER_OPENED(include ORDER_NEW and ORDER_PARTIAL), ORDER_NEW, ORDER_PARTIAL, ORDER_FINISHED, ORDER_CANCEL, ORDER_CUTOFF)
      */
     @SerializedName("status")
     var status : String? = null
@@ -54,5 +53,77 @@ open class LooprOrderItem : RealmObject() {
 
     private var mDealtAmountToBuy : String? = null
 
+    /**
+     * Amount of toSell tokens from [LooprOrder] cancelled
+     * Example output - "0x1a055690d9db80000"
+     */
+    var cancelledAmountToSell: BigInteger?
+        get() {
+            return mCancelledAmountToSell?.let { BigInteger(it, 16) }
+        }
+        set(value) {
+            mCancelledAmountToSell = value?.toString(16)
+        }
+
+    private var mCancelledAmountToSell : String? = null
+
+    /**
+     * Amount of toBuy tokens from [LooprOrder] cancelled
+     * Example output - "0x1a055690d9db80000"
+     */
+    var cancelledAmountToBuy: BigInteger?
+        get() {
+            return mCancelledAmountToBuy?.let { BigInteger(it, 16) }
+        }
+        set(value) {
+            mCancelledAmountToBuy = value?.toString(16)
+        }
+
+    private var mCancelledAmountToBuy : String? = null
+
+    /**
+     * Custom class deserializer
+     */
+    class LooprOrderItemDeserializer : JsonDeserializer<LooprOrderItem> {
+        @Throws(JsonParseException::class)
+        override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): LooprOrderItem? {
+            if (json.isJsonNull || json.isJsonPrimitive) {
+                return null
+            } else {
+                val jsonObj = json.asJsonObject
+                val order = LooprOrderItem()
+
+                //TODO - check if this code is enough to handle normally encountered errors
+                //if (!jsonObj.get("id").isJsonNull && jsonObj.get("id").isJsonPrimitive) {
+                jsonObj.get("originalOrder")?.let {
+                    order.originalOrder = context.deserialize(it.asJsonObject, LooprOrder.LooprOrderDeserializer::class.java)
+                }
+                //}
+
+                jsonObj.get("status")?.let {
+                    order.status  = it.asString
+                }
+
+                jsonObj.get("dealtAmountB")?.let {
+                    order.mDealtAmountToBuy  = it.asString
+                }
+
+                jsonObj.get("dealtAmountS")?.let {
+                    order.mDealtAmountToSell  = it.asString
+                }
+
+                jsonObj.get("cancelledAmountB")?.let {
+                    order.mCancelledAmountToBuy  = it.asString
+                }
+
+                jsonObj.get("cancelledAmountS")?.let {
+                    order.mCancelledAmountToSell  = it.asString
+                }
+
+                return order
+            }
+        }
+
+    }
 
 }

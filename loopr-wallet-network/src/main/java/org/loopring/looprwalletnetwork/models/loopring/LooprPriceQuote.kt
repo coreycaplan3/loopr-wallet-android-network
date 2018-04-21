@@ -47,7 +47,7 @@ open class LooprPriceQuote : RealmObject() {
                 return null
             } else {
                 val priceQuote = LooprPriceQuote()
-                var priceQuoteJsonObject = json.asJsonObject
+                val priceQuoteJsonObject = json.asJsonObject
 
                 //TODO - check if this code is enough to handle normally encountered errors
                 priceQuoteJsonObject.get("id")?.let {
@@ -58,15 +58,17 @@ open class LooprPriceQuote : RealmObject() {
                     priceQuote.jsonrpc  = it.asString
                 }
 
-                priceQuoteJsonObject.get("result").asJsonObject.get("currency")?.let {
-                    priceQuote.currency  = it.asString
-                }
+                priceQuoteJsonObject.get("result")?.let {
+                    it.asJsonObject.get("currency")?.let {
+                        priceQuote.currency  = it.asString
+                    }
 
-                var tokensJsonArray = priceQuoteJsonObject.get("result").asJsonObject.get("tokens").asJsonArray
+                    val tokensJsonArray = it.asJsonObject.get("tokens").asJsonArray
 
-                priceQuote.tokens = RealmList()
-                tokensJsonArray.forEach {
-                    priceQuote.tokens?.add(context.deserialize(it,LooprPriceQuote::class.java))
+                    priceQuote.tokens = RealmList()
+                    tokensJsonArray.forEach {
+                        priceQuote.tokens?.add(context.deserialize(it,LooprTokenPriceQuote::class.java))
+                    }
                 }
 
                 return priceQuote

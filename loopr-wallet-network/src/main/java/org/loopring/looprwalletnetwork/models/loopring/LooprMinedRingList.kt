@@ -34,19 +34,19 @@ open class LooprMinedRingList : RealmObject() {
      * Total amount of orders
      * Example output - 12
      */
-    var total : Int?  = null
+    var total : Int? = null
 
     /**
      * Index of page
      * Example output - 2
      */
-    var pageIndex : Int?  = null
+    var pageIndex : Int? = null
 
     /**
      * Amount per page
      * Example output - 10
      */
-    var pageSize : Int?  = null
+    var pageSize : Int? = null
 
     /**
      * Custom class deserializer
@@ -81,13 +81,15 @@ open class LooprMinedRingList : RealmObject() {
                     minedRingList.pageSize  = it.asInt
                 }
 
+                jsonObj.get("result")?.let {
+                    val minedRingJsonArray = it.asJsonObject.get("data").asJsonArray
 
-                var minedRingJsonArray = jsonObj.get("result").asJsonObject.get("data").asJsonArray
-
-                minedRingList.minedRings = RealmList()
-                minedRingJsonArray.forEach {
-                    minedRingList.minedRings?.add(context.deserialize(it,LooprMinedRing::class.java))
+                    minedRingList.minedRings = RealmList()
+                    minedRingJsonArray.forEach {
+                        minedRingList.minedRings?.add(context.deserialize(it,LooprMinedRing::class.java))
+                    }
                 }
+
 
                 return minedRingList
             }

@@ -25,16 +25,15 @@ open class LooprDepth : RealmObject() {
     @SerializedName("jsonrpc")
     var jsonrpc : String? = null
 
+    /**
+     * List of [LooprDepthListItem] each with information about the buy demand at certain price depths
+     */
+    var buyDepth : RealmList<LooprDepthListItem>? = null
 
     /**
-     * [LooprDepthList] of objects with information about the order
+     * List of [LooprDepthListItem] each with information about the sell demand at certain price depths
      */
-    var buyDepth : LooprDepthList? = null
-
-    /**
-     * [LooprDepthList] of objects with information about the order
-     */
-    var sellDepth : LooprDepthList? = null
+    var sellDepth : RealmList<LooprDepthListItem>? = null
 
     /**
      * The market pair
@@ -47,8 +46,8 @@ open class LooprDepth : RealmObject() {
      * The loopring protocol version
      * Example output - "v1.2"
      */
-    @SerializedName("contractVersion")
-    var contractVersion : String? = null
+    @SerializedName("delegateAddress")
+    var delegateAddress : String? = null
 
     /**
      * Custom class deserializer
@@ -70,21 +69,33 @@ open class LooprDepth : RealmObject() {
                 //}
 
                 jsonObj.get("jsonrpc")?.let {
-                    depth.jsonrpc  = it.asString
+                    depth.jsonrpc = it.asString
                 }
 
-                var depthLists = jsonObj.get("result").asJsonObject.get("depth").asJsonObject
+                jsonObj.get("result")?.let {
+                    val depthLists = it.asJsonObject.get("depth").asJsonObject
 
-                depth.buyDepth =  context.deserialize(depthLists.get("buy").asJsonObject,LooprOrderItem::class.java)
+                    depthLists.get("buy")?.let {
+                        depth.buyDepth = RealmList()
+                        it.asJsonArray.forEach {
+                            depth.buyDepth?.add(context.deserialize(it, LooprDepthListItem::class.java))
+                        }
+                    }
 
-                depth.sellDepth =  context.deserialize(depthLists.get("sell").asJsonObject,LooprOrderItem::class.java)
+                    depthLists.get("sell")?.let {
+                        depth.sellDepth = RealmList()
+                        it.asJsonArray.forEach {
+                            depth.sellDepth?.add(context.deserialize(it, LooprDepthListItem::class.java))
+                        }
+                    }
 
-                jsonObj.get("result")?.asJsonObject?.get("market")?.let {
-                    depth.market  = it.asString
-                }
+                    it.asJsonObject?.get("market")?.let {
+                        depth.market = it.asString
+                    }
 
-                jsonObj.get("result")?.asJsonObject?.get("contractVersion")?.let {
-                    depth.contractVersion  = it.asString
+                    it.asJsonObject?.get("delegateAddress")?.let {
+                        depth.delegateAddress = it.asString
+                    }
                 }
 
 

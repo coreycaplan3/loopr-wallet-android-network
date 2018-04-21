@@ -9,6 +9,7 @@ import io.realm.RealmObject
 import java.lang.reflect.Type
 
 open class LooprOrderResponse : RealmObject() {
+
     /**
      * TODO - figure out what this id is
      * Example output - 64

@@ -53,14 +53,14 @@ open class LooprTickerExchangeList {
                     tickerList.jsonrpc  = it.asString
                 }
 
+                jsonObj.get("result")?.let {
+                    val tickerJsonObject = it.asJsonObject
+                    tickerList.tickers = RealmList()
 
-                var tickerJsonObject = jsonObj.get("result").asJsonObject
-
-                tickerList.tickers = RealmList()
-
-                //TODO - this one is missing 'market' so LooprTicker may fail deserialization. Find out through testing
-                for (exchange in tickerJsonObject.keySet()) {
-                    tickerList.tickers?.add(context.deserialize(tickerJsonObject.get(exchange).asJsonObject,LooprTicker::class.java))
+                    //TODO - this one is missing 'market' so LooprTicker may fail deserialization. Find out through testing
+                    for (exchange in tickerJsonObject.keySet()) {
+                        tickerList.tickers?.add(context.deserialize(tickerJsonObject.get(exchange).asJsonObject,LooprTicker::class.java))
+                    }
                 }
 
                 return tickerList

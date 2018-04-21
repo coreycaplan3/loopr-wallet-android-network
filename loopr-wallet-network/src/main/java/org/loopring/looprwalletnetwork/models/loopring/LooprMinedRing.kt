@@ -5,10 +5,8 @@ import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
 import com.google.gson.annotations.SerializedName
-import io.realm.RealmList
 import io.realm.RealmObject
 import java.lang.reflect.Type
-import java.math.BigDecimal
 import java.math.BigInteger
 import java.util.*
 
@@ -69,10 +67,10 @@ open class LooprMinedRing : RealmObject() {
      */
     var totalLrcFee: BigInteger?
         get() {
-            return mTotalLrcFee?.let { BigInteger(it) }
+            return mTotalLrcFee?.let { BigInteger(it,16) }
         }
         set(value) {
-            mTotalLrcFee = value.toString()
+            mTotalLrcFee = value?.toString(16)
         }
 
     private var mTotalLrcFee: String? = null
@@ -95,7 +93,7 @@ open class LooprMinedRing : RealmObject() {
                 return null
             } else {
                 val minedRing = LooprMinedRing()
-                var trendsJsonObject = json.asJsonObject
+                val trendsJsonObject = json.asJsonObject
 
                 trendsJsonObject.get("ringhash")?.let {
                     minedRing.ringhash  = it.asString
