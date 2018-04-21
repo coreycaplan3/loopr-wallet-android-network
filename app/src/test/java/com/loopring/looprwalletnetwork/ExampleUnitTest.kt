@@ -1,4 +1,4 @@
-package com.loopring.looprwalletnetwork
+package org.loopring.looprwalletnetwork
 
 import org.junit.Test
 
