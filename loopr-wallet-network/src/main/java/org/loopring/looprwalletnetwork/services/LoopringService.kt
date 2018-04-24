@@ -169,6 +169,8 @@ class LoopringService() {
 
     /**
      * Get trend info per market
+     * Will return the latest 100 (or possibly fewer) records in the selected interval.
+     * For example will return the last 100 hours of data if 1Hr selected, with each data point being one hour
      * @param market - The market type. Example input - "LRC-WETH"
      * @param interval - The interval. Example inputs - "1Hr", "2Hr", "4Hr", "1Day", "1Week"
      *
