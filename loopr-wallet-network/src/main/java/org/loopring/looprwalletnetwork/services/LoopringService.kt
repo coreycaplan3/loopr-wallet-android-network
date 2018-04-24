@@ -7,7 +7,7 @@ import org.web3j.crypto.Credentials
 import java.math.BigInteger
 import java.util.*
 
-class LoopringService(private val contractVersion: String = "v1.2") {
+class LoopringService() {
 
     private val jsonRpcVersion = "2.0"
     private val loopringContractAddress = "0xEF68e7C694F40c8202821eDF525dE3782458639f"
