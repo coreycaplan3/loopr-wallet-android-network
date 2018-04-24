@@ -54,14 +54,17 @@ open class LooprTickerList : RealmObject() {
                 }
 
 
-                var tickerJsonArray = jsonObj.get("result").asJsonArray
+                jsonObj.get("result")?.let {
+                    var tickerJsonArray = it.asJsonArray
 
-                tickerList.tickers = RealmList()
-                tickerJsonArray.forEach {
-                    tickerList.tickers?.add(context.deserialize(it,LooprTicker::class.java))
+                    tickerList.tickers = RealmList()
+                    tickerJsonArray.forEach {
+                        tickerList.tickers?.add(context.deserialize(it, LooprTicker::class.java))
+                    }
                 }
 
                 return tickerList
+
             }
         }
 

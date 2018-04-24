@@ -1,7 +1,6 @@
 package org.loopring.looprwalletnetwork.models.loopring
 
 import com.google.gson.annotations.SerializedName
-import io.realm.RealmList
 import io.realm.RealmObject
 
 open class LooprTransactionSubmittedResponse : RealmObject() {

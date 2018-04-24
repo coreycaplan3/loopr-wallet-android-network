@@ -1,36 +1,29 @@
 package org.loopring.looprwalletnetwork.models.loopring
 
 import com.google.gson.annotations.SerializedName
+import io.realm.RealmList
 import io.realm.RealmObject
 import java.math.BigInteger
 
 open class LooprPortfolio : RealmObject() {
 
     /**
-     * Token symbol
-     * Example output - "LRC"
+     * TODO - figure out what this id is
+     * Example output - 64
      */
-    @SerializedName("token")
-    var token: String? = null
+    @SerializedName("id")
+    var id : Int?  = null
 
     /**
-     * Amount of the [token] owned
-     * Example output - "0x000001234d"
+     * String representing the version of jsonrpc. Should match the one used in the request
+     * Example output - "2.0"
      */
-    var amount: BigInteger?
-        get() {
-            return mAmount?.let { BigInteger(it) }
-        }
-        set(value) {
-            mAmount = value.toString()
-        }
-
-    private var mAmount: String? = null
+    @SerializedName("jsonrpc")
+    var jsonrpc : String? = null
 
     /**
-     * Percentage of portfolio
-     * Example output - "2.35"
+     * A list of [LooprPortfolioToken] objects with token data
      */
-    @SerializedName("percentage")
-    var percentage: String? = null
+    @SerializedName("result")
+    var tokens : RealmList<LooprPortfolioToken>? = null
 }

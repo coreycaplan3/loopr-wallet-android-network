@@ -25,7 +25,6 @@ open class LooprOrderList : RealmObject() {
     @SerializedName("jsonrpc")
     var jsonrpc : String? = null
 
-
     /**
      * List of [LooprOrder] objects with information about the order
      */
@@ -36,21 +35,21 @@ open class LooprOrderList : RealmObject() {
      * Example output - 12
      */
     @SerializedName("total")
-    var total : Integer? = null
+    var total : Int? = null
 
     /**
      * Index of page
      * Example output - 3
      */
     @SerializedName("pageIndex")
-    var pageIndex : Integer? = null
+    var pageIndex : Int? = null
 
     /**
      * Number of results per page
      * Example output - 10
      */
     @SerializedName("pageSize")
-    var pageSize : Integer? = null
+    var pageSize : Int? = null
 
     /**
      * Custom class deserializer
@@ -71,16 +70,20 @@ open class LooprOrderList : RealmObject() {
                 }
                 //}
 
-
                 jsonObj.get("jsonrpc")?.let {
                     orderList.jsonrpc  = it.asString
                 }
 
-                var tokenJsonArray = jsonObj.get("result").asJsonObject.get("data").asJsonArray
+                jsonObj.get("result")?.let {
+                    orderList.total = it.asJsonObject.get("total").asString.toIntOrNull()
+                    orderList.pageIndex = it.asJsonObject.get("pageIndex").asString.toIntOrNull()
+                    orderList.pageSize = it.asJsonObject.get("pageSize").asString.toIntOrNull()
 
-                orderList.orders = RealmList()
-                tokenJsonArray.forEach {
-                    orderList.orders?.add(context.deserialize(it,LooprOrderItem::class.java))
+                    val dataArray = it.asJsonObject.get("data").asJsonArray
+                    orderList.orders = RealmList()
+                    dataArray.forEach {
+                        orderList.orders?.add(context.deserialize(it,LooprOrderItem::class.java))
+                    }
                 }
 
                 return orderList

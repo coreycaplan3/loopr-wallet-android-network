@@ -40,7 +40,7 @@ open class LooprTrendList : RealmObject() {
                 return null
             } else {
                 val trendsList = LooprTrendList()
-                var trendsJsonObject = json.asJsonObject
+                val trendsJsonObject = json.asJsonObject
 
                 //TODO - check if this code is enough to handle normally encountered errors
                 trendsJsonObject.get("id")?.let {
@@ -51,13 +51,15 @@ open class LooprTrendList : RealmObject() {
                     trendsList.jsonrpc  = it.asString
                 }
 
+                trendsJsonObject.get("result")?.let {
+                    val trendsJsonArray = it.asJsonObject.get("data").asJsonArray
 
-                var trendsJsonArray = trendsJsonObject.get("result").asJsonObject.get("data").asJsonArray
-
-                trendsList.trends = RealmList()
-                trendsJsonArray.forEach {
-                    trendsList.trends?.add(context.deserialize(it,LooprTrend::class.java))
+                    trendsList.trends = RealmList()
+                    trendsJsonArray.forEach {
+                        trendsList.trends?.add(context.deserialize(it,LooprTrend::class.java))
+                    }
                 }
+
 
                 return trendsList
             }

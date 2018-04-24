@@ -70,24 +70,26 @@ open class LooprFillsList : RealmObject() {
                     fillList.jsonrpc  = it.asString
                 }
 
-                var fills = RealmList<LooprFill>()
-                var jsonFillsArray = jsonObj.get("result").asJsonObject.get("data").asJsonArray
-                for (fill in jsonFillsArray) {
-                    fillList.fills?.add(context.deserialize(fill.asJsonObject,LooprFill::class.java))
-                }
+                jsonObj.get("result")?.let {
+                    fillList.fills = RealmList()
 
-                jsonObj.get("result").asJsonObject.get("pageIndex")?.let {
-                    fillList.pageIndex = it.asInt
-                }
+                    val jsonFillsArray = it.asJsonObject.get("data").asJsonArray
+                    jsonFillsArray.forEach {
+                        fillList.fills?.add(context.deserialize(it.asJsonObject,LooprFill::class.java))
+                    }
 
-                jsonObj.get("result").asJsonObject.get("pageSize")?.let {
-                    fillList.pageSize = it.asInt
-                }
+                    it.asJsonObject.get("pageIndex")?.let {
+                        fillList.pageIndex = it.asInt
+                    }
 
-                jsonObj.get("result").asJsonObject.get("total")?.let {
-                    fillList.total = it.asInt
-                }
+                    it.asJsonObject.get("pageSize")?.let {
+                        fillList.pageSize = it.asInt
+                    }
 
+                    it.asJsonObject.get("total")?.let {
+                        fillList.total = it.asInt
+                    }
+                }
 
                 return fillList
             }

@@ -1,7 +1,12 @@
 package org.loopring.looprwalletnetwork.models.loopring
 
+import com.google.gson.JsonDeserializationContext
+import com.google.gson.JsonDeserializer
+import com.google.gson.JsonElement
+import com.google.gson.JsonParseException
 import com.google.gson.annotations.SerializedName
 import io.realm.RealmObject
+import java.lang.reflect.Type
 import java.math.BigInteger
 import java.util.*
 
@@ -62,10 +67,10 @@ open class LooprTransaction : RealmObject() {
      */
     var value: BigInteger?
         get() {
-            return mValue?.let{ BigInteger(it)}
+            return mValue?.let{ BigInteger(it, 16)}
         }
         set(value) {
-            mValue = value.toString()
+            mValue = value?.toString(16)
         }
 
     private var mValue: String? = null
@@ -83,4 +88,69 @@ open class LooprTransaction : RealmObject() {
      */
     @SerializedName("status")
     var status: String? = null
+
+    /**
+     * Custom class deserializer
+     */
+    class LooprTransactionDeserializer : JsonDeserializer<LooprTransaction> {
+        @Throws(JsonParseException::class)
+        override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): LooprTransaction? {
+            if (json.isJsonNull || json.isJsonPrimitive) {
+                return null
+            } else {
+                val jsonObj = json.asJsonObject
+                val transaction = LooprTransaction()
+
+                //TODO - check if this code is enough to handle normally encountered errors
+                jsonObj.get("owner")?.let {
+                    transaction.owner = it.asString
+                }
+
+                jsonObj.get("from")?.let {
+                    transaction.from  = it.asString
+                }
+
+                jsonObj.get("to")?.let {
+                    transaction.to  = it.asString
+                }
+
+                jsonObj.get("from")?.let {
+                    transaction.from  = it.asString
+                }
+
+                jsonObj.get("createTime")?.let {
+                    transaction.createTime  = Date(it.asString.toLong())
+                }
+
+                jsonObj.get("updateTime")?.let {
+                    transaction.updateTime  = Date(it.asString.toLong())
+                }
+
+                jsonObj.get("hash")?.let {
+                    transaction.hash  = it.asString
+                }
+
+                jsonObj.get("blockNumber")?.let {
+                    transaction.blockNumber  = it.asLong
+                }
+
+                jsonObj.get("value")?.let {
+                    transaction.mValue  = it.asString
+                }
+
+                jsonObj.get("type")?.let {
+                    transaction.type  = it.asString
+                }
+
+                jsonObj.get("status")?.let {
+                    transaction.status  = it.asString
+                }
+
+
+                return transaction
+            }
+        }
+
+    }
+
 }

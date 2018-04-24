@@ -61,33 +61,31 @@ open class LooprTransactionList : RealmObject() {
                 val transactionList = LooprTransactionList()
 
                 //TODO - check if this code is enough to handle normally encountered errors
-                //if (!jsonObj.get("id").isJsonNull && jsonObj.get("id").isJsonPrimitive) {
                 jsonObj.get("id")?.let {
                     transactionList.id = it.asString.toIntOrNull()
                 }
-                //}
 
                 jsonObj.get("jsonrpc")?.let {
                     transactionList.jsonrpc  = it.asString
                 }
 
-                jsonObj.get("result").asJsonObject.get("pageIndex")?.let {
-                    transactionList.pageIndex  = it.asInt
-                }
+                jsonObj.get("result")?.let {
+                    it.asJsonObject.get("pageIndex")?.let {
+                        transactionList.pageIndex  = it.asInt
+                    }
+                    it.asJsonObject.get("pageSize")?.let {
+                        transactionList.pageSize  = it.asInt
+                    }
+                    it.asJsonObject.get("total")?.let {
+                        transactionList.total  = it.asInt
+                    }
 
-                jsonObj.get("result").asJsonObject.get("pageSize")?.let {
-                    transactionList.pageSize  = it.asInt
-                }
+                    val transactionJsonArray = it.asJsonObject.get("data").asJsonArray
 
-                jsonObj.get("result").asJsonObject.get("total")?.let {
-                    transactionList.total  = it.asInt
-                }
-
-                var transactionJsonArray = jsonObj.get("result").asJsonObject.get("data").asJsonArray
-
-                transactionList.transactions = RealmList()
-                transactionJsonArray.forEach {
-                    transactionList.transactions?.add(context.deserialize(it,LooprTransaction::class.java))
+                    transactionList.transactions = RealmList()
+                    transactionJsonArray.forEach {
+                        transactionList.transactions?.add(context.deserialize(it,LooprTransaction::class.java))
+                    }
                 }
 
                 return transactionList
