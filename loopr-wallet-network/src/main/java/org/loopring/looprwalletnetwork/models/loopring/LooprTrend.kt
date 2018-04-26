@@ -48,7 +48,7 @@ open class LooprTrend : RealmObject() {
     private var mLow : String? = null
 
     /**
-     * The 24hr exchange volume
+     * The 24hr exchange volume - refers to volume of token B in a A-B trading pair
      * Example output - 1038
      */
     var vol : BigDecimal?
@@ -62,7 +62,7 @@ open class LooprTrend : RealmObject() {
     private var mVol : String? = null
 
     /**
-     * The 24hr exchange amount
+     * The 24hr exchange amount - refers to volume of token A in a A-B trading pair
      * Example output - 1003839.32
      */
     var amount : BigDecimal?
