@@ -1,18 +1,19 @@
 package org.loopring.looprwalletnetwork.services
 
 import com.google.gson.JsonObject
-import org.loopring.looprwalletnetwork.models.loopring.*
 import kotlinx.coroutines.experimental.Deferred
+import org.loopring.looprwalletnetwork.models.loopring.requestObjects.*
+import org.loopring.looprwalletnetwork.models.loopring.responseObjects.*
 import org.web3j.crypto.Credentials
 import java.math.BigInteger
 import java.util.*
 
-class LoopringService() {
+class LoopringService {
 
     private val jsonRpcVersion = "2.0"
     private val loopringContractAddress = "0xEF68e7C694F40c8202821eDF525dE3782458639f"
     private val delegateAddress = "0x5567ee920f7E62274284985D793344351A00142B" //TODO - ask Corey where a good place to externalize this to is
-    val id = "64"
+    val id = 64
 
     /**
      * Get user's balance and token allowance info
@@ -20,10 +21,10 @@ class LoopringService() {
      */
     fun getBalances(owner: String): Deferred<LooprBalance> {
         val service = LoopringServiceInternal.getService()
-        val jsonParams = JsonObject()
-        jsonParams.addProperty("owner", owner)
-        jsonParams.addProperty("delegateAddress", delegateAddress)
-        return service.getBalances(this.jsonRpcVersion,"loopring_getBalance", jsonParams.toString(),this.id)
+        val request = LooprRequestBalance(owner, delegateAddress)
+        val wrapper = LooprRequestWrapper(this.jsonRpcVersion, "loopring_getBalance", request, id)
+
+        return service.getBalances(wrapper)
     }
 
     /**
@@ -49,27 +50,12 @@ class LoopringService() {
                     lrcFee: BigInteger, buyNoMoreThanBuyAmt: Boolean, marginSplitPercentage: Int,
                     credentials: Credentials): Deferred<LooprOrderResponse> {
         val service = LoopringServiceInternal.getService()
-        val jsonParams = JsonObject() //TODO - it may take this as array of objects, find out through testing
-        jsonParams.addProperty("protocol", loopringContractAddress)
-        jsonParams.addProperty("delegateAddress", delegateAddress)
-        jsonParams.addProperty("owner", owner)
-        jsonParams.addProperty("tokenS", toSell)
-        jsonParams.addProperty("tokenB", toBuy)
-        jsonParams.addProperty("amountS", sellAmt.toString())
-        jsonParams.addProperty("amountB", buyAmt.toString())
-        jsonParams.addProperty("validSince", validSince.time.toString())
-        jsonParams.addProperty("validUntil", validUntil.toString())
-        jsonParams.addProperty("lrcFee",lrcFee.toString())
-        jsonParams.addProperty("buyNoMoreThanBuyAmt",buyNoMoreThanBuyAmt.toString())
-        jsonParams.addProperty("marginSplitPercentage",marginSplitPercentage.toString())
-        //TODO - get transaciton hash and use code below to get the r and s. Also find out how to get the v
-        /*var signedTransaction = credentials.ecKeyPair.sign(ByteArray(0))
-        signedTransaction.r
-        signedTransaction.s*/
-        jsonParams.addProperty("v","")
-        jsonParams.addProperty("r","")
-        jsonParams.addProperty("s","")
-        return service.submitOrder(this.jsonRpcVersion,"loopring_submitOrder", jsonParams.toString(),this.id)
+        val request = LooprRequestOrder(loopringContractAddress, delegateAddress, owner, toSell,
+                                        toBuy, sellAmt, buyAmt, validSince, validUntil, lrcFee,
+                                        buyNoMoreThanBuyAmt, marginSplitPercentage, credentials)
+        val wrapper = LooprRequestWrapper(this.jsonRpcVersion, "loopring_submitOrder", request, id)
+
+        return service.submitOrder(wrapper)
     }
 
     /**
@@ -87,17 +73,11 @@ class LoopringService() {
                     market: String, side: String, pageIndex: Int,
                     pageSize: Int): Deferred<LooprOrderList> {
         val service = LoopringServiceInternal.getService()
-        val jsonParams = JsonObject() //TODO - it may take this as array of objects, find out through testing
-        jsonParams.addProperty("owner", owner)
-        jsonParams.addProperty("orderHash", orderHash)
-        jsonParams.addProperty("status", status)
-        jsonParams.addProperty("delegateAddress", delegateAddress)
-        jsonParams.addProperty("market", market)
-        jsonParams.addProperty("side", side)
-        jsonParams.addProperty("pageIndex", pageIndex)
-        jsonParams.addProperty("pageSize", pageSize)
+        val request = LooprRequestOrderList(owner, orderHash, status, side, delegateAddress, market,
+                                            pageIndex, pageSize)
+        val wrapper = LooprRequestWrapper(this.jsonRpcVersion, "loopring_getOrders", request, this.id)
 
-        return service.getOrderList(this.jsonRpcVersion,"loopring_getOrderByHash", jsonParams.toString(),this.id)
+        return service.getOrderList(wrapper)
     }
 
     /**
@@ -106,14 +86,12 @@ class LoopringService() {
      * @param length - The length of the depth data, example - 10
      *
      */
-    fun getDepth(market: String, length: String): Deferred<LooprDepth> {
+    fun getDepth(market: String, length: Int): Deferred<LooprDepth> {
         val service = LoopringServiceInternal.getService()
-        val jsonParams = JsonObject()
-        jsonParams.addProperty("market", market)
-        jsonParams.addProperty("delegateAddress", delegateAddress)
-        jsonParams.addProperty("length", length)
+        val request = LooprRequestDepth(market, delegateAddress, length)
+        val wrapper = LooprRequestWrapper(this.jsonRpcVersion, "loopring_getDepth", request, this.id)
 
-        return service.getDepth(this.jsonRpcVersion,"loopring_getDepth", jsonParams.toString(),this.id)
+        return service.getDepth(wrapper)
     }
 
     /**
@@ -123,9 +101,10 @@ class LoopringService() {
      */
     fun getTicker(market: String): Deferred<LooprTickerList> {
         val service = LoopringServiceInternal.getService()
-        val jsonParams = JsonObject() //TODO - docs show an object in a list, find out through testing if that's true
+        val request = LooprRequestEmpty()
+        val wrapper = LooprRequestWrapper(this.jsonRpcVersion, "loopring_getTicker", request, this.id)
 
-        return service.getTicker(this.jsonRpcVersion,"loopring_getTicker", jsonParams.toString(),this.id)
+        return service.getTicker(wrapper)
     }
 
     /**
@@ -136,10 +115,10 @@ class LoopringService() {
      */
     fun getTickers(market: String): Deferred<LooprTickerExchangeList> {
         val service = LoopringServiceInternal.getService()
-        val jsonParams = JsonObject()
-        jsonParams.addProperty("market", market)
+        val request = LooprRequestTickers(market)
+        val wrapper = LooprRequestWrapper(this.jsonRpcVersion, "loopring_getTickers", request, this.id)
 
-        return service.getTickers(this.jsonRpcVersion,"loopring_getTickers", jsonParams.toString(),this.id)
+        return service.getTickers(wrapper)
     }
 
     /**
@@ -155,16 +134,10 @@ class LoopringService() {
     fun getFills(market: String, owner: String, orderHash: String, ringHash: String,
                    pageIndex: Int, pageSize: Int): Deferred<LooprFillsList> {
         val service = LoopringServiceInternal.getService()
-        val jsonParams = JsonObject()
-        jsonParams.addProperty("market", market)
-        jsonParams.addProperty("delegateAddress", delegateAddress)
-        jsonParams.addProperty("owner", owner)
-        jsonParams.addProperty("orderHash", orderHash)
-        jsonParams.addProperty("ringHash", ringHash)
-        jsonParams.addProperty("pageIndex", pageIndex)
-        jsonParams.addProperty("pageSize", pageSize)
+        val request = LooprRequestFills(market, owner, delegateAddress, orderHash, ringHash, pageIndex, pageSize)
+        val wrapper = LooprRequestWrapper(this.jsonRpcVersion, "loopring_getFills", request, this.id)
 
-        return service.getFills(this.jsonRpcVersion,"loopring_getFills", jsonParams.toString(),this.id)
+        return service.getFills(wrapper)
     }
 
     /**
@@ -177,11 +150,10 @@ class LoopringService() {
      */
     fun getTrend(market: String, interval: String): Deferred<LooprTrendList> {
         val service = LoopringServiceInternal.getService()
-        val jsonParams = JsonObject()
-        jsonParams.addProperty("market", market)
-        jsonParams.addProperty("interval",  interval)
+        val request = LooprRequestTrend(market, interval)
+        val wrapper = LooprRequestWrapper(this.jsonRpcVersion, "loopring_getTrend", request, this.id)
 
-        return service.getTrend(this.jsonRpcVersion,"loopring_getTrend", jsonParams.toString(),this.id)
+        return service.getTrend(wrapper)
     }
 
     /**
@@ -193,29 +165,24 @@ class LoopringService() {
      */
     fun getRingMined(ringHash: String, pageIndex: Int, pageSize: Int): Deferred<LooprMinedRingList> {
         val service = LoopringServiceInternal.getService()
-        val jsonParams = JsonObject()
-        jsonParams.addProperty("ringHash", ringHash)
-        jsonParams.addProperty("delegateAddress", delegateAddress)
-        jsonParams.addProperty("pageIndex", pageIndex)
-        jsonParams.addProperty("pageSize", pageSize)
+        val request = LooprRequestRingMined(ringHash, delegateAddress, pageIndex, pageSize)
+        val wrapper = LooprRequestWrapper(this.jsonRpcVersion, "loopring_getRingMined", request, this.id)
 
-        return service.getRingMined(this.jsonRpcVersion,"loopring_getRingMined", jsonParams.toString(),this.id)
+        return service.getRingMined(wrapper)
     }
 
     /**
      * Get cut off time of the address
      * @param address - The address. Example input - "0x8888f1f195afa192cfee860698584c030f4c9db1"
-     * @param blockNumber - The page want to query. Example input - 2
+     * @param blockNumber - "earliest", "latest" or "pending", default is "latest"
      *
      */
-    fun getCutoff(address: String, blockNumber: Int): Deferred<LooprCutoff> {
+    fun getCutoff(address: String, blockNumber: String): Deferred<LooprCutoff> {
         val service = LoopringServiceInternal.getService()
-        val jsonParams = JsonObject()
-        jsonParams.addProperty("address", address)
-        jsonParams.addProperty("delegateAddress", delegateAddress)
-        jsonParams.addProperty("blockNumber", blockNumber)
+        val request = LooprRequestCutoff(address, delegateAddress, blockNumber)
+        val wrapper = LooprRequestWrapper(this.jsonRpcVersion, "loopring_getCutoff", request, this.id)
 
-        return service.getCutoff(this.jsonRpcVersion,"loopring_getCutoff", jsonParams.toString(),this.id)
+        return service.getCutoff(wrapper)
     }
 
     /**
@@ -225,10 +192,10 @@ class LoopringService() {
      */
     fun getPriceQuote(currency: String): Deferred<LooprPriceQuote> {
         val service = LoopringServiceInternal.getService()
-        val jsonParams = JsonObject()
-        jsonParams.addProperty("currency", currency)
+        val request = LooprRequestPriceQuote(currency)
+        val wrapper = LooprRequestWrapper(this.jsonRpcVersion, "loopring_getPriceQuote", request, this.id)
 
-        return service.getPriceQuote(this.jsonRpcVersion,"loopring_getPriceQuote", jsonParams.toString(),this.id)
+        return service.getPriceQuote(wrapper)
     }
 
     /**
@@ -239,11 +206,10 @@ class LoopringService() {
      */
     fun getEstimatedAllocatedAllowance(owner: String, tokens: String): Deferred<LooprEstimatedAllocatedAllowance> {
         val service = LoopringServiceInternal.getService()
-        val jsonParams = JsonObject()
-        jsonParams.addProperty("owner", owner)
-        jsonParams.addProperty("tokens", tokens)
+        val request = LooprRequestEstAllocatedAllowance(owner, tokens)
+        val wrapper = LooprRequestWrapper(this.jsonRpcVersion, "loopring_getEstimatedAllocatedAllowance", request, this.id)
 
-        return service.getEstimatedAllocatedAllowance(this.jsonRpcVersion,"loopring_getEstimatedAllocatedAllowance", jsonParams.toString(),this.id)
+        return service.getEstimatedAllocatedAllowance(wrapper)
     }
 
     /**
@@ -253,10 +219,10 @@ class LoopringService() {
      */
     fun getGetFrozenLRCFee(owner: String): Deferred<LooprFrozenLRCFee> {
         val service = LoopringServiceInternal.getService()
-        val jsonParams = JsonObject()
-        jsonParams.addProperty("owner", owner)
+        val request = LooprRequestFrozenLrcFee(owner)
+        val wrapper = LooprRequestWrapper(this.jsonRpcVersion, "loopring_getGetFrozenLRCFee", request, this.id)
 
-        return service.getGetFrozenLRCFee(this.jsonRpcVersion,"loopring_getGetFrozenLRCFee", jsonParams.toString(),this.id)
+        return service.getGetFrozenLRCFee(wrapper)
     }
 
     /**
@@ -266,9 +232,10 @@ class LoopringService() {
      */
     fun getSupportedMarket(): Deferred<LooprMarketPairs> {
         val service = LoopringServiceInternal.getService()
-        val jsonParams = JsonObject()
+        val request = LooprRequestEmpty()
+        val wrapper = LooprRequestWrapper(this.jsonRpcVersion, "loopring_getSupportedMarket", request, this.id)
 
-        return service.getSupportedMarket(this.jsonRpcVersion,"loopring_getSupportedMarket", jsonParams.toString(),this.id)
+        return service.getSupportedMarket(wrapper)
     }
 
     /**
@@ -278,9 +245,10 @@ class LoopringService() {
      */
     fun getSupportedTokens(): Deferred<LooprSupportedTokenList> {
         val service = LoopringServiceInternal.getService()
-        val jsonParams = JsonObject()
+        val request = LooprRequestEmpty()
+        val wrapper = LooprRequestWrapper(this.jsonRpcVersion, "loopring_getSupportedTokens", request, this.id)
 
-        return service.getSupportedTokens(this.jsonRpcVersion,"loopring_getSupportedTokens", jsonParams.toString(),this.id)
+        return service.getSupportedTokens(wrapper)
     }
 
     /**
@@ -290,29 +258,30 @@ class LoopringService() {
      */
     fun getGetPortfolio(owner: String): Deferred<LooprPortfolio> {
         val service = LoopringServiceInternal.getService()
-        val jsonParams = JsonObject()
-        jsonParams.addProperty("owner", owner)
+        val request = LooprRequestPortfolio(owner)
+        val wrapper = LooprRequestWrapper(this.jsonRpcVersion, "loopring_getPortfolio", request, this.id)
 
-        return service.getPortfolio(this.jsonRpcVersion,"loopring_getPortfolio", jsonParams.toString(),this.id)
+        return service.getPortfolio(wrapper)
     }
 
     /**
      * Get user's latest transactions by owner
      * @param owner - The owner address, must be applied. Example input - "0x847983c3a34afa192cfee860698584c030f4c9db1"
      * @param txHash - The transaction hash. Example input - "0xc7756d5d556383b2f965094464bdff3ebe658f263f552858cc4eff4ed0aeafeb"
+     * @param symbol - The token symbol like LRC,WETH. Example input - "RDN"
+     * @param status - The transaction status, possible inputs are "pending", "success", and "failed"
+     * @param txType - The transaction type, possible inputs are "send", "receive", "enable", and "convert"
      * @param pageIndex - The page want to query, default is 1. Example input - 2
      * @param pageSize - The size per page, default is 10. Example input - 20
      *
      */
-    fun getTransactions(owner: String, txHash: String, pageIndex: Int, pageSize: Int): Deferred<LooprTransactionList> {
+    fun getTransactions(owner: String, txHash: String, symbol: String, status: String,
+                        txType: String, pageIndex: Int, pageSize: Int): Deferred<LooprTransactionList> {
         val service = LoopringServiceInternal.getService()
-        val jsonParams = JsonObject()
-        jsonParams.addProperty("owner", owner)
-        jsonParams.addProperty("txHash", txHash)
-        jsonParams.addProperty("pageIndex", pageIndex)
-        jsonParams.addProperty("pageSize", pageSize)
+        val request = LooprRequestTransactions(owner, txHash, symbol, status, txType, pageIndex, pageSize)
+        val wrapper = LooprRequestWrapper(this.jsonRpcVersion, "loopring_getTransactions", request, this.id)
 
-        return service.getTransactions(this.jsonRpcVersion,"loopring_getTransactions", jsonParams.toString(),this.id)
+        return service.getTransactions(wrapper)
     }
 
     /**
@@ -322,10 +291,10 @@ class LoopringService() {
      */
     fun unlockWallet(owner: String): Deferred<LooprUnlockResponse> {
         val service = LoopringServiceInternal.getService()
-        val jsonParams = JsonObject()
-        jsonParams.addProperty("owner", owner)
+        val request = LooprRequestUnlockWallet(owner)
+        val wrapper = LooprRequestWrapper(this.jsonRpcVersion, "loopring_unlockWallet", request, this.id)
 
-        return service.unlockWallet(this.jsonRpcVersion,"loopring_unlockWallet", jsonParams.toString(),this.id)
+        return service.unlockWallet(wrapper)
     }
 
     /**
@@ -335,10 +304,10 @@ class LoopringService() {
      */
     fun notifyTransactionSubmitted(txHash: String): Deferred<LooprTransactionSubmittedResponse> {
         val service = LoopringServiceInternal.getService()
-        val jsonParams = JsonObject()
-        jsonParams.addProperty("txHash", txHash)
+        val request = LooprRequestUnlockWallet(txHash)
+        val wrapper = LooprRequestWrapper(this.jsonRpcVersion, "loopring_notifyTransactionSubmitted", request, this.id)
 
-        return service.notifyTransactionSubmitted(this.jsonRpcVersion,"loopring_notifyTransactionSubmitted", jsonParams.toString(),this.id)
+        return service.notifyTransactionSubmitted(wrapper)
     }
 
 }
