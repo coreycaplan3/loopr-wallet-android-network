@@ -47,6 +47,7 @@ open class LooprBalance : RealmObject() {
             } else {
                 val jsonObj = json.asJsonObject
                 val balanceInfo = LooprBalance()
+                //throw (Throwable(jsonObj.toString()))
 
                 //TODO - check if this code is enough to handle normally encountered errors
                 //if (!jsonObj.get("id").isJsonNull && jsonObj.get("id").isJsonPrimitive) {
@@ -58,13 +59,14 @@ open class LooprBalance : RealmObject() {
                 jsonObj.get("jsonrpc")?.let {
                     balanceInfo.jsonrpc  = it.asString
                 }
-
+                //throw(Throwable(jsonObj.toString()))
                 jsonObj.get("result")?.let {
                     balanceInfo.delegateAddress = it.asJsonObject.get("delegateAddress").asString
                     val tokenArray = it.asJsonObject.get("tokens").asJsonArray
 
                     balanceInfo.tokens = RealmList()
                     tokenArray.forEach {
+                        //throw(Throwable(it.toString()))
                         balanceInfo.tokens?.add(context.deserialize(it, LooprTokenInfo::class.java))
                     }
                 }

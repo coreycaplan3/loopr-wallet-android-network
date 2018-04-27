@@ -4,6 +4,7 @@ import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.CoroutineCallAdapterFactory
 import org.loopring.looprwalletnetwork.utilities.DateDeserializer
 import kotlinx.coroutines.experimental.Deferred
+import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import org.loopring.looprwalletnetwork.models.loopring.requestObjects.LooprRequestBalance
 import org.loopring.looprwalletnetwork.models.loopring.requestObjects.LooprRequestOrder
@@ -200,6 +201,7 @@ internal interface LoopringServiceInternal {
             val gson = GsonBuilder()
                     .registerTypeAdapter(Date::class.java, DateDeserializer())
                     .registerTypeAdapter(LooprBalance::class.java, LooprBalance.LooprBalanceDeserializer())
+                    .registerTypeAdapter(LooprTokenInfo::class.java, LooprTokenInfo.LooprTokenInfoDeserializer())
                     .registerTypeAdapter(LooprDepth::class.java, LooprDepth.LooprDepthDeserializer())
                     .registerTypeAdapter(LooprOrderResponse::class.java, LooprOrderResponse.LooprOrderResponseDeserializer())
                     .registerTypeAdapter(LooprOrder::class.java, LooprOrder.LooprOrderDeserializer())
@@ -233,6 +235,56 @@ internal interface LoopringServiceInternal {
                     .build()
 
             return retrofit.create<LoopringServiceInternal>(LoopringServiceInternal::class.java)
+        }
+
+        fun getMockService(baseUrl: HttpUrl): LoopringServiceInternal {
+
+            val httpClient = OkHttpClient()
+            /*httpClient.interceptors().add(Interceptor {
+                val request = it.request()
+
+                val httpUrl = it.request().url().newBuilder()
+                        .build()
+
+                val newRequest = request.newBuilder().url(httpUrl).build()
+                it.proceed(newRequest)
+            }*/
+            val gson = GsonBuilder()
+                    .registerTypeAdapter(Date::class.java, DateDeserializer())
+                    .registerTypeAdapter(LooprBalance::class.java, LooprBalance.LooprBalanceDeserializer())
+                    .registerTypeAdapter(LooprTokenInfo::class.java, LooprTokenInfo.LooprTokenInfoDeserializer())
+                    .registerTypeAdapter(LooprDepth::class.java, LooprDepth.LooprDepthDeserializer())
+                    .registerTypeAdapter(LooprOrderResponse::class.java, LooprOrderResponse.LooprOrderResponseDeserializer())
+                    .registerTypeAdapter(LooprOrder::class.java, LooprOrder.LooprOrderDeserializer())
+                    .registerTypeAdapter(LooprOrderList::class.java, LooprOrderList.LooprOrderListDeserializer())
+                    .registerTypeAdapter(LooprOrderItem::class.java, LooprOrderItem.LooprOrderItemDeserializer())
+                    .registerTypeAdapter(LooprDepthListItem::class.java, LooprDepthListItem.LooprDepthListItemDeserializer())
+                    .registerTypeAdapter(LooprTickerList::class.java, LooprTickerList.LooprTickerListDeserializer())
+                    .registerTypeAdapter(LooprTicker::class.java, LooprTicker.LooprTickerDeserializer())
+                    .registerTypeAdapter(LooprTickerExchangeList::class.java, LooprTickerExchangeList.LooprTickerExchangeListDeserializer())
+                    .registerTypeAdapter(LooprFillsList::class.java, LooprFillsList.LooprFillsListDeserializer())
+                    .registerTypeAdapter(LooprTrendList::class.java, LooprTrendList.LooprTrendListDeserializer())
+                    .registerTypeAdapter(LooprTrend::class.java, LooprTrend.LooprTrendDeserializer())
+                    .registerTypeAdapter(LooprMinedRingList::class.java, LooprMinedRingList.LooprMinedRingListDeserializer())
+                    .registerTypeAdapter(LooprMinedRing::class.java, LooprMinedRing.LooprMinedRingDeserializer())
+                    .registerTypeAdapter(LooprPriceQuote::class.java, LooprPriceQuote.LooprPriceQuoteDeserializer())
+                    .registerTypeAdapter(LooprTokenPriceQuote::class.java, LooprTokenPriceQuote.LooprTokenPriceQuoteDeserializer())
+                    .registerTypeAdapter(LooprEstimatedAllocatedAllowance::class.java, LooprEstimatedAllocatedAllowance.LooprEstimatedAllocatedAllowanceDeserializer())
+                    .registerTypeAdapter(LooprFrozenLRCFee::class.java, LooprFrozenLRCFee.LooprFrozenLRCFeeDeserializer())
+                    .registerTypeAdapter(LooprPortfolioToken::class.java, LooprPortfolioToken.LooprPortfolioTokenDeserializer())
+                    .registerTypeAdapter(LooprTransactionList::class.java, LooprTransactionList.LooprTransactionListDeserializer())
+                    .registerTypeAdapter(LooprTransaction::class.java, LooprTransaction.LooprTransactionDeserializer())
+                    .enableComplexMapKeySerialization()
+                    .serializeNulls()
+                    .create()
+
+            val retrofitMock = Retrofit.Builder()
+                    .baseUrl(baseUrl)
+                    .addCallAdapterFactory(CoroutineCallAdapterFactory())
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .build()
+
+            return retrofitMock.create<LoopringServiceInternal>(LoopringServiceInternal::class.java)
         }
     }
 

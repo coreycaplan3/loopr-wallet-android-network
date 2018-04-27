@@ -58,7 +58,7 @@ open class LooprTokenInfo : RealmObject() {
 
                 //TODO - check if this code is enough to handle normally encountered errors
                 //if (!jsonObj.get("id").isJsonNull && jsonObj.get("id").isJsonPrimitive) {
-                jsonObj.get("token")?.let {
+                jsonObj.get("symbol")?.let {
                     tokenInfo.token = it.asString
                 }
                 //}

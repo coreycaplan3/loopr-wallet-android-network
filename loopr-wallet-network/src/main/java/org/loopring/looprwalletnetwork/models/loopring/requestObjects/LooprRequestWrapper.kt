@@ -3,6 +3,8 @@ package org.loopring.looprwalletnetwork.models.loopring.requestObjects
 data class LooprRequestWrapper(
         val jsonrpc: String,
         val method: String,
-        val param: Any,
-        val id: Int) {
+        val paramObj: Any,
+        val id: Int
+) {
+    val params: List<Any> = listOf(paramObj)
 }
