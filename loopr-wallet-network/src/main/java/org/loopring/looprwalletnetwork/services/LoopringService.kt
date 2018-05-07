@@ -12,7 +12,7 @@ class LoopringService {
 
     val jsonRpcVersion = "2.0"
     private val loopringContractAddress = "0xEF68e7C694F40c8202821eDF525dE3782458639f"
-    val delegateAddress = "0x5567ee920f7E62274284985D793344351A00142B" //TODO - ask Corey where a good place to externalize this to is
+    val delegateAddress = "0x17233e07c67d086464fD408148c3ABB56245FA64" //TODO - find out a good way to constantly hv e the updated version of this
     val id = 64
     var isMock = false
     var mockUrl: HttpUrl? = null
@@ -24,8 +24,7 @@ class LoopringService {
     fun getBalances(owner: String): Deferred<LooprBalance> {
         val service = getLoopringService()
         val request = LooprRequestBalance(owner, delegateAddress)
-        val wrapper = LooprRequestWrapper(this.jsonRpcVersion, "loopring_getBalance", request, id)
-        //throw(Throwable(Gson().toJson(wrapper)))
+        val wrapper = LooprRequestWrapper(this.jsonRpcVersion, "loopring_getBalance", request, /*id*/id)
 
         return service.getBalances(wrapper)
     }
@@ -102,7 +101,7 @@ class LoopringService {
      * No params
      *
      */
-    fun getTicker(market: String): Deferred<LooprTickerList> {
+    fun getTicker(): Deferred<LooprTickerList> {
         val service = getLoopringService()
         val request = LooprRequestEmpty()
         val wrapper = LooprRequestWrapper(this.jsonRpcVersion, "loopring_getTicker", request, this.id)

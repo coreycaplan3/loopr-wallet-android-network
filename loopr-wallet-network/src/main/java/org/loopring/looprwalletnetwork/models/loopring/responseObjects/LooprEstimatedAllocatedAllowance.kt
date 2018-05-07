@@ -4,27 +4,15 @@ import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
-import com.google.gson.annotations.SerializedName
 import io.realm.RealmList
 import io.realm.RealmObject
 import java.lang.reflect.Type
 import java.math.BigInteger
 
-open class LooprEstimatedAllocatedAllowance : RealmObject() {
+open class LooprEstimatedAllocatedAllowance(
+        override var id: Int? = null, override var jsonrpc: String? = null
+) : RealmObject(), LooprResponse {
 
-    /**
-     * TODO - figure out what this id is
-     * Example output - 64
-     */
-    @SerializedName("id")
-    var id : Int?  = null
-
-    /**
-     * String representing the version of jsonrpc. Should match the one used in the request
-     * Example output - "2.0"
-     */
-    @SerializedName("jsonrpc")
-    var jsonrpc : String? = null
 
     /**
      * The frozen amount in hex format
@@ -62,18 +50,13 @@ open class LooprEstimatedAllocatedAllowance : RealmObject() {
             if (json.isJsonNull || json.isJsonPrimitive) {
                 return null
             } else {
-                val allocatedAllowance = LooprEstimatedAllocatedAllowance()
                 val jsonObj = json.asJsonObject
+                val allocatedAllowance = LooprEstimatedAllocatedAllowance()
+
+                LooprResponse.checkForError(jsonObj)
+                allocatedAllowance.setIdJsonRPC(jsonObj)
 
                 //TODO - check if this code is enough to handle normally encountered errors
-                jsonObj.get("id")?.let {
-                    allocatedAllowance.id = it.asString.toIntOrNull()
-                }
-
-                jsonObj.get("jsonrpc")?.let {
-                    allocatedAllowance.jsonrpc  = it.asString
-                }
-
                 jsonObj.get("result")?.let {
                     allocatedAllowance.mAllowance = RealmList()
                     it.asJsonArray.forEach {

@@ -1,29 +1,13 @@
 package org.loopring.looprwalletnetwork.models.loopring.responseObjects
 
-import com.google.gson.JsonDeserializationContext
-import com.google.gson.JsonDeserializer
-import com.google.gson.JsonElement
-import com.google.gson.JsonParseException
-import com.google.gson.annotations.SerializedName
+import com.google.gson.*
 import io.realm.RealmList
 import io.realm.RealmObject
 import java.lang.reflect.Type
 
-open class LooprBalance : RealmObject() {
-
-    /**
-     * TODO - figure out what this id is
-     * Example output - 64
-     */
-    @SerializedName("id")
-    var id : Int?  = null
-
-    /**
-     * String representing the version of jsonrpc. Should match the one used in the request
-     * Example output - "2.0"
-     */
-    @SerializedName("jsonrpc")
-    var jsonrpc : String? = null
+open class LooprBalance(
+        override var id: Int? = null, override var jsonrpc: String? = null
+) : RealmObject(), LooprResponse {
 
     /**
      * The loopring TokenTransferDelegate Protocol
@@ -47,30 +31,20 @@ open class LooprBalance : RealmObject() {
             } else {
                 val jsonObj = json.asJsonObject
                 val balanceInfo = LooprBalance()
-                //throw (Throwable(jsonObj.toString()))
+
+                LooprResponse.checkForError(jsonObj)
+                balanceInfo.setIdJsonRPC(jsonObj)
 
                 //TODO - check if this code is enough to handle normally encountered errors
-                //if (!jsonObj.get("id").isJsonNull && jsonObj.get("id").isJsonPrimitive) {
-                    jsonObj.get("id")?.let {
-                        balanceInfo.id = it.asString.toIntOrNull()
-                    }
-                //}
-
-                jsonObj.get("jsonrpc")?.let {
-                    balanceInfo.jsonrpc  = it.asString
-                }
-                //throw(Throwable(jsonObj.toString()))
                 jsonObj.get("result")?.let {
                     balanceInfo.delegateAddress = it.asJsonObject.get("delegateAddress").asString
                     val tokenArray = it.asJsonObject.get("tokens").asJsonArray
 
                     balanceInfo.tokens = RealmList()
                     tokenArray.forEach {
-                        //throw(Throwable(it.toString()))
                         balanceInfo.tokens?.add(context.deserialize(it, LooprTokenInfo::class.java))
                     }
                 }
-
                 return balanceInfo
             }
         }

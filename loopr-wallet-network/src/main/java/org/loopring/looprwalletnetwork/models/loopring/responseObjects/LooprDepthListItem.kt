@@ -65,11 +65,17 @@ open class LooprDepthListItem : RealmObject() {
                     val depthListItemJson = json.asJsonArray
 
                     //TODO - find out through testing where possible errors could arise with these
-                    depthListItem.mDepthPrice = depthListItemJson.get(0).asString
+                    depthListItemJson.get(0)?.let{
+                        depthListItem.mDepthPrice = it.asString
+                    }
 
-                    depthListItem.mAmtTokenA = depthListItemJson.get(1).asString
+                    depthListItemJson.get(1).let {
+                        depthListItem.mAmtTokenA = it.asString
+                    }
 
-                    depthListItem.mAmtTokenB = depthListItemJson.get(2).asString
+                    depthListItemJson.get(2).let {
+                        depthListItem.mAmtTokenB = it.asString
+                    }
 
                     return depthListItem
                 }

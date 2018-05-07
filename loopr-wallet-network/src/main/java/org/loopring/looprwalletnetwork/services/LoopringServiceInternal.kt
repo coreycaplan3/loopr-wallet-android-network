@@ -201,6 +201,10 @@ internal interface LoopringServiceInternal {
             val gson = GsonBuilder()
                     .registerTypeAdapter(Date::class.java, DateDeserializer())
                     .registerTypeAdapter(LooprBalance::class.java, LooprBalance.LooprBalanceDeserializer())
+                    .registerTypeAdapter(LooprCutoff::class.java, LooprCutoff.LooprCutoffDeserializer())
+                    .registerTypeAdapter(LooprMarketPairs::class.java, LooprMarketPairs.LooprMarketPairsDeserializer())
+                    .registerTypeAdapter(LooprFill::class.java, LooprFill.LooprFillDeserializer())
+                    .registerTypeAdapter(LooprPortfolio::class.java, LooprPortfolio.LooprPortfolioDeserializer())
                     .registerTypeAdapter(LooprTokenInfo::class.java, LooprTokenInfo.LooprTokenInfoDeserializer())
                     .registerTypeAdapter(LooprDepth::class.java, LooprDepth.LooprDepthDeserializer())
                     .registerTypeAdapter(LooprOrderResponse::class.java, LooprOrderResponse.LooprOrderResponseDeserializer())
@@ -223,6 +227,9 @@ internal interface LoopringServiceInternal {
                     .registerTypeAdapter(LooprPortfolioToken::class.java, LooprPortfolioToken.LooprPortfolioTokenDeserializer())
                     .registerTypeAdapter(LooprTransactionList::class.java, LooprTransactionList.LooprTransactionListDeserializer())
                     .registerTypeAdapter(LooprTransaction::class.java, LooprTransaction.LooprTransactionDeserializer())
+                    .registerTypeAdapter(LooprSupportedToken::class.java, LooprSupportedTokenList.LooprSupportedTokenListDeserializer())
+                    .registerTypeAdapter(LooprTransactionSubmittedResponse::class.java, LooprTransactionSubmittedResponse.LooprTransactionSubmittedResponseDeserializer())
+                    .registerTypeAdapter(LooprUnlockResponse::class.java, LooprUnlockResponse.LooprUnlockResponseDeserializer())
                     .enableComplexMapKeySerialization()
                     .serializeNulls()
                     .create()
@@ -239,7 +246,7 @@ internal interface LoopringServiceInternal {
 
         fun getMockService(baseUrl: HttpUrl): LoopringServiceInternal {
 
-            val httpClient = OkHttpClient()
+            //val httpClient = OkHttpClient()
             /*httpClient.interceptors().add(Interceptor {
                 val request = it.request()
 
@@ -252,7 +259,11 @@ internal interface LoopringServiceInternal {
             val gson = GsonBuilder()
                     .registerTypeAdapter(Date::class.java, DateDeserializer())
                     .registerTypeAdapter(LooprBalance::class.java, LooprBalance.LooprBalanceDeserializer())
+                    .registerTypeAdapter(LooprCutoff::class.java, LooprCutoff.LooprCutoffDeserializer())
                     .registerTypeAdapter(LooprTokenInfo::class.java, LooprTokenInfo.LooprTokenInfoDeserializer())
+                    .registerTypeAdapter(LooprMarketPairs::class.java, LooprMarketPairs.LooprMarketPairsDeserializer())
+                    .registerTypeAdapter(LooprFill::class.java, LooprFill.LooprFillDeserializer())
+                    .registerTypeAdapter(LooprPortfolio::class.java, LooprPortfolio.LooprPortfolioDeserializer())
                     .registerTypeAdapter(LooprDepth::class.java, LooprDepth.LooprDepthDeserializer())
                     .registerTypeAdapter(LooprOrderResponse::class.java, LooprOrderResponse.LooprOrderResponseDeserializer())
                     .registerTypeAdapter(LooprOrder::class.java, LooprOrder.LooprOrderDeserializer())
@@ -274,6 +285,9 @@ internal interface LoopringServiceInternal {
                     .registerTypeAdapter(LooprPortfolioToken::class.java, LooprPortfolioToken.LooprPortfolioTokenDeserializer())
                     .registerTypeAdapter(LooprTransactionList::class.java, LooprTransactionList.LooprTransactionListDeserializer())
                     .registerTypeAdapter(LooprTransaction::class.java, LooprTransaction.LooprTransactionDeserializer())
+                    .registerTypeAdapter(LooprSupportedToken::class.java, LooprSupportedTokenList.LooprSupportedTokenListDeserializer())
+                    .registerTypeAdapter(LooprTransactionSubmittedResponse::class.java, LooprTransactionSubmittedResponse.LooprTransactionSubmittedResponseDeserializer())
+                    .registerTypeAdapter(LooprUnlockResponse::class.java, LooprUnlockResponse.LooprUnlockResponseDeserializer())
                     .enableComplexMapKeySerialization()
                     .serializeNulls()
                     .create()

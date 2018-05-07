@@ -9,21 +9,9 @@ import io.realm.RealmList
 import io.realm.RealmObject
 import java.lang.reflect.Type
 
-open class LooprPriceQuote : RealmObject() {
-
-    /**
-     * TODO - figure out what this id is
-     * Example output - 64
-     */
-    @SerializedName("id")
-    var id : Int?  = null
-
-    /**
-     * String representing the version of jsonrpc. Should match the one used in the request
-     * Example output - "2.0"
-     */
-    @SerializedName("jsonrpc")
-    var jsonrpc : String? = null
+open class LooprPriceQuote(
+        override var id: Int? = null, override var jsonrpc: String? = null
+) : RealmObject(), LooprResponse {
 
     /**
      * The base currency, CNY or USD
@@ -46,19 +34,14 @@ open class LooprPriceQuote : RealmObject() {
             if (json.isJsonNull || json.isJsonPrimitive) {
                 return null
             } else {
+                val jsonObj = json.asJsonObject
                 val priceQuote = LooprPriceQuote()
-                val priceQuoteJsonObject = json.asJsonObject
+
+                LooprResponse.checkForError(jsonObj)
+                priceQuote.setIdJsonRPC(jsonObj)
 
                 //TODO - check if this code is enough to handle normally encountered errors
-                priceQuoteJsonObject.get("id")?.let {
-                    priceQuote.id = it.asString.toIntOrNull()
-                }
-
-                priceQuoteJsonObject.get("jsonrpc")?.let {
-                    priceQuote.jsonrpc  = it.asString
-                }
-
-                priceQuoteJsonObject.get("result")?.let {
+                jsonObj.get("result")?.let {
                     it.asJsonObject.get("currency")?.let {
                         priceQuote.currency  = it.asString
                     }

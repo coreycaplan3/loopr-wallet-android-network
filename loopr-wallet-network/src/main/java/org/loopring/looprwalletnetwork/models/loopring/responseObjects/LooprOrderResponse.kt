@@ -4,25 +4,12 @@ import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
-import com.google.gson.annotations.SerializedName
 import io.realm.RealmObject
 import java.lang.reflect.Type
 
-open class LooprOrderResponse : RealmObject() {
-
-    /**
-     * TODO - figure out what this id is
-     * Example output - 64
-     */
-    @SerializedName("id")
-    var id : Int?  = null
-
-    /**
-     * String representing the version of jsonrpc. Should match the one used in the request
-     * Example output - "2.0"
-     */
-    @SerializedName("jsonrpc")
-    var jsonrpc : String? = null
+open class LooprOrderResponse(
+        override var id: Int? = null, override var jsonrpc: String? = null
+) : RealmObject(), LooprResponse {
 
     /**
      * Order Hash
@@ -40,25 +27,17 @@ open class LooprOrderResponse : RealmObject() {
                 return null
             } else {
                 val jsonObj = json.asJsonObject
-                val response = LooprOrderResponse()
+                val responseObj = LooprOrderResponse()
+
+                LooprResponse.checkForError(jsonObj)
+                responseObj.setIdJsonRPC(jsonObj)
 
                 //TODO - check if this code is enough to handle normally encountered errors
-                //if (!jsonObj.get("id").isJsonNull && jsonObj.get("id").isJsonPrimitive) {
-                jsonObj.get("id")?.let {
-                    response.id = it.asInt
-                }
-                //}
-
-
-                jsonObj.get("jsonrpc")?.let {
-                    response.jsonrpc  = it.asString
-                }
-
                 jsonObj.get("result").asJsonObject.get("orderHash")?.let {
-                    response.orderHash = it.asString
+                    responseObj.orderHash = it.asString
                 }
 
-                return response
+                return responseObj
             }
         }
 

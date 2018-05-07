@@ -9,21 +9,9 @@ import io.realm.RealmList
 import io.realm.RealmObject
 import java.lang.reflect.Type
 
-open class LooprOrderList : RealmObject() {
-
-    /**
-     * TODO - figure out what this id is
-     * Example output - 64
-     */
-    @SerializedName("id")
-    var id : Int?  = null
-
-    /**
-     * String representing the version of jsonrpc. Should match the one used in the request
-     * Example output - "2.0"
-     */
-    @SerializedName("jsonrpc")
-    var jsonrpc : String? = null
+open class LooprOrderList(
+        override var id: Int? = null, override var jsonrpc: String? = null
+) : RealmObject(), LooprResponse {
 
     /**
      * List of [LooprOrder] objects with information about the order
@@ -63,17 +51,10 @@ open class LooprOrderList : RealmObject() {
                 val jsonObj = json.asJsonObject
                 val orderList = LooprOrderList()
 
+                LooprResponse.checkForError(jsonObj)
+                orderList.setIdJsonRPC(jsonObj)
+
                 //TODO - check if this code is enough to handle normally encountered errors
-                //if (!jsonObj.get("id").isJsonNull && jsonObj.get("id").isJsonPrimitive) {
-                jsonObj.get("id")?.let {
-                    orderList.id = it.asString.toIntOrNull()
-                }
-                //}
-
-                jsonObj.get("jsonrpc")?.let {
-                    orderList.jsonrpc  = it.asString
-                }
-
                 jsonObj.get("result")?.let {
                     orderList.total = it.asJsonObject.get("total").asString.toIntOrNull()
                     orderList.pageIndex = it.asJsonObject.get("pageIndex").asString.toIntOrNull()

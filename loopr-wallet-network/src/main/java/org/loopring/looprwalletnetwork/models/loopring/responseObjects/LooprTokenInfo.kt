@@ -57,12 +57,9 @@ open class LooprTokenInfo : RealmObject() {
                 val tokenInfo = LooprTokenInfo()
 
                 //TODO - check if this code is enough to handle normally encountered errors
-                //if (!jsonObj.get("id").isJsonNull && jsonObj.get("id").isJsonPrimitive) {
                 jsonObj.get("symbol")?.let {
                     tokenInfo.token = it.asString
                 }
-                //}
-
 
                 jsonObj.get("balance")?.let {
                     tokenInfo.mBalance  = it.asString

@@ -31,7 +31,7 @@ open class LooprFill : RealmObject() {
      * Example output - 100
      */
     @SerializedName("ringIndex")
-    var ringIndex : Integer? = null
+    var ringIndex : Int? = null
 
     /**
      * The timestamp of matching time
@@ -187,19 +187,16 @@ open class LooprFill : RealmObject() {
                 val fill = LooprFill()
 
                 //TODO - check if this code is enough to handle normally encountered errors
-                //if (!jsonObj.get("id").isJsonNull && jsonObj.get("id").isJsonPrimitive) {
                 jsonObj.get("protocol")?.let {
                     fill.protocol = it.asString
                 }
-                //}
-
 
                 jsonObj.get("owner")?.let {
                     fill.owner  = it.asString
                 }
 
                 jsonObj.get("ringIndex")?.let {
-                    fill.ringIndex = Integer(it.asString)
+                    fill.ringIndex = Integer.parseInt(it.asString)
                 }
 
                 jsonObj.get("createTime")?.let {

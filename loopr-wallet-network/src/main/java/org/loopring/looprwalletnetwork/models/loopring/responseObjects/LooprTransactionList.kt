@@ -4,26 +4,13 @@ import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
-import com.google.gson.annotations.SerializedName
 import io.realm.RealmList
 import io.realm.RealmObject
 import java.lang.reflect.Type
 
-open class LooprTransactionList : RealmObject() {
-
-    /**
-     * TODO - figure out what this id is
-     * Example output - 64
-     */
-    @SerializedName("id")
-    var id : Int?  = null
-
-    /**
-     * String representing the version of jsonrpc. Should match the one used in the request
-     * Example output - "2.0"
-     */
-    @SerializedName("jsonrpc")
-    var jsonrpc : String? = null
+open class LooprTransactionList(
+        override var id: Int? = null, override var jsonrpc: String? = null
+) : RealmObject(), LooprResponse {
 
     /**
      * Transaction list
@@ -58,37 +45,32 @@ open class LooprTransactionList : RealmObject() {
                 return null
             } else {
                 val jsonObj = json.asJsonObject
-                val transactionList = LooprTransactionList()
+                val transactionListObj = LooprTransactionList()
+
+                LooprResponse.checkForError(jsonObj)
+                transactionListObj.setIdJsonRPC(jsonObj)
 
                 //TODO - check if this code is enough to handle normally encountered errors
-                jsonObj.get("id")?.let {
-                    transactionList.id = it.asString.toIntOrNull()
-                }
-
-                jsonObj.get("jsonrpc")?.let {
-                    transactionList.jsonrpc  = it.asString
-                }
-
                 jsonObj.get("result")?.let {
                     it.asJsonObject.get("pageIndex")?.let {
-                        transactionList.pageIndex  = it.asInt
+                        transactionListObj.pageIndex  = it.asInt
                     }
                     it.asJsonObject.get("pageSize")?.let {
-                        transactionList.pageSize  = it.asInt
+                        transactionListObj.pageSize  = it.asInt
                     }
                     it.asJsonObject.get("total")?.let {
-                        transactionList.total  = it.asInt
+                        transactionListObj.total  = it.asInt
                     }
 
                     val transactionJsonArray = it.asJsonObject.get("data").asJsonArray
 
-                    transactionList.transactions = RealmList()
+                    transactionListObj.transactions = RealmList()
                     transactionJsonArray.forEach {
-                        transactionList.transactions?.add(context.deserialize(it, LooprTransaction::class.java))
+                        transactionListObj.transactions?.add(context.deserialize(it, LooprTransaction::class.java))
                     }
                 }
 
-                return transactionList
+                return transactionListObj
             }
         }
 

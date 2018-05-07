@@ -9,21 +9,9 @@ import io.realm.RealmList
 import io.realm.RealmObject
 import java.lang.reflect.Type
 
-open class LooprTrendList : RealmObject() {
-
-    /**
-     * TODO - figure out what this id is
-     * Example output - 64
-     */
-    @SerializedName("id")
-    var id : Int?  = null
-
-    /**
-     * String representing the version of jsonrpc. Should match the one used in the request
-     * Example output - "2.0"
-     */
-    @SerializedName("jsonrpc")
-    var jsonrpc : String? = null
+open class LooprTrendList(
+        override var id: Int? = null, override var jsonrpc: String? = null
+) : RealmObject(), LooprResponse {
 
     /**
      * A list of [LooprTrend] objects with trend data
@@ -39,34 +27,26 @@ open class LooprTrendList : RealmObject() {
             if (json.isJsonNull || json.isJsonPrimitive) {
                 return null
             } else {
-                val trendsList = LooprTrendList()
-                val trendsJsonObject = json.asJsonObject
+                val jsonObj = json.asJsonObject
+                val trendsListObj = LooprTrendList()
+
+                LooprResponse.checkForError(jsonObj)
+                trendsListObj.setIdJsonRPC(jsonObj)
 
                 //TODO - check if this code is enough to handle normally encountered errors
-                trendsJsonObject.get("id")?.let {
-                    trendsList.id = it.asString.toIntOrNull()
-                }
+                jsonObj.get("result")?.let {
+                    val trendsJsonArray = it.asJsonArray
 
-                trendsJsonObject.get("jsonrpc")?.let {
-                    trendsList.jsonrpc  = it.asString
-                }
-
-                trendsJsonObject.get("result")?.let {
-                    val trendsJsonArray = it.asJsonObject.get("data").asJsonArray
-
-                    trendsList.trends = RealmList()
+                    trendsListObj.trends = RealmList()
                     trendsJsonArray.forEach {
-                        trendsList.trends?.add(context.deserialize(it, LooprTrend::class.java))
+                        trendsListObj.trends?.add(context.deserialize(it, LooprTrend::class.java))
                     }
                 }
 
 
-                return trendsList
+                return trendsListObj
             }
         }
 
     }
-
-
-
 }

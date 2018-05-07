@@ -1,24 +1,17 @@
 package org.loopring.looprwalletnetwork.models.loopring.responseObjects
 
+import com.google.gson.JsonDeserializationContext
+import com.google.gson.JsonDeserializer
+import com.google.gson.JsonElement
+import com.google.gson.JsonParseException
 import com.google.gson.annotations.SerializedName
 import io.realm.RealmObject
+import java.lang.reflect.Type
 import java.util.*
 
-open class LooprCutoff : RealmObject() {
-
-    /**
-     * TODO - figure out what this id is
-     * Example output - 64
-     */
-    @SerializedName("id")
-    var id : Int?  = null
-
-    /**
-     * String representing the version of jsonrpc. Should match the one used in the request
-     * Example output - "2.0"
-     */
-    @SerializedName("jsonrpc")
-    var jsonrpc : String? = null
+open class LooprCutoff(
+        override var id: Int? = null, override var jsonrpc: String? = null
+) : RealmObject(), LooprResponse {
 
     /**
      * The cutoff timestamp string
@@ -26,4 +19,30 @@ open class LooprCutoff : RealmObject() {
      */
     @SerializedName("result")
     var cutoff : Date? = null
+
+    /**
+     * Custom class deserializer
+     */
+    class LooprCutoffDeserializer : JsonDeserializer<LooprCutoff> {
+        @Throws(JsonParseException::class)
+        override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): LooprCutoff? {
+            if (json.isJsonNull || json.isJsonPrimitive) {
+                return null
+            } else {
+                val jsonObj = json.asJsonObject
+                val cutoffObj = LooprCutoff()
+
+                LooprResponse.checkForError(jsonObj)
+                cutoffObj.setIdJsonRPC(jsonObj)
+
+                //TODO - check if this code is enough to handle normally encountered errors
+                jsonObj.get("result")?.let {
+                    cutoffObj.cutoff = context.deserialize(it.asJsonObject,Date::class.java)
+                }
+                return cutoffObj
+            }
+        }
+
+    }
+
 }

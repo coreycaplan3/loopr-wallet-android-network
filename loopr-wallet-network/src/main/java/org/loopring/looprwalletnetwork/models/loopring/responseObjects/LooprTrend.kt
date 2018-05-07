@@ -118,6 +118,13 @@ open class LooprTrend : RealmObject() {
     private var end : Date? = null
 
     /**
+     * The time the data was created
+     * Example output - 1512646617
+     */
+    @SerializedName("createTime")
+    private var createTime : Date? = null
+
+    /**
      * Custom class deserializer
      */
     class LooprTrendDeserializer : JsonDeserializer<LooprTrend> {
@@ -163,6 +170,10 @@ open class LooprTrend : RealmObject() {
 
                 trendsJsonObject.get("end")?.let {
                     trendsList.end  = Date(it.asLong)
+                }
+
+                trendsJsonObject.get("createTime")?.let {
+                    trendsList.createTime  = Date(it.asLong)
                 }
 
                 return trendsList
