@@ -11,10 +11,23 @@ Kotlin's Coroutines, see [here](https://kotlinlang.org/docs/reference/coroutines
 
 ### Adding the Library
 
-To add this library as a dependency to your project via Gradle, add the following:
+To add this library as a dependency to your project via Gradle, add the following Maven URL to your
+project-level build.gradle file:
 
 ```
-compile 'com.loopring.android:loopr-wallet-network:0.1.0'
+allprojects {
+    repositories {
+        maven {
+            url "https://dl.bintray.com/coreycaplan3/loopr-android"
+        }
+    }
+}
+```
+
+Then, add the following dependency to your app-level build.gradle file:
+
+```
+implementation 'com.loopring.android:loopr-wallet-network:0.9.0'
 ```
 
 ### Using the ETH Wrapper
