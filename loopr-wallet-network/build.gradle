@@ -5,10 +5,10 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'realm-android'
 
 ext {
-    bintrayRepo = 'maven'
+    bintrayRepo = 'loopr-android'
     bintrayName = 'loopr-wallet-android-network'
 
-    publishedGroupId = 'com.loopring.android'
+    publishedGroupId = 'org.loopring.looprwallet'
     libraryName = 'Loopr Wallet Network'
     artifact = 'loopr-wallet-network'
 
@@ -17,7 +17,7 @@ ext {
     siteUrl = 'https://github.com/coreycaplan3/loopr-wallet-android-network'
     gitUrl = 'https://github.com/coreycaplan3/loopr-wallet-android-network.git'
 
-    libraryVersion = '0.2.0'
+    libraryVersion = '0.9.0'
 
     developerId = 'coreycaplan3'
     developerName = 'Corey Caplan'
@@ -26,6 +26,16 @@ ext {
     licenseName = 'GNU General Public License v3.0'
     licenseUrl = 'https://www.gnu.org/licenses/gpl-3.0.en.html'
     allLicenses = ["GPL-3.0"]
+}
+
+bintray {
+    pkg {
+        version {
+            gpg {
+                sign = false // Disable GPG signing with a public/private key
+            }
+        }
+    }
 }
 
 android {
