@@ -18,7 +18,7 @@ project-level build.gradle file:
 allprojects {
     repositories {
         maven {
-            url "https://dl.bintray.com/coreycaplan3/loopr-android"
+            url  "https://jcenter.bintray.com"
         }
     }
 }
@@ -27,7 +27,7 @@ allprojects {
 Then, add the following dependency to your app-level build.gradle file:
 
 ```
-implementation 'com.loopring.android:loopr-wallet-network:0.9.0'
+implementation 'org.loopring.android:loopr-wallet-network:0.9.1'
 ```
 
 ### Using the ETH Wrapper
