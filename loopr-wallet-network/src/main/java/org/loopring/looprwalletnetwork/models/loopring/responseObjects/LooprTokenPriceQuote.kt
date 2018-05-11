@@ -6,6 +6,7 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
 import com.google.gson.annotations.SerializedName
 import io.realm.RealmObject
+import io.realm.annotations.PrimaryKey
 import java.lang.reflect.Type
 import java.math.BigDecimal
 
@@ -15,6 +16,7 @@ open class LooprTokenPriceQuote : RealmObject() {
      * The token the [price] data is for
      * Example output - "ETH"
      */
+    @PrimaryKey
     @SerializedName("symbol")
     var symbol : String? = null
 

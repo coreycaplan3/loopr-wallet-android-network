@@ -6,6 +6,7 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
 import com.google.gson.annotations.SerializedName
 import io.realm.RealmObject
+import io.realm.annotations.PrimaryKey
 import java.lang.reflect.Type
 import java.math.BigInteger
 import java.util.*
@@ -51,6 +52,7 @@ open class LooprTransaction : RealmObject() {
      * The transaction hash
      * Example output - "0xa226639a5852df7a61a19a473a5f6feb98be5247077a7b22b8c868178772d01e"
      */
+    @PrimaryKey
     @SerializedName("txHash")
     var hash: String? = null
 

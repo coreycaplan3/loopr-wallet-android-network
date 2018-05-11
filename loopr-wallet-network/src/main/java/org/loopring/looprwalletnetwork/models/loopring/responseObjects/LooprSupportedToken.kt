@@ -6,6 +6,7 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
 import com.google.gson.annotations.SerializedName
 import io.realm.RealmObject
+import io.realm.annotations.PrimaryKey
 import java.lang.reflect.Type
 import java.math.BigInteger
 import java.util.*
@@ -25,6 +26,7 @@ open class LooprSupportedToken : RealmObject() {
      * Symbol
      * Example output - "OMG"
      */
+    @PrimaryKey
     @SerializedName("symbol")
     var symbol : String? = null
 
