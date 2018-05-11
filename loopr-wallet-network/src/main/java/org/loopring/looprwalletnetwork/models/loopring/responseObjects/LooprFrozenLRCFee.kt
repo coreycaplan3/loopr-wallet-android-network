@@ -15,30 +15,17 @@ open class LooprFrozenLRCFee(
 
     /**
      * The frozen amount in hex format
-     * Example output - ["0x2347ad6c"]
-     * TODO - find out if this ever returns more than one string. If not deserialize straight to string
+     * Example output - "0x2347ad6c"
      */
-    var frozenFees: RealmList<BigInteger>?
+    var frozenFees: BigInteger?
         get() {
-            val response = RealmList<BigInteger>()
-            val feesList = mFrozenFees //Have to get mFrozenFees at a moment in time in case of changes
-            feesList?.let {
-                for (element in feesList) {
-                    response.add(BigInteger(element,10))
-                }
-            }
-            return response
+            return mFrozenFees?.let { BigInteger(it,16) }
         }
         set(value) {
-            mFrozenFees = RealmList()
-            value?.let {
-                for (element in value) {
-                    mFrozenFees?.add(element.toString(10))
-                }
-            }
+            mFrozenFees = value?.toString(16)
         }
 
-    private var mFrozenFees : RealmList<String>? = null
+    private var mFrozenFees : String? = null
 
     /**
      * Custom class deserializer
@@ -57,10 +44,7 @@ open class LooprFrozenLRCFee(
 
                 //TODO - check if this code is enough to handle normally encountered errors
                 jsonObj.get("result")?.let {
-                    frozenFee.mFrozenFees = RealmList()
-                    it.asJsonArray.forEach {
-                        frozenFee.mFrozenFees?.add(BigInteger(it.asString,16).toString(10))
-                    }
+                    frozenFee.mFrozenFees = it.asString.substring(2)
                 }
 
                 return frozenFee

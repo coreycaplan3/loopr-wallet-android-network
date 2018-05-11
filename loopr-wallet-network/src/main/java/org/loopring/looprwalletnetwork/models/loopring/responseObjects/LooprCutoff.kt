@@ -37,12 +37,19 @@ open class LooprCutoff(
 
                 //TODO - check if this code is enough to handle normally encountered errors
                 jsonObj.get("result")?.let {
-                    cutoffObj.cutoff = context.deserialize(it.asJsonObject,Date::class.java)
+                    if (it.asString != "0") {
+                        cutoffObj.cutoff = context.deserialize(it, Date::class.java)
+                    }
                 }
                 return cutoffObj
             }
         }
+    }
 
+    companion object {
+        val BLOCK_EARLIEST = "earliest"
+        val BLOCK_LATEST = "latest"
+        val BLOCK_PENDING = "pending"
     }
 
 }

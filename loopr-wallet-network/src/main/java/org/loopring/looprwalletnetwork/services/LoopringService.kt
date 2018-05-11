@@ -64,7 +64,9 @@ class LoopringService {
      * Get loopring order list
      * @param owner - The address, if is null, will query all orders
      * @param orderHash - The order hash
-     * @param status - order status enum string.(status collection is : ORDER_OPENED(include ORDER_NEW and ORDER_PARTIAL), ORDER_NEW, ORDER_PARTIAL, ORDER_FINISHED, ORDER_CANCEL, ORDER_CUTOFF)
+     * @param status - order status enum string. Use
+     * [LooprOrderList.ORDER_OPENED] (includes ORDER_NEW and ORDER_PARTIAL), [LooprOrderList.ORDER_NEW],
+     * [LooprOrderList.ORDER_PARTIAL], [LooprOrderList.ORDER_FINISHED], [LooprOrderList.ORDER_CANCEL], or [LooprOrderList.ORDER_CUTOFF]
      * @param market - The market of the order.(format is LRC-WETH)
      * @param side - The side of order. only support "buy" and "sell"
      * @param pageIndex - The page you want to query, default is 1
@@ -176,7 +178,7 @@ class LoopringService {
     /**
      * Get cut off time of the address
      * @param address - The address. Example input - "0x8888f1f195afa192cfee860698584c030f4c9db1"
-     * @param blockNumber - "earliest", "latest" or "pending", default is "latest"
+     * @param blockNumber - "earliest", "latest" or "pending", default is "latest". Use [LooprCutoff.BLOCK_EARLIEST], [LooprCutoff.BLOCK_LATEST], or [LooprCutoff.BLOCK_PENDING]
      *
      */
     fun getCutoff(address: String, blockNumber: String): Deferred<LooprCutoff> {
@@ -203,12 +205,12 @@ class LoopringService {
     /**
      * Get the total frozen amount of all unfinished orders
      * @param owner - The address. Example input - "0x8888f1f195afa192cfee860698584c030f4c9db1"
-     * @param tokens - The specific token which you want to get. Example input - "WETH"
+     * @param token - The specific token which you want to get. Example input - "WETH"
      *
      */
-    fun getEstimatedAllocatedAllowance(owner: String, tokens: String): Deferred<LooprEstimatedAllocatedAllowance> {
+    fun getEstimatedAllocatedAllowance(owner: String, token: String): Deferred<LooprEstimatedAllocatedAllowance> {
         val service = getLoopringService()
-        val request = LooprRequestEstAllocatedAllowance(owner, tokens)
+        val request = LooprRequestEstAllocatedAllowance(owner, token)
         val wrapper = LooprRequestWrapper(this.jsonRpcVersion, "loopring_getEstimatedAllocatedAllowance", request, this.id)
 
         return service.getEstimatedAllocatedAllowance(wrapper)
@@ -219,12 +221,12 @@ class LoopringService {
      * @param owner - The address, if is null, will query all orders. Example input - "0x8888f1f195afa192cfee860698584c030f4c9db1"
      * TODO - check if the two gets in the name are a typo (they come from the API docs)
      */
-    fun getGetFrozenLRCFee(owner: String): Deferred<LooprFrozenLRCFee> {
+    fun getFrozenLRCFee(owner: String): Deferred<LooprFrozenLRCFee> {
         val service = getLoopringService()
         val request = LooprRequestFrozenLrcFee(owner)
-        val wrapper = LooprRequestWrapper(this.jsonRpcVersion, "loopring_getGetFrozenLRCFee", request, this.id)
+        val wrapper = LooprRequestWrapper(this.jsonRpcVersion, "loopring_getFrozenLRCFee", request, this.id)
 
-        return service.getGetFrozenLRCFee(wrapper)
+        return service.getFrozenLRCFee(wrapper)
     }
 
     /**
@@ -258,7 +260,7 @@ class LoopringService {
      * @param owner - The owner address, must be applied.  Example input - "0x847983c3a34afa192cfee860698584c030f4c9db1"
      *
      */
-    fun getGetPortfolio(owner: String): Deferred<LooprPortfolio> {
+    fun getPortfolio(owner: String): Deferred<LooprPortfolio> {
         val service = getLoopringService()
         val request = LooprRequestPortfolio(owner)
         val wrapper = LooprRequestWrapper(this.jsonRpcVersion, "loopring_getPortfolio", request, this.id)
@@ -319,6 +321,10 @@ class LoopringService {
 
     fun setLive() {
         this.isMock = false
+    }
+
+    fun getService(): LoopringService {
+        return LoopringService()
     }
 
     private fun getLoopringService(): LoopringServiceInternal{

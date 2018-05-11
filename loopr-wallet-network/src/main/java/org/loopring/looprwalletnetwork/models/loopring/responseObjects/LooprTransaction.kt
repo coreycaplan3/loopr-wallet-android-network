@@ -6,6 +6,7 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
 import com.google.gson.annotations.SerializedName
 import io.realm.RealmObject
+import io.realm.annotations.PrimaryKey
 import java.lang.reflect.Type
 import java.math.BigInteger
 import java.util.*
@@ -51,7 +52,8 @@ open class LooprTransaction : RealmObject() {
      * The transaction hash
      * Example output - "0xa226639a5852df7a61a19a473a5f6feb98be5247077a7b22b8c868178772d01e"
      */
-    @SerializedName("hash")
+    @PrimaryKey
+    @SerializedName("txHash")
     var hash: String? = null
 
     /**
@@ -67,10 +69,10 @@ open class LooprTransaction : RealmObject() {
      */
     var value: BigInteger?
         get() {
-            return mValue?.let{ BigInteger(it, 16)}
+            return mValue?.let{ BigInteger(it)}
         }
         set(value) {
-            mValue = value?.toString(16)
+            mValue = value?.toString()
         }
 
     private var mValue: String? = null
@@ -88,6 +90,13 @@ open class LooprTransaction : RealmObject() {
      */
     @SerializedName("status")
     var status: String? = null
+
+    /**
+     * The symbol for the token in the transaction
+     * Example output - "LRC"
+     */
+    @SerializedName("symbol")
+    var symbol: String? = null
 
     /**
      * Custom class deserializer
@@ -126,7 +135,7 @@ open class LooprTransaction : RealmObject() {
                     transaction.updateTime  = Date(it.asString.toLong())
                 }
 
-                jsonObj.get("hash")?.let {
+                jsonObj.get("txHash")?.let {
                     transaction.hash  = it.asString
                 }
 
@@ -144,6 +153,10 @@ open class LooprTransaction : RealmObject() {
 
                 jsonObj.get("status")?.let {
                     transaction.status  = it.asString
+                }
+
+                jsonObj.get("symbol")?.let {
+                    transaction.symbol  = it.asString
                 }
 
 

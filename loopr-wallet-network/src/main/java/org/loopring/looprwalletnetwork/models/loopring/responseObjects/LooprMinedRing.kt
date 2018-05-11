@@ -6,6 +6,7 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
 import com.google.gson.annotations.SerializedName
 import io.realm.RealmObject
+import io.realm.annotations.PrimaryKey
 import java.lang.reflect.Type
 import java.math.BigInteger
 import java.util.*
@@ -37,6 +38,7 @@ open class LooprMinedRing : RealmObject() {
      * The ring hash
      * Example output - "0xb903239f8543d04b5dc1ba6579132b143087c68db1b2168786408fcbce568238"
      */
+    @PrimaryKey
     @SerializedName("ringHash")
     var ringHash: String? = null
 

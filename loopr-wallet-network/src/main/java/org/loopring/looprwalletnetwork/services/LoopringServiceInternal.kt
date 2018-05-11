@@ -114,7 +114,7 @@ internal interface LoopringServiceInternal {
      * @return [LooprFrozenLRCFee]
      */
     @POST("rpc/$relayVersion/")
-    fun getGetFrozenLRCFee(@Body lrcFeeRequest: LooprRequestWrapper): Deferred<LooprFrozenLRCFee>
+    fun getFrozenLRCFee(@Body lrcFeeRequest: LooprRequestWrapper): Deferred<LooprFrozenLRCFee>
 
     /**
      * Get the USD/CNY/BTC quoted price of tokens
@@ -230,6 +230,7 @@ internal interface LoopringServiceInternal {
                     .registerTypeAdapter(LooprSupportedToken::class.java, LooprSupportedTokenList.LooprSupportedTokenListDeserializer())
                     .registerTypeAdapter(LooprTransactionSubmittedResponse::class.java, LooprTransactionSubmittedResponse.LooprTransactionSubmittedResponseDeserializer())
                     .registerTypeAdapter(LooprUnlockResponse::class.java, LooprUnlockResponse.LooprUnlockResponseDeserializer())
+                    .registerTypeAdapter(LooprSupportedToken::class.java, LooprSupportedToken.LooprSupportedTokenDeserializer())
                     .enableComplexMapKeySerialization()
                     .serializeNulls()
                     .create()
@@ -288,6 +289,7 @@ internal interface LoopringServiceInternal {
                     .registerTypeAdapter(LooprSupportedToken::class.java, LooprSupportedTokenList.LooprSupportedTokenListDeserializer())
                     .registerTypeAdapter(LooprTransactionSubmittedResponse::class.java, LooprTransactionSubmittedResponse.LooprTransactionSubmittedResponseDeserializer())
                     .registerTypeAdapter(LooprUnlockResponse::class.java, LooprUnlockResponse.LooprUnlockResponseDeserializer())
+                    .registerTypeAdapter(LooprSupportedToken::class.java, LooprSupportedToken.LooprSupportedTokenDeserializer())
                     .enableComplexMapKeySerialization()
                     .serializeNulls()
                     .create()

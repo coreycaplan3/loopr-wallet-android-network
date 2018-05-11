@@ -15,31 +15,18 @@ open class LooprEstimatedAllocatedAllowance(
 
 
     /**
-     * The frozen amount in hex format
+     * Allocated allowance amount
      * Example output - ["0x2347ad6c"]
-     * TODO - check if this ever returns more than one list item, if not then go straight to string
      */
-    var allowance: RealmList<BigInteger>?
+    var allowance: BigInteger?
         get() {
-            val response = RealmList<BigInteger>()
-            val allowanceList = mAllowance //Have to get mAllowance at a moment in time in case of changes
-            allowanceList?.let {
-                for (element in allowanceList) {
-                    response.add(BigInteger(element,10))
-                }
-            }
-            return response
+            return mAllowance?.let { BigInteger(it, 16) }
         }
         set(value) {
-            mAllowance = RealmList()
-            value?.let {
-                for (element in value) {
-                    mAllowance?.add(element.toString(10))
-                }
-            }
+            mAllowance = value?.toString(16)
         }
 
-    private var mAllowance : RealmList<String>? = null
+    private var mAllowance : String? = null
 
     /**
      * Custom class deserializer
@@ -58,10 +45,7 @@ open class LooprEstimatedAllocatedAllowance(
 
                 //TODO - check if this code is enough to handle normally encountered errors
                 jsonObj.get("result")?.let {
-                    allocatedAllowance.mAllowance = RealmList()
-                    it.asJsonArray.forEach {
-                        allocatedAllowance.mAllowance?.add(BigInteger(it.asString,16).toString(10))
-                    }
+                    allocatedAllowance.mAllowance = it.asString.substring(2)
                 }
 
                 return allocatedAllowance

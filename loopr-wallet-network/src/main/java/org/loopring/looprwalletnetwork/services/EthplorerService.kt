@@ -10,6 +10,7 @@ import org.loopring.looprwalletnetwork.models.ethplorer.transactioninfo.EthTrans
 import org.loopring.looprwalletnetwork.models.ethplorer.transactioninfo.EthTransactionOperationInfo
 import org.loopring.looprwalletnetwork.utilities.DateDeserializer
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.CoroutineCallAdapterFactory
+import kotlinx.coroutines.experimental.Deferred
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -40,7 +41,7 @@ interface EthplorerService {
      * @return [EthTokenInfo] object with data about the token
      */
     @GET("getTokenInfo/{address}")
-    fun getTokenInfo(@Path("address") address: String): Call<EthTokenInfo>
+    fun getTokenInfo(@Path("address") address: String): Deferred<EthTokenInfo>
 
     /**
      * Get information on about an address
@@ -55,7 +56,7 @@ interface EthplorerService {
     fun getAddressInfo(
             @Path("address") address: String,
             @Path("token") token: String? = null
-    ): Call<EthAddressInfo>
+    ): Deferred<EthAddressInfo>
 
     /**
      * Get information on about a transaction
@@ -66,7 +67,7 @@ interface EthplorerService {
      * @return [EthTransactionInfo] object with data about the transaction
      */
     @GET("getTxInfo/{transactionHash}")
-    fun getTxInfo(@Path("transactionHash") txHash: String): Call<EthTransactionInfo>
+    fun getTxInfo(@Path("transactionHash") txHash: String): Deferred<EthTransactionInfo>
 
     /**
      * Get last operations of a token
@@ -83,7 +84,7 @@ interface EthplorerService {
             @Path("address") address: String,
             @Query("limit") limit: String? = null,
             @Query("type") type: String? = null
-    ): Call<EthTokenHistory>
+    ): Deferred<EthTokenHistory>
 
     /**
      * Get last operations performed by an address
@@ -102,7 +103,7 @@ interface EthplorerService {
             @Query("token") token: String? = null,
             @Query("type") type: String? = null,
             @Query("limit") limit: String? = null
-    ): Call<EthAddressHistory>
+    ): Deferred<EthAddressHistory>
 
     /**
      * Get a list of address transactions
@@ -119,7 +120,7 @@ interface EthplorerService {
             @Path("address") address: String,
             @Query("showZeroValues") showZeroValues: String? = null,
             @Query("limit") limit: String? = null
-    ): Call<EthAddressTransactions>
+    ): Deferred<EthAddressTransactions>
 
     /**
      * Get the top 50 tokens by capitalization
@@ -134,7 +135,7 @@ interface EthplorerService {
     fun getTop(
             @Query("criteria") criteria: String? = null,
             @Query("limit") limit: String? = null
-    ): Call<EthTopTokens>
+    ): Deferred<EthTopTokens>
 
     /**
      * Shows top 50 of the most active tokens for the last 30 days period
@@ -149,7 +150,7 @@ interface EthplorerService {
     fun getTopTokens(
             @Query("period") period: String? = null,
             @Query("limit") limit: String? = null
-    ): Call<EthTopTokenActivity>
+    ): Deferred<EthTopTokenActivity>
 
     /**
      * Shows grouped information for an ERC20 token at the given address
@@ -164,7 +165,7 @@ interface EthplorerService {
     fun getTokenHistoryGrouped(
             @Path("address") address: String,
             @Query("period") period: String? = null
-    ): Call<EthTokenHistoryGrouped>
+    ): Deferred<EthTokenHistoryGrouped>
 
     /**
      * Get grouped price history for the token at the given address
@@ -179,7 +180,7 @@ interface EthplorerService {
     fun getTokenPriceHistoryGrouped(
             @Path("address") address: String,
             @Query("period") period: String? = null
-    ): Call<EthTokenPriceHistoryGrouped>
+    ): Deferred<EthTokenPriceHistoryGrouped>
 
     @Suppress("MemberVisibilityCanBePrivate")
     companion object {
