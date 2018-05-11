@@ -15,8 +15,8 @@ open class LooprTokenPriceQuote : RealmObject() {
      * The token the [price] data is for
      * Example output - "ETH"
      */
-    @SerializedName("token")
-    var token : String? = null
+    @SerializedName("symbol")
+    var symbol : String? = null
 
     /**
      * Price for the [token] in the currency stated in the [LooprPriceQuote] object
@@ -45,8 +45,8 @@ open class LooprTokenPriceQuote : RealmObject() {
                 val jsonObj = json.asJsonObject
 
                 //TODO - check if this code is enough to handle normally encountered errors
-                jsonObj.get("token")?.let {
-                    priceQuote.token = it.asString
+                jsonObj.get("symbol")?.let {
+                    priceQuote.symbol = it.asString
                 }
 
                 jsonObj.get("price")?.let {

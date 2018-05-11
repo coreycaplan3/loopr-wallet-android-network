@@ -28,6 +28,7 @@ open class LooprSupportedTokenList(
             if (json.isJsonNull || json.isJsonPrimitive) {
                 return null
             } else {
+                //throw(Throwable("11"))
                 val jsonObj = json.asJsonObject
                 val supportedTokenObj = LooprSupportedTokenList()
 

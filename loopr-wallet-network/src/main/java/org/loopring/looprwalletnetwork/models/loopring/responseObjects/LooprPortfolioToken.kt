@@ -20,14 +20,14 @@ open class LooprPortfolioToken : RealmObject() {
 
     /**
      * Amount of [token] owned
-     * Example output - "0x000001234d"
+     * Example output - 9782200000000000000000
      */
     var amount: BigInteger?
         get() {
-            return mAmount?.let { BigInteger(mAmount,16) }
+            return mAmount?.let { BigInteger(mAmount) }
         }
         set(value) {
-            mAmount = value?.toString(16)
+            mAmount = value?.toString()
         }
 
     private var mAmount : String? = null
