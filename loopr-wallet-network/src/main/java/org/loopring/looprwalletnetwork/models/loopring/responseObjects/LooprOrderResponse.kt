@@ -5,6 +5,7 @@ import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
 import io.realm.RealmObject
+import io.realm.annotations.PrimaryKey
 import java.lang.reflect.Type
 
 open class LooprOrderResponse(
@@ -15,6 +16,7 @@ open class LooprOrderResponse(
      * Order Hash
      * Example output - "0xc7756d5d556383b2f965094464bdff3ebe658f263f552858cc4eff4ed0aeafeb"
      */
+    @PrimaryKey
     var orderHash : String? = null
 
     /**

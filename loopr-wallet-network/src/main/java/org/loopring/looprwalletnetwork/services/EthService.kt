@@ -5,6 +5,7 @@ import kotlinx.coroutines.experimental.async
 import org.web3j.crypto.Credentials
 import org.web3j.protocol.Web3j
 import org.web3j.protocol.core.RemoteCall
+import org.web3j.protocol.core.methods.response.TransactionReceipt
 import org.web3j.tx.RawTransactionManager
 import org.web3j.tx.Transfer
 import org.web3j.utils.Convert
@@ -38,7 +39,7 @@ class EthService private constructor(private val web3j: Web3j) {
      * @throws org.web3j.protocol.exceptions.TransactionException If the transaction takes too
      * long to broadcast
      */
-    fun sendEth(
+    private fun sendEth(
             amount: BigDecimal,
             toAddress: String,
             credentials: Credentials,
@@ -50,6 +51,20 @@ class EthService private constructor(private val web3j: Web3j) {
             Transfer(web3j, transactionManager)
                     .sendFunds(toAddress, amount, Convert.Unit.ETHER, gasPrice, gasLimit)
         })
+    }
+
+    fun sendEther(
+            recipient: String,
+            amount: BigDecimal,
+            credentials: Credentials,
+            gasLimit: BigInteger,
+            gasPrice: BigInteger
+    ): Deferred<TransactionReceipt> = async() {
+        EthService.getService(web3j)
+                .sendEth(amount, recipient, credentials, gasPrice, gasLimit)
+                .await()
+                .send()
+                .send()
     }
 
     companion object {

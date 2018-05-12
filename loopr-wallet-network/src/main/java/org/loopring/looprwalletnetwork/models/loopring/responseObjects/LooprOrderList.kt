@@ -72,4 +72,13 @@ open class LooprOrderList(
         }
 
     }
+
+    companion object {
+        val ORDER_OPENED = "ORDER_OPENED" //Includes new and partial
+        val ORDER_NEW = "ORDER_NEW"
+        val ORDER_PARTIAL = "ORDER_PARTIAL"
+        val ORDER_FINISHED = "ORDER_FINISHED"
+        val ORDER_CANCEL = "ORDER_CANCEL"
+        val ORDER_CUTOFF = "ORDER_CUTOFF"
+    }
 }

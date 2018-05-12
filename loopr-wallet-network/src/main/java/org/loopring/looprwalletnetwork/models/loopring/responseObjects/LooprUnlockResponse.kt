@@ -15,11 +15,10 @@ open class LooprUnlockResponse(
 
     /**
      * Success or fail info
-     * Example output - ["unlock_notice_success"]
-     * TODO - if this always returns a single string, deserialize it to string
+     * Example output - "unlock_notice_success"
      */
     @SerializedName("result")
-    var pairs : RealmList<String>? = null
+    var response : String? = null
 
     /**
      * Custom class deserializer
@@ -38,12 +37,7 @@ open class LooprUnlockResponse(
 
                 //TODO - check if this code is enough to handle normally encountered errors
                 jsonObj.get("result")?.let {
-                    val trendsJsonArray = it.asJsonArray
-
-                    unlockResponseObj.pairs = RealmList()
-                    trendsJsonArray.forEach {
-                        unlockResponseObj.pairs?.add(it.asString)
-                    }
+                    unlockResponseObj.response = it.asString
                 }
 
 

@@ -1,4 +1,4 @@
-package org.loopring.looprwalletnetwork
+package org.loopring.looprwalletnetwork.service
 
 import org.loopring.looprwalletnetwork.services.LoopringService
 import kotlinx.coroutines.experimental.runBlocking
@@ -14,6 +14,10 @@ import org.mockito.junit.MockitoJUnitRunner
 import java.math.BigInteger
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
+import org.loopring.looprwalletnetwork.models.loopring.responseObjects.LooprCutoff
+import org.loopring.looprwalletnetwork.models.loopring.responseObjects.LooprOrderList
+import java.lang.Long.parseLong
+import java.math.BigDecimal
 import java.util.*
 
 
@@ -23,7 +27,7 @@ class LoopringServiceTest {
     private lateinit var serviceMock: LoopringService
     private lateinit var serviceLive: LoopringService
 
-    val dispatcher: Dispatcher = object : Dispatcher() {
+    private val dispatcher: Dispatcher = object : Dispatcher() {
 
         @Throws(InterruptedException::class)
         override fun dispatch(request: RecordedRequest): MockResponse {
@@ -49,6 +53,24 @@ class LoopringServiceTest {
                     return MockResponse().setResponseCode(200).setBody("{\"jsonrpc\":\"2.0\",\"id\":64,\"result\":[{\"intervals\":\"1Day\",\"market\":\"LRC-WETH\",\"vol\":1.0694368,\"amount\":899.28375,\"createTime\":1524614471,\"open\":0.0010667891,\"close\":0.0012489996,\"high\":0.0012505002,\"low\":0.0010667891,\"start\":1524528001,\"end\":1524614400}]}")
                 method == "loopring_getRingMined" ->
                     return MockResponse().setResponseCode(200).setBody("{\"jsonrpc\":\"2.0\",\"id\":64,\"result\":{\"data\":[{\"id\":1,\"protocol\":\"0xb1170dE31c7f72aB62535862C97F5209E356991b\",\"delegateAddress\":\""+serviceMock.delegateAddress+"\",\"ringIndex\":\"0\",\"ringHash\":\"0x3d58a550136668074648778c3ac6757df582c0df7c7af12c76f39d4a43be5054\",\"txHash\":\"0x30940beef7acb033d10882861a469c19bb6c1aab9a15e6897d6bb0020d70ffa7\",\"miner\":\"0x3ACDF3e3D8eC52a768083f718e763727b0210650\",\"feeRecipient\":\"0x3ACDF3e3D8eC52a768083f718e763727b0210650\",\"isRinghashReserved\":false,\"blockNumber\":5469397,\"totalLrcFee\":\"323200000000000000\",\"tradeAmount\":2,\"timestamp\":1524156383,\"Fork\":false}],\"pageIndex\":1,\"pageSize\":20,\"total\":1}}")
+                method == "loopring_getCutoff" ->
+                    return MockResponse().setResponseCode(200).setBody("{\"jsonrpc\":\"2.0\",\"id\":64,\"result\":1501232222}")
+                method == "loopring_getPriceQuote" ->
+                    return MockResponse().setResponseCode(200).setBody("{\"jsonrpc\":\"2.0\",\"id\":64,\"result\":{\"currency\":\"CNY\",\"tokens\":[{\"symbol\":\"LRC\",\"price\":5.2055563217},{\"symbol\":\"IOST\",\"price\":0.3566289306},{\"symbol\":\"BNT\",\"price\":32.026390396},{\"symbol\":\"FOO\",\"price\":0.356182153},{\"symbol\":\"VITE\",\"price\":0.5336757253333333},{\"symbol\":\"SNT\",\"price\":0.9850778553},{\"symbol\":\"DAI\",\"price\":6.373984582},{\"symbol\":\"RDN\",\"price\":12.832176889},{\"symbol\":\"BAR\",\"price\":2.2808154852},{\"symbol\":\"ARP\",\"price\":0.600385191},{\"symbol\":\"KNC\",\"price\":13.718423474},{\"symbol\":\"REQ\",\"price\":1.6547167504},{\"symbol\":\"OMG\",\"price\":102.28092714},{\"symbol\":\"BAT\",\"price\":2.6060733839},{\"symbol\":\"EOS\",\"price\":109.74713358},{\"symbol\":\"WETH\",\"price\":4803.081528},{\"symbol\":\"ETH\",\"price\":4803.081528},{\"symbol\":\"ZRX\",\"price\":9.711915248},{\"symbol\":\"RHOC\",\"price\":11.740336349}]}}")
+                method == "loopring_getEstimatedAllocatedAllowance" ->
+                    return MockResponse().setResponseCode(200).setBody("{\"jsonrpc\":\"2.0\",\"id\":64,\"result\":\"0x2347ad6c\"}")
+                method == "loopring_getFrozenLRCFee" ->
+                    return MockResponse().setResponseCode(200).setBody("{\"jsonrpc\":\"2.0\",\"id\":64,\"result\":\"0x2347ad6c\"}")
+                method == "loopring_getSupportedMarket" ->
+                    return MockResponse().setResponseCode(200).setBody("{\"jsonrpc\":\"2.0\",\"id\":64,\"result\":[\"ZRX-LRC\",\"ZRX-WETH\",\"ZRX-BAR\",\"RHOC-BAR\",\"RHOC-LRC\",\"RHOC-WETH\",\"VITE-LRC\",\"VITE-WETH\",\"VITE-BAR\",\"LRC-WETH\",\"IOST-LRC\",\"IOST-WETH\",\"IOST-BAR\",\"BNT-LRC\",\"BNT-WETH\",\"BNT-BAR\",\"FOO-LRC\",\"FOO-WETH\",\"FOO-BAR\",\"OMG-BAR\",\"OMG-LRC\",\"OMG-WETH\",\"SNT-BAR\",\"SNT-LRC\",\"SNT-WETH\",\"RDN-LRC\",\"RDN-WETH\",\"RDN-BAR\",\"BAR-LRC\",\"BAR-WETH\",\"ARP-LRC\",\"ARP-WETH\",\"ARP-BAR\",\"KNC-LRC\",\"KNC-WETH\",\"KNC-BAR\",\"REQ-LRC\",\"REQ-WETH\",\"REQ-BAR\",\"BAT-LRC\",\"BAT-WETH\",\"BAT-BAR\",\"EOS-LRC\",\"EOS-WETH\",\"EOS-BAR\"]}")
+                method == "loopring_getSupportedTokens" ->
+                    return MockResponse().setResponseCode(200).setBody("{\"jsonrpc\":\"2.0\",\"id\":64,\"result\":[{\"protocol\":\"0xfa1a856cfa3409cfa145fa4e20eb270df3eb21ab\",\"symbol\":\"IOST\",\"source\":\"iostoken\",\"time\":0,\"deny\":false,\"decimals\":1000000000000000000,\"isMarket\":false,\"icoPrice\":null},{\"protocol\":\"0x744d70fdbe2ba4cf95131626614a1763df805b9e\",\"symbol\":\"SNT\",\"source\":\"status\",\"time\":0,\"deny\":false,\"decimals\":1000000000000000000,\"isMarket\":false,\"icoPrice\":null},{\"protocol\":\"0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0\",\"symbol\":\"EOS\",\"source\":\"eos\",\"time\":0,\"deny\":false,\"decimals\":1000000000000000000,\"isMarket\":false,\"icoPrice\":null},{\"protocol\":\"0xef68e7c694f40c8202821edf525de3782458639f\",\"symbol\":\"LRC\",\"source\":\"loopring\",\"time\":0,\"deny\":false,\"decimals\":1000000000000000000,\"isMarket\":true,\"icoPrice\":null},{\"protocol\":\"0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2\",\"symbol\":\"WETH\",\"source\":\"ethereum\",\"time\":0,\"deny\":false,\"decimals\":1000000000000000000,\"isMarket\":true,\"icoPrice\":null},{\"protocol\":\"0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359\",\"symbol\":\"DAI\",\"source\":\"dai\",\"time\":0,\"deny\":false,\"decimals\":1000000000000000000,\"isMarket\":false,\"icoPrice\":null},{\"protocol\":\"0xd26114cd6ee289accf82350c8d8487fedb8a0c07\",\"symbol\":\"OMG\",\"source\":\"omisego\",\"time\":0,\"deny\":false,\"decimals\":1000000000000000000,\"isMarket\":false,\"icoPrice\":null},{\"protocol\":\"0xb5f64747127be058ee7239b363269fc8cf3f4a87\",\"symbol\":\"BAR\",\"source\":\"wax\",\"time\":0,\"deny\":false,\"decimals\":1000000000000000000,\"isMarket\":true,\"icoPrice\":null},{\"protocol\":\"0x8f8221afbb33998d8584a2b05749ba73c37a938a\",\"symbol\":\"REQ\",\"source\":\"request-network\",\"time\":0,\"deny\":false,\"decimals\":1000000000000000000,\"isMarket\":false,\"icoPrice\":null},{\"protocol\":\"0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c\",\"symbol\":\"BNT\",\"source\":\"bancor\",\"time\":0,\"deny\":false,\"decimals\":1000000000000000000,\"isMarket\":false,\"icoPrice\":null},{\"protocol\":\"0xf5b3b365fa319342e89a3da71ba393e12d9f63c3\",\"symbol\":\"FOO\",\"source\":\"storm\",\"time\":0,\"deny\":false,\"decimals\":100000000,\"isMarket\":false,\"icoPrice\":null},{\"protocol\":\"0x168296bb09e24a88805cb9c33356536b980d3fc5\",\"symbol\":\"RHOC\",\"source\":\"rchain\",\"time\":0,\"deny\":false,\"decimals\":100000000,\"isMarket\":false,\"icoPrice\":null},{\"protocol\":\"0x1b793e49237758dbd8b752afc9eb4b329d5da016\",\"symbol\":\"VITE\",\"source\":\"\",\"time\":0,\"deny\":false,\"decimals\":1000000000000000000,\"isMarket\":false,\"icoPrice\":\"1/9000\"},{\"protocol\":\"0xdd974d5c2e2928dea5f71b9825b8b646686bd200\",\"symbol\":\"KNC\",\"source\":\"kyber-network\",\"time\":0,\"deny\":false,\"decimals\":1000000000000000000,\"isMarket\":false,\"icoPrice\":null},{\"protocol\":\"0xe41d2489571d322189246dafa5ebde1f4699f498\",\"symbol\":\"ZRX\",\"source\":\"0x\",\"time\":0,\"deny\":false,\"decimals\":1000000000000000000,\"isMarket\":false,\"icoPrice\":null},{\"protocol\":\"0x255aa6df07540cb5d3d297f0d0d4d84cb52bc8e6\",\"symbol\":\"RDN\",\"source\":\"raiden-network-token\",\"time\":0,\"deny\":false,\"decimals\":1000000000000000000,\"isMarket\":false,\"icoPrice\":null},{\"protocol\":\"0xbeb6fdf4ef6ceb975157be43cbe0047b248a8922\",\"symbol\":\"ARP\",\"source\":\"\",\"time\":0,\"deny\":false,\"decimals\":1000000000000000000,\"isMarket\":false,\"icoPrice\":\"1/8000\"},{\"protocol\":\"0x0d8775f648430679a709e98d2b0cb6250d2887ef\",\"symbol\":\"BAT\",\"source\":\"basic-attention-token\",\"time\":0,\"deny\":false,\"decimals\":1000000000000000000,\"isMarket\":false,\"icoPrice\":null}]}")
+                method == "loopring_getPortfolio" ->
+                    return MockResponse().setResponseCode(200).setBody("{\"jsonrpc\":\"2.0\",\"id\":64,\"result\":[{\"token\":\"BAR\",\"amount\":\"9782200000000000000000\",\"percentage\":\"91.8582%\"},{\"token\":\"LRC\",\"amount\":\"116155166000000023386\",\"percentage\":\"2.7725%\"},{\"token\":\"EOS\",\"amount\":\"3000000000000000035\",\"percentage\":\"1.7029%\"},{\"token\":\"WETH\",\"amount\":\"63147725458498073\",\"percentage\":\"1.6022%\"},{\"token\":\"ZRX\",\"amount\":\"14999999996812749004\",\"percentage\":\"0.9368%\"},{\"token\":\"ETH\",\"amount\":\"33322393820000000\",\"percentage\":\"0.8455%\"},{\"token\":\"VITE\",\"amount\":\"100000000000000000000\",\"percentage\":\"0.2819%\"},{\"token\":\"BNT\",\"amount\":\"0\",\"percentage\":\"0.0000%\"},{\"token\":\"FOO\",\"amount\":\"109800000000000\",\"percentage\":\"0.0000%\"},{\"token\":\"ARP\",\"amount\":\"0\",\"percentage\":\"0.0000%\"},{\"token\":\"DAI\",\"amount\":\"0\",\"percentage\":\"0.0000%\"},{\"token\":\"IOST\",\"amount\":\"0\",\"percentage\":\"0.0000%\"},{\"token\":\"OMG\",\"amount\":\"0\",\"percentage\":\"0.0000%\"},{\"token\":\"BAT\",\"amount\":\"0\",\"percentage\":\"0.0000%\"},{\"token\":\"SNT\",\"amount\":\"0\",\"percentage\":\"0.0000%\"},{\"token\":\"REQ\",\"amount\":\"0\",\"percentage\":\"0.0000%\"},{\"token\":\"RHOC\",\"amount\":\"0\",\"percentage\":\"0.0000%\"},{\"token\":\"KNC\",\"amount\":\"0\",\"percentage\":\"0.0000%\"},{\"token\":\"RDN\",\"amount\":\"0\",\"percentage\":\"0.0000%\"}]}")
+                method == "loopring_getTransactions" ->
+                    return MockResponse().setResponseCode(200).setBody("{\"jsonrpc\":\"2.0\",\"id\":64,\"result\":{\"data\":[{\"protocol\":\"0xef68e7c694f40c8202821edf525de3782458639f\",\"owner\":\"0xeba7136a36da0f5e16c6bdbc739c716bb5b65a00\",\"from\":\"0x2234c96681e9533fdfd122bacbbc634efbafa0f0\",\"to\":\"0xeba7136a36da0f5e16c6bdbc739c716bb5b65a00\",\"txHash\":\"0x46b9ab33d6904718fc2d16ad1a133a35ae23045bb65893eb2c41b0984b78eca7\",\"symbol\":\"LRC\",\"content\":{\"market\":\"\",\"orderHash\":\"\",\"fill\":\"\"},\"blockNumber\":5550001,\"value\":\"79640000000000000000\",\"logIndex\":35,\"type\":\"receive\",\"status\":\"success\",\"createTime\":1525364262,\"updateTime\":1525364262,\"gas_price\":\"10000000000\",\"gas_limit\":\"500000\",\"gas_used\":\"362742\",\"nonce\":\"866\"},{\"protocol\":\"0xef68e7c694f40c8202821edf525de3782458639f\",\"owner\":\"0xeba7136a36da0f5e16c6bdbc739c716bb5b65a00\",\"from\":\"0xb94065482ad64d4c2b9252358d746b39e820a582\",\"to\":\"0xeba7136a36da0f5e16c6bdbc739c716bb5b65a00\",\"txHash\":\"0xb821eff03913deb0627cb16e0c7aa73e064d05df17c4c1c7574efdd903980f45\",\"symbol\":\"LRC\",\"content\":{\"market\":\"\",\"orderHash\":\"\",\"fill\":\"\"},\"blockNumber\":5541918,\"value\":\"89670000000000000000\",\"logIndex\":12,\"type\":\"receive\",\"status\":\"success\",\"createTime\":1525240133,\"updateTime\":1525240133,\"gas_price\":\"10000000000\",\"gas_limit\":\"1000000\",\"gas_used\":\"305601\",\"nonce\":\"481\"},{\"protocol\":\"0xef68e7c694f40c8202821edf525de3782458639f\",\"owner\":\"0xeba7136a36da0f5e16c6bdbc739c716bb5b65a00\",\"from\":\"0x3acdf3e3d8ec52a768083f718e763727b0210650\",\"to\":\"0xeba7136a36da0f5e16c6bdbc739c716bb5b65a00\",\"txHash\":\"0x26d62ad14d55a036282996e9d023aa98cdca8371a74f5b2ccac2ff15c759ca9f\",\"symbol\":\"LRC\",\"content\":{\"market\":\"\",\"orderHash\":\"\",\"fill\":\"\"},\"blockNumber\":5491578,\"value\":\"360000000000000000\",\"logIndex\":53,\"type\":\"receive\",\"status\":\"success\",\"createTime\":1524484434,\"updateTime\":1524484434,\"gas_price\":\"3350270758\",\"gas_limit\":\"1000000\",\"gas_used\":\"371290\",\"nonce\":\"278\"}],\"pageIndex\":1,\"pageSize\":10,\"total\":3}}")
+                method == "loopring_unlockWallet" ->
+                    return MockResponse().setResponseCode(200).setBody("{\"jsonrpc\":\"2.0\",\"id\":64,\"result\":\"unlock_notice_success\"}")
                 //request.path == "/api?module=stats&action=ethsupply&apikey=537ZMY3HV44B111IV29WNPTEAE3ZNSBU5M" ->
                 //    return MockResponse().setResponseCode(200).setBody("{\"status\":\"1\",\"message\":\"OK\",\"result\":\"98272428967800000000000000\"}")
                 else -> return MockResponse().setResponseCode(404)
@@ -127,7 +149,7 @@ class LoopringServiceTest {
     fun getOrders_shouldWorkMock() = runBlocking {
         val deferred = serviceMock.getOrders("0x847983c3a34afa192cfee860698584c030f4c9db1",
                 "0xf0b75ed18109403b88713cd7a1a8423352b9ed9260e39cb1ea0f423e2b6664f0",
-                "ORDER_CANCEL",
+                LooprOrderList.ORDER_CANCEL,
                 "cross-weth",
                 "buy",
                 2,
@@ -329,6 +351,349 @@ class LoopringServiceTest {
         Assert.assertEquals(1,result.minedRings?.get(0)?.id)
         Assert.assertEquals(false,result.minedRings?.get(0)?.isRinghashReserved)
         Assert.assertEquals(false,result.minedRings?.get(0)?.fork)
+    }
+
+    /**
+     * Testing best case, all proper data is returned
+     * Mock server
+     */
+    @Test
+    fun getCutoff_shouldWorkMock() = runBlocking {
+        val deferred = serviceMock.getCutoff("0x8888f1f195afa192cfee860698584c030f4c9db1", LooprCutoff.BLOCK_LATEST)
+
+        val result = deferred.await()
+        Assert.assertEquals(serviceMock.id, result.id)
+        Assert.assertEquals(serviceMock.jsonRpcVersion, result.jsonrpc)
+        Assert.assertNotNull(result.cutoff)
+        Assert.assertTrue(result.cutoff?.getTime()!! > 1500000000)
+    }
+
+    /**
+     * Testing best case, all proper data is returned
+     * Live server
+     */
+    @Test
+    fun getCutoff_shouldWorkLive() = runBlocking {
+        val deferred = serviceLive.getCutoff("0x8888f1f195afa192cfee860698584c030f4c9db1", LooprCutoff.BLOCK_LATEST)
+
+        val result = deferred.await()
+        Assert.assertEquals(serviceLive.id, result.id)
+        Assert.assertEquals(serviceLive.jsonRpcVersion, result.jsonrpc)
+        Assert.assertNull(result.cutoff)
+    }
+
+    /**
+     * Testing best case, all proper data is returned
+     * Mock server
+     */
+    @Test
+    fun getPriceQuote_shouldWorkMock() = runBlocking {
+        val deferred = serviceMock.getPriceQuote("CNY")
+
+        val result = deferred.await()
+        Assert.assertEquals(serviceMock.id, result.id)
+        Assert.assertEquals(serviceMock.jsonRpcVersion, result.jsonrpc)
+        Assert.assertEquals("CNY",result.currency)
+        Assert.assertNotNull(result.tokens?.get(0)?.price)
+        Assert.assertTrue(result.tokens?.get(0)?.price!! > BigDecimal("0"))
+        Assert.assertNotNull(result.tokens?.get(0)?.symbol)
+    }
+
+    /**
+     * Testing best case, all proper data is returned
+     * Live server
+     */
+    @Test
+    fun getPriceQuote_shouldWorkLive() = runBlocking {
+        val deferred = serviceLive.getPriceQuote("CNY")
+
+        val result = deferred.await()
+        Assert.assertEquals(serviceLive.id, result.id)
+        Assert.assertEquals(serviceLive.jsonRpcVersion, result.jsonrpc)
+        Assert.assertEquals("CNY",result.currency)
+        Assert.assertNotNull(result.tokens?.get(0)?.price)
+        Assert.assertTrue(result.tokens?.get(0)?.price!! > BigDecimal("0"))
+        Assert.assertNotNull(result.tokens?.get(0)?.symbol)
+    }
+
+    /**
+     * Testing best case, all proper data is returned
+     * Mock server
+     */
+    @Test
+    fun getEstimatedAllocatedAllowance_shouldWorkMock() = runBlocking {
+        val deferred = serviceMock.getEstimatedAllocatedAllowance("0x8888f1f195afa192cfee860698584c030f4c9db1", "WETH")
+
+        val result = deferred.await()
+        Assert.assertEquals(serviceMock.id, result.id)
+        Assert.assertEquals(serviceMock.jsonRpcVersion, result.jsonrpc)
+        Assert.assertNotNull(result.allowance)
+        Assert.assertEquals(BigInteger("2347ad6c",16), result.allowance)
+    }
+
+    /**
+     * Testing best case, all proper data is returned
+     * Live server
+     */
+    @Test
+    fun getEstimatedAllocatedAllowance_shouldWorkLive() = runBlocking {
+        val deferred = serviceLive.getEstimatedAllocatedAllowance("0x8888f1f195afa192cfee860698584c030f4c9db1", "WETH")
+
+        val result = deferred.await()
+        Assert.assertEquals(serviceLive.id, result.id)
+        Assert.assertEquals(serviceLive.jsonRpcVersion, result.jsonrpc)
+        Assert.assertNotNull(result.allowance)
+        Assert.assertEquals(BigInteger("0"), result.allowance)
+    }
+
+    /**
+     * Testing best case, all proper data is returned
+     * Mock server
+     */
+    @Test
+    fun getFrozenLRCFee_shouldWorkMock() = runBlocking {
+        val deferred = serviceMock.getFrozenLRCFee("0x8888f1f195afa192cfee860698584c030f4c9db1")
+
+        val result = deferred.await()
+        Assert.assertEquals(serviceMock.id, result.id)
+        Assert.assertEquals(serviceMock.jsonRpcVersion, result.jsonrpc)
+        Assert.assertNotNull(result.frozenFees)
+        Assert.assertEquals(BigInteger("2347ad6c",16), result.frozenFees)
+    }
+
+    /**
+     * Testing best case, all proper data is returned
+     * Live server
+     */
+    @Test
+    fun getFrozenLRCFee_shouldWorkLive() = runBlocking {
+        val deferred = serviceLive.getFrozenLRCFee("0x8888f1f195afa192cfee860698584c030f4c9db1")
+
+        val result = deferred.await()
+        Assert.assertEquals(serviceLive.id, result.id)
+        Assert.assertEquals(serviceLive.jsonRpcVersion, result.jsonrpc)
+        Assert.assertNotNull(result.frozenFees)
+        Assert.assertEquals(BigInteger("0",16), result.frozenFees)
+    }
+
+    /**
+     * Testing best case, all proper data is returned
+     * Mock server
+     */
+    @Test
+    fun getSupportedMarket_shouldWorkMock() = runBlocking {
+        val deferred = serviceMock.getSupportedMarket()
+
+        val result = deferred.await()
+        Assert.assertEquals(serviceMock.id, result.id)
+        Assert.assertEquals(serviceMock.jsonRpcVersion, result.jsonrpc)
+        Assert.assertNotNull(result.pairs)
+        Assert.assertNotNull(result.pairs?.get(0))
+        Assert.assertEquals("ZRX-LRC", result.pairs?.get(0))
+    }
+
+    /**
+     * Testing best case, all proper data is returned
+     * Live server
+     */
+    @Test
+    fun getSupportedMarket_shouldWorkLive() = runBlocking {
+        val deferred = serviceLive.getSupportedMarket()
+
+        val result = deferred.await()
+        Assert.assertEquals(serviceLive.id, result.id)
+        Assert.assertEquals(serviceLive.jsonRpcVersion, result.jsonrpc)
+        Assert.assertNotNull(result.pairs)
+        Assert.assertNotNull(result.pairs?.get(0))
+    }
+
+    /**
+     * Testing best case, all proper data is returned
+     * Mock server
+     */
+    @Test
+    fun getSupportedTokens_shouldWorkMock() = runBlocking {
+        val deferred = serviceMock.getSupportedTokens()
+
+        val result = deferred.await()
+        Assert.assertEquals(serviceMock.id, result.id)
+        Assert.assertEquals(serviceMock.jsonRpcVersion, result.jsonrpc)
+        Assert.assertNotNull(result.tokens)
+        Assert.assertNotNull(result.tokens?.get(0))
+        Assert.assertEquals("0xfa1a856cfa3409cfa145fa4e20eb270df3eb21ab", result.tokens?.get(0)?.protocol)
+        Assert.assertEquals("IOST", result.tokens?.get(0)?.symbol)
+        Assert.assertEquals("iostoken", result.tokens?.get(0)?.source)
+        Assert.assertEquals(Date(0), result.tokens?.get(0)?.time)
+        Assert.assertEquals(false, result.tokens?.get(0)?.deny)
+        Assert.assertEquals(BigInteger("1000000000000000000"), result.tokens?.get(0)?.decimals)
+        Assert.assertEquals(false, result.tokens?.get(0)?.isMarket)
+        Assert.assertNull(result.tokens?.get(0)?.icoPrice)
+    }
+
+    /**
+     * Testing best case, all proper data is returned
+     * Live server
+     */
+    @Test
+    fun getSupportedTokens_shouldWorkLive() = runBlocking {
+        val deferred = serviceLive.getSupportedTokens()
+
+        val result = deferred.await()
+        Assert.assertEquals(serviceLive.id, result.id)
+        Assert.assertEquals(serviceLive.jsonRpcVersion, result.jsonrpc)
+        Assert.assertNotNull(result.tokens)
+        Assert.assertNotNull(result.tokens?.get(0))
+        Assert.assertNotNull(result.tokens?.get(0)?.protocol)
+        Assert.assertNotNull(result.tokens?.get(0)?.symbol)
+        Assert.assertNotNull(result.tokens?.get(0)?.source)
+        Assert.assertNotNull(result.tokens?.get(0)?.time)
+        Assert.assertNotNull(result.tokens?.get(0)?.deny)
+        Assert.assertNotNull(result.tokens?.get(0)?.decimals)
+        Assert.assertNotNull(result.tokens?.get(0)?.isMarket)
+    }
+
+    /**
+     * Testing best case, all proper data is returned
+     * Mock server
+     */
+    @Test
+    fun getPortfolio_shouldWorkMock() = runBlocking {
+        val deferred = serviceMock.getPortfolio("0xeba7136a36da0f5e16c6bdbc739c716bb5b65a00")
+
+        val result = deferred.await()
+        Assert.assertEquals(serviceMock.id, result.id)
+        Assert.assertEquals(serviceMock.jsonRpcVersion, result.jsonrpc)
+        Assert.assertNotNull(result.tokens)
+        Assert.assertNotNull(result.tokens?.get(0))
+        Assert.assertEquals("BAR", result.tokens?.get(0)?.token)
+        Assert.assertEquals(BigInteger("9782200000000000000000"), result.tokens?.get(0)?.amount)
+        Assert.assertEquals("91.8582%", result.tokens?.get(0)?.percentage)
+    }
+
+    /**
+     * Testing best case, all proper data is returned
+     * Live server
+     */
+    @Test
+    fun getPortfolio_shouldWorkLive() = runBlocking {
+        val deferred = serviceLive.getPortfolio("0xeba7136a36da0f5e16c6bdbc739c716bb5b65a00")
+
+        val result = deferred.await()
+        Assert.assertEquals(serviceLive.id, result.id)
+        Assert.assertEquals(serviceLive.jsonRpcVersion, result.jsonrpc)
+        Assert.assertNotNull(result.tokens)
+        Assert.assertNotNull(result.tokens?.get(0))
+        Assert.assertNotNull(result.tokens?.get(0)?.token)
+        Assert.assertNotNull(result.tokens?.get(0)?.amount)
+        Assert.assertNotNull(result.tokens?.get(0)?.percentage)
+    }
+
+    /**
+     * Testing best case, all proper data is returned
+     * Mock server
+     */
+    @Test
+    fun getTransactions_shouldWorkMock() = runBlocking {
+        val deferred = serviceMock.getTransactions(
+                "0xeba7136a36da0f5e16c6bdbc739c716bb5b65a00",
+                "0x46b9ab33d6904718fc2d16ad1a133a35ae23045bb65893eb2c41b0984b78eca7",
+                "LRC","success","receive",1,20
+        )
+
+        val result = deferred.await()
+        Assert.assertEquals(serviceMock.id, result.id)
+        Assert.assertEquals(serviceMock.jsonRpcVersion, result.jsonrpc)
+        Assert.assertEquals(1,result.pageIndex)
+        Assert.assertEquals(10,result.pageSize)
+        Assert.assertEquals(3,result.total)
+        Assert.assertNotNull(result.transactions)
+        Assert.assertNotNull(result.transactions?.get(0))
+        Assert.assertEquals("0xeba7136a36da0f5e16c6bdbc739c716bb5b65a00",result.transactions?.get(0)?.owner)
+        Assert.assertEquals("0x2234c96681e9533fdfd122bacbbc634efbafa0f0",result.transactions?.get(0)?.from)
+        Assert.assertEquals("0xeba7136a36da0f5e16c6bdbc739c716bb5b65a00",result.transactions?.get(0)?.to)
+        Assert.assertEquals("0x46b9ab33d6904718fc2d16ad1a133a35ae23045bb65893eb2c41b0984b78eca7",result.transactions?.get(0)?.hash)
+        Assert.assertEquals("LRC",result.transactions?.get(0)?.symbol)
+        Assert.assertEquals(parseLong("5550001"),result.transactions?.get(0)?.blockNumber)
+        Assert.assertEquals(BigInteger("79640000000000000000"),result.transactions?.get(0)?.value)
+        Assert.assertEquals("receive",result.transactions?.get(0)?.type)
+        Assert.assertEquals("success",result.transactions?.get(0)?.status)
+        Assert.assertEquals(Date(1525364262),result.transactions?.get(0)?.createTime)
+        Assert.assertEquals(Date(1525364262),result.transactions?.get(0)?.updateTime)
+    }
+
+    /**
+     * Testing best case, all proper data is returned
+     * Live server
+     */
+    @Test
+    fun getTransactions_shouldWorkLive() = runBlocking {
+        val deferred = serviceLive.getTransactions(
+                "0xeba7136a36da0f5e16c6bdbc739c716bb5b65a00",
+                "0x46b9ab33d6904718fc2d16ad1a133a35ae23045bb65893eb2c41b0984b78eca7",
+                "LRC","success","receive",1,20
+        )
+
+        val result = deferred.await()
+        Assert.assertEquals(serviceLive.id, result.id)
+        Assert.assertEquals(serviceLive.jsonRpcVersion, result.jsonrpc)
+        Assert.assertEquals(1,result.pageIndex)
+        Assert.assertEquals(20,result.pageSize)
+        Assert.assertEquals(3,result.total)
+        Assert.assertNotNull(result.transactions)
+        Assert.assertNotNull(result.transactions?.get(0))
+        Assert.assertNotNull(result.transactions?.get(0)?.owner)
+        Assert.assertNotNull(result.transactions?.get(0)?.from)
+        Assert.assertNotNull(result.transactions?.get(0)?.to)
+        Assert.assertNotNull(result.transactions?.get(0)?.hash)
+        Assert.assertNotNull(result.transactions?.get(0)?.symbol)
+        Assert.assertNotNull(result.transactions?.get(0)?.blockNumber)
+        Assert.assertNotNull(result.transactions?.get(0)?.value)
+        Assert.assertNotNull(result.transactions?.get(0)?.type)
+        Assert.assertNotNull(result.transactions?.get(0)?.status)
+        Assert.assertNotNull(result.transactions?.get(0)?.createTime)
+        Assert.assertNotNull(result.transactions?.get(0)?.updateTime)
+    }
+
+    /**
+     * Testing best case, all proper data is returned
+     * Mock server
+     */
+    @Test
+    fun unlockWallet_shouldWorkMock() = runBlocking {
+        val deferred = serviceMock.unlockWallet("0xeba7136a36da0f5e16c6bdbc739c716bb5b65a00")
+
+        val result = deferred.await()
+        Assert.assertEquals(serviceMock.id, result.id)
+        Assert.assertEquals(serviceMock.jsonRpcVersion, result.jsonrpc)
+        Assert.assertEquals("unlock_notice_success",result.response)
+    }
+
+    /**
+     * Testing best case, all proper data is returned
+     * Live server
+     */
+    @Test
+    fun unlockWallet_shouldWorkLive() = runBlocking {
+        val deferred = serviceLive.unlockWallet("0xeba7136a36da0f5e16c6bdbc739c716bb5b65a00")
+
+        val result = deferred.await()
+        Assert.assertEquals(serviceLive.id, result.id)
+        Assert.assertEquals(serviceLive.jsonRpcVersion, result.jsonrpc)
+        Assert.assertEquals("unlock_notice_success",result.response)
+    }
+
+    /**
+     * Testing best case, all proper data is returned
+     * Mock server
+     */
+    @Test
+    fun notifyTransactionSubmitted_shouldWorkMock() = runBlocking {
+        val deferred = serviceMock.unlockWallet("0xeba7136a36da0f5e16c6bdbc739c716bb5b65a00")
+
+        val result = deferred.await()
+        Assert.assertEquals(serviceMock.id, result.id)
+        Assert.assertEquals(serviceMock.jsonRpcVersion, result.jsonrpc)
+        Assert.assertEquals("unlock_notice_success",result.response)
     }
 
 

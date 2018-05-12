@@ -5,6 +5,7 @@ import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
 import io.realm.RealmObject
+import io.realm.annotations.PrimaryKey
 import java.lang.reflect.Type
 import java.math.BigInteger
 
@@ -14,6 +15,7 @@ open class LooprTokenInfo : RealmObject() {
      * String representing the token's symbol
      * Example output - "LRC"
      */
+    @PrimaryKey
     var token : String? = null
 
     /**
