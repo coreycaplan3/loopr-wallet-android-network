@@ -2,6 +2,7 @@ package org.loopring.looprwalletnetwork.services
 
 import kotlinx.coroutines.experimental.Deferred
 import okhttp3.HttpUrl
+import org.loopring.looprwalletnetwork.BuildConfig
 import org.loopring.looprwalletnetwork.models.loopring.requestObjects.*
 import org.loopring.looprwalletnetwork.models.loopring.responseObjects.*
 import org.web3j.crypto.Credentials
@@ -328,6 +329,11 @@ class LoopringService {
     }
 
     private fun getLoopringService(): LoopringServiceInternal{
+        /*when(BuildConfig.BUILD_TYPE) {
+            "debug" -> TODO("YOUR DEBUG CODE HERE")
+            "release" -> TODO("YOUR RELEASE CODE HERE")
+            else -> throw IllegalArgumentException("Invalid build type, found ${BuildConfig.BUILD_TYPE}")
+        }*/
     if (this.isMock) return LoopringServiceInternal.getMockService(this.mockUrl!!)
         else return LoopringServiceInternal.getService()
     }
