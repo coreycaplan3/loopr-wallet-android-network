@@ -56,7 +56,7 @@ open class EthAddressInfo(
         var address: String? = null,
 
         /**
-         * Eth specific information
+         * EthService specific information
          */
         @SerializedName("ETH")
         var eth: EtherInfo? = null,
