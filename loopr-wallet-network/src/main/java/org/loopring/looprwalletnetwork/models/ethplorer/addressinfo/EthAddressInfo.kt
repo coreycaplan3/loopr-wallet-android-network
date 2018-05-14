@@ -56,7 +56,7 @@ open class EthAddressInfo(
         var address: String? = null,
 
         /**
-         * EthService specific information
+         * LoopringContractService specific information
          */
         @SerializedName("ETH")
         var eth: EtherInfo? = null,

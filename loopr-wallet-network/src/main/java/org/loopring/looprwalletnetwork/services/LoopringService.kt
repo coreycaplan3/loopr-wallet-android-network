@@ -36,7 +36,7 @@ class LoopringService {
      * peer-to-peer network for off-chain order-book maintenance and ring-mining.
      * Once mined, the ring will be serialized into a transaction and submitted to Ethereum blockchain
      * @param owner - the owner of the tokens being traded away
-     * @param toSell - the token to sell, in the form "EthService"
+     * @param toSell - the token to sell, in the form "LoopringContractService"
      * @param toBuy - the token to buy, in the form "Lrc"
      * @param sellAmt - Maximum amount of [sellAmt] to sell. Takes an integer
      * @param buyAmt - Minimum amount of [toBuy] to buy if all sellAmt sold. Takes an inteer
