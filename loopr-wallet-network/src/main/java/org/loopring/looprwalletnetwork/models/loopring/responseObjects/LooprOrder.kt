@@ -35,6 +35,13 @@ open class LooprOrder : RealmObject() {
     var owner : String? = null
 
     /**
+     * Order hash
+     * Example output - "0xe85590c6ac6096de02a4b1b1cf57fe2980c483d9a9a8eebdddbdbccc21445cd6"
+     */
+    @SerializedName("hash")
+    var hash : String? = null
+
+    /**
      * Token to sell
      * Example output - "LRC"
      */
@@ -153,6 +160,13 @@ open class LooprOrder : RealmObject() {
     var walletAddress : String? = null
 
     /**
+     * Address of the order
+     * Example output - "0xb94065482Ad64d4c2b9252358D746B39e820A582"
+     */
+    @SerializedName("address")
+    var address : String? = null
+
+    /**
      * The wallet auth public key
      * Example output - "0xb94065482Ad64d4c2b9252358D746B39e820A582"
      */
@@ -224,11 +238,11 @@ open class LooprOrder : RealmObject() {
                 }
 
                 jsonObj.get("amountS")?.let {
-                    order.mAmtToSell = it.asString
+                    order.mAmtToSell = it.asString.substring(2)
                 }
 
                 jsonObj.get("amountB")?.let {
-                    order.mAmtToBuy = it.asString
+                    order.mAmtToBuy = it.asString.substring(2)
                 }
 
                 jsonObj.get("validSince")?.let {
@@ -251,12 +265,16 @@ open class LooprOrder : RealmObject() {
                     order.market = it.asString
                 }
 
+                jsonObj.get("hash")?.let {
+                    order.hash = it.asString
+                }
+
                 jsonObj.get("buyNoMoreThanAmountB")?.let {
                     order.buyNoMoreThanBuyAmt = it.asBoolean
                 }
 
                 jsonObj.get("marginSplitPercentage")?.let {
-                    order.marginSplitPercentage = it.asInt
+                    order.marginSplitPercentage = Integer.parseInt(it.asString.substring(2),16)
                 }
 
                 jsonObj.get("v")?.let {
@@ -273,6 +291,10 @@ open class LooprOrder : RealmObject() {
 
                 jsonObj.get("walletAddress")?.let {
                     order.walletAddress = it.asString
+                }
+
+                jsonObj.get("address")?.let {
+                    order.address = it.asString
                 }
 
                 jsonObj.get("authAddr")?.let {

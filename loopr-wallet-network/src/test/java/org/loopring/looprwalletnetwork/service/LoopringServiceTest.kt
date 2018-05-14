@@ -42,7 +42,7 @@ class LoopringServiceTest {
                 method == "loopring_getBalance" -> //
                     return MockResponse().setResponseCode(200).setBody("{\"jsonrpc\":\"2.0\",\"id\":64,\"result\":{\"delegateAddress\":\""+serviceMock.delegateAddress+"\",\"owner\":\"0x5496379c453c4e6Bf8DDf9794Ae8783D2B4Cb07d\",\"tokens\":[{\"symbol\":\"VITE\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"DAI\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"FOO\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"WETH\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"RDN\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"LRC\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"BNT\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"ZRX\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"BAR\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"RHOC\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"BAT\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"IOST\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"OMG\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"KNC\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"ETH\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"SNT\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"ARP\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"EOS\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"REQ\",\"balance\":\"0\",\"allowance\":\"0\"}]}}")
                 method == "loopring_getOrders" -> //
-                    return MockResponse().setResponseCode(200).setBody("{\"jsonrpc\":\"2.0\",\"id\":64,\"result\":{\"data\":[],\"pageIndex\":2,\"pageSize\":40,\"total\":0}}")
+                    return MockResponse().setResponseCode(200).setBody("{\"jsonrpc\":\"2.0\",\"id\":12312,\"result\":{\"data\":[{\"originalOrder\":{\"protocol\":\"0x8d8812b72d1e4ffCeC158D25f56748b7d67c1e78\",\"delegateAddress\":\"0x17233e07c67d086464fD408148c3ABB56245FA64\",\"address\":\"0x328Bf4C7772C7efEA43c3e0C741085481A0AC311\",\"hash\":\"0xe85590c6ac6096de02a4b1b1cf57fe2980c483d9a9a8eebdddbdbccc21445cd6\",\"tokenS\":\"LRC\",\"tokenB\":\"VITE\",\"amountS\":\"0x3e1b0038be886c60000\",\"amountB\":\"0xe605303a75d35880000\",\"validSince\":\"0x5af8ed0c\",\"validUntil\":\"0x5afa3e8c\",\"lrcFee\":\"0x1fcc27bc459d20000\",\"buyNoMoreThanAmountB\":true,\"marginSplitPercentage\":\"0x32\",\"v\":\"0x1c\",\"r\":\"0x415b91b4277947ac92a422d73528622f71075940b622487ac4ee0fabe2fbd326\",\"s\":\"0x618e2ce5a0cf7f9fa5ee3c486369125eb812ce135ed69e024c8ea7bcd8c3e242\",\"walletAddress\":\"0xb94065482Ad64d4c2b9252358D746B39e820A582\",\"authAddr\":\"0x2ab06e4d7606cF427b44C2aE01B1FA8b30c30824\",\"authPrivateKey\":\"0x82d50484609ee832fcff30abeb20a00935ba12746c0e18e391cb4a677bf72dd1\",\"market\":\"VITE-LRC\",\"side\":\"buy\",\"createTime\":1526263146,\"orderType\":\"market_order\"},\"dealtAmountS\":\"0x3e1affd8444b2a4fbbc\",\"dealtAmountB\":\"0xe605303a75d35880000\",\"cancelledAmountS\":\"0x0\",\"cancelledAmountB\":\"0x0\",\"status\":\"ORDER_FINISHED\"}],\"pageIndex\":1,\"pageSize\":1,\"total\":663}}")
                 method == "loopring_getDepth" ->
                     return MockResponse().setResponseCode(200).setBody("{\"jsonrpc\":\"2.0\",\"id\":64,\"result\":{\"delegateAddress\":\""+serviceMock.delegateAddress+"\",\"market\":\"LRC-WETH\",\"depth\":{\"buy\":[[\"1.0000000000\",\"4.0000000000\",\"4.0000000000\"],[\"0.0014416000\",\"150.0000000000\",\"0.2162400000\"],[\"0.0014355300\",\"500.0000000000\",\"0.7177650000\"],[\"0.0014220800\",\"450.0000000000\",\"0.6399360000\"],[\"0.0011000000\",\"10000.0000000000\",\"11.0000000000\"],[\"0.0001000000\",\"2468.0000000000\",\"0.2468000000\"]],\"sell\":[[\"1.0100000000\",\"500.0000000000\",\"505.0000000000\"],[\"1.0000000000\",\"18.0000000000\",\"18.0000000000\"],[\"0.8888888800\",\"1000.0000000000\",\"888.8888800000\"],[\"0.0019000000\",\"200.0000000000\",\"0.3800000000\"],[\"0.0017000000\",\"200.0000000000\",\"0.3400000000\"],[\"0.0015000000\",\"90.0000000000\",\"0.1350000000\"],[\"0.0014700000\",\"450.0000000000\",\"0.6615000000\"],[\"0.0014416000\",\"150.0000000000\",\"0.2162400000\"],[\"0.0014355300\",\"213.0000000000\",\"0.3057678900\"],[\"0.0014000000\",\"30.0000000000\",\"0.0420000000\"]]}}}")
                 method == "loopring_getTicker" ->
@@ -157,8 +157,42 @@ class LoopringServiceTest {
                 )
 
         val result = deferred.await()
-        Assert.assertEquals(serviceMock.id, result.id)
+        Assert.assertEquals(12312, result.id)
         Assert.assertEquals(serviceMock.jsonRpcVersion, result.jsonrpc)
+        Assert.assertEquals(1, result.pageIndex)
+        Assert.assertEquals(1, result.pageSize)
+        Assert.assertEquals(663, result.total)
+        Assert.assertNotNull(result.orders)
+        Assert.assertNotNull(result.orders?.get(0))
+        Assert.assertEquals(BigInteger("3e1affd8444b2a4fbbc",16),result.orders?.get(0)?.dealtAmountToSell)
+        Assert.assertEquals(BigInteger("e605303a75d35880000",16),result.orders?.get(0)?.dealtAmountToBuy)
+        Assert.assertEquals(BigInteger("0"),result.orders?.get(0)?.cancelledAmountToSell)
+        Assert.assertEquals(BigInteger("0"),result.orders?.get(0)?.cancelledAmountToBuy)
+        Assert.assertEquals("ORDER_FINISHED",result.orders?.get(0)?.status)
+        Assert.assertNotNull(result.orders?.get(0)?.originalOrder)
+        Assert.assertEquals("0x8d8812b72d1e4ffCeC158D25f56748b7d67c1e78",result.orders?.get(0)?.originalOrder?.protocol)
+        Assert.assertEquals("0x17233e07c67d086464fD408148c3ABB56245FA64",result.orders?.get(0)?.originalOrder?.delegateAddress)
+        Assert.assertEquals("0x328Bf4C7772C7efEA43c3e0C741085481A0AC311",result.orders?.get(0)?.originalOrder?.address)
+        Assert.assertEquals("0xe85590c6ac6096de02a4b1b1cf57fe2980c483d9a9a8eebdddbdbccc21445cd6",result.orders?.get(0)?.originalOrder?.hash)
+        Assert.assertEquals("LRC",result.orders?.get(0)?.originalOrder?.toSell)
+        Assert.assertEquals("VITE",result.orders?.get(0)?.originalOrder?.toBuy)
+        Assert.assertEquals(BigInteger("0x3e1b0038be886c60000",16),result.orders?.get(0)?.originalOrder?.amtToSell)
+        Assert.assertEquals(BigInteger("0xe605303a75d35880000",16),result.orders?.get(0)?.originalOrder?.amtToBuy)
+        Assert.assertEquals("0x5af8ed0c",result.orders?.get(0)?.originalOrder?.validSince)
+        Assert.assertEquals("0x5afa3e8c",result.orders?.get(0)?.originalOrder?.validUntil)
+        Assert.assertEquals("0x1fcc27bc459d20000",result.orders?.get(0)?.originalOrder?.lrcFee)
+        Assert.assertEquals(true,result.orders?.get(0)?.originalOrder?.buyNoMoreThanBuyAmt)
+        Assert.assertEquals("0x32",result.orders?.get(0)?.originalOrder?.marginSplitPercentage)
+        Assert.assertEquals("0x1c",result.orders?.get(0)?.originalOrder?.v)
+        Assert.assertEquals("0x415b91b4277947ac92a422d73528622f71075940b622487ac4ee0fabe2fbd326",result.orders?.get(0)?.originalOrder?.r)
+        Assert.assertEquals("0x618e2ce5a0cf7f9fa5ee3c486369125eb812ce135ed69e024c8ea7bcd8c3e242",result.orders?.get(0)?.originalOrder?.s)
+        Assert.assertEquals("0xb94065482Ad64d4c2b9252358D746B39e820A582",result.orders?.get(0)?.originalOrder?.walletAddress)
+        Assert.assertEquals("0x2ab06e4d7606cF427b44C2aE01B1FA8b30c30824",result.orders?.get(0)?.originalOrder?.authAddr)
+        Assert.assertEquals("0x82d50484609ee832fcff30abeb20a00935ba12746c0e18e391cb4a677bf72dd1",result.orders?.get(0)?.originalOrder?.authPrivateKey)
+        Assert.assertEquals("VITE-LRC",result.orders?.get(0)?.originalOrder?.market)
+        Assert.assertEquals("buy",result.orders?.get(0)?.originalOrder?.side)
+        Assert.assertEquals(Date(1526263146),result.orders?.get(0)?.originalOrder?.createTime)
+        Assert.assertEquals("market_order",result.orders?.get(0)?.originalOrder?.orderType)
 
     }
 

@@ -45,7 +45,7 @@ class LoopringContractService : Contract {
 
     fun getRingMinedEvents(transactionReceipt: TransactionReceipt): List<RingMinedEventResponse> {
         val event = Event("RingMined",
-                Arrays.asList<TypeReference<*>>(object : TypeReference<Bytes32>() {
+                Arrays.asList<TypeReference<*>>(object : TypeReference<Type<Bytes32>>() {
 
                 }),
                 Arrays.asList(object : TypeReference<Uint256>() {

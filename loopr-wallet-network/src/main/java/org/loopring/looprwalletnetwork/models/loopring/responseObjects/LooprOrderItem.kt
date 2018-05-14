@@ -96,7 +96,7 @@ open class LooprOrderItem : RealmObject() {
                 //TODO - check if this code is enough to handle normally encountered errors
                 //if (!jsonObj.get("id").isJsonNull && jsonObj.get("id").isJsonPrimitive) {
                 jsonObj.get("originalOrder")?.let {
-                    order.originalOrder = context.deserialize(it.asJsonObject, LooprOrder.LooprOrderDeserializer::class.java)
+                    order.originalOrder = context.deserialize(it.asJsonObject, LooprOrder::class.java)
                 }
                 //}
 
@@ -105,19 +105,19 @@ open class LooprOrderItem : RealmObject() {
                 }
 
                 jsonObj.get("dealtAmountB")?.let {
-                    order.mDealtAmountToBuy  = it.asString
+                    order.mDealtAmountToBuy  = it.asString.substring(2)
                 }
 
                 jsonObj.get("dealtAmountS")?.let {
-                    order.mDealtAmountToSell  = it.asString
+                    order.mDealtAmountToSell  = it.asString.substring(2)
                 }
 
                 jsonObj.get("cancelledAmountB")?.let {
-                    order.mCancelledAmountToBuy  = it.asString
+                    order.mCancelledAmountToBuy  = it.asString.substring(2)
                 }
 
                 jsonObj.get("cancelledAmountS")?.let {
-                    order.mCancelledAmountToSell  = it.asString
+                    order.mCancelledAmountToSell  = it.asString.substring(2)
                 }
 
                 return order

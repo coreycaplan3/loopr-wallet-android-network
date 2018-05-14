@@ -74,9 +74,9 @@ class LoopringService {
      * @param pageSize - The size per page, default is 50
      *
      */
-    fun getOrders(owner: String, orderHash: String, status: String,
-                    market: String, side: String, pageIndex: Int,
-                    pageSize: Int): Deferred<LooprOrderList> {
+    fun getOrders(owner: String?, orderHash: String?, status: String,
+                    market: String?, side: String?, pageIndex: Int?,
+                    pageSize: Int?): Deferred<LooprOrderList> {
         val service = getLoopringService()
         val request = LooprRequestOrderList(owner, orderHash, status, side, delegateAddress, market,
                                             pageIndex, pageSize)
