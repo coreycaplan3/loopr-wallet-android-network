@@ -145,46 +145,6 @@ class Erc20Service : Contract {
     companion object {
 
         /**
-         * This will create a new instance of the smart contract on the Ethereum blockchain using
-         * the supplied credentials, and constructor parameter values
-         *
-         * @param web3j the web3j object that connects with the network
-         * @param credentials the credentials of the wallet conducting the transaction
-         * @param gasPrice price of gas for this transaction
-         * @param gasLimit gas limit for the transaction
-         * @param binary The binary transaction information. This can be found when the contract
-         * was first deployed.
-         * @return RemoteCall with response of the request
-         */
-        fun deploy(
-                web3j: Web3j,
-                credentials: Credentials,
-                gasPrice: BigInteger,
-                gasLimit: BigInteger,
-                binary: String
-        ) = deployRemoteCall(Erc20Service::class.java, web3j, credentials, gasPrice, gasLimit, binary, "")
-
-        /**
-         * This will create a new instance of the smart contract on the Ethereum blockchain using
-         * the supplied credentials, and constructor parameter values
-         *
-         * @param web3j the web3j object that connects with the network
-         * @param transactionManager the transaction manager with the relevant transaction information
-         * @param gasPrice price of gas for this transaction
-         * @param gasLimit gas limit for the transaction
-         * @param binary The binary transaction information. This can be found when the contract
-         * was first deployed.
-         * @return RemoteCall with response of the reqquest
-         */
-        fun deploy(
-                web3j: Web3j,
-                transactionManager: TransactionManager,
-                gasPrice: BigInteger,
-                gasLimit: BigInteger,
-                binary: String
-        ) = deployRemoteCall(Erc20Service::class.java, web3j, transactionManager, gasPrice, gasLimit, binary, "")
-
-        /**
          * Constructs an instance of a smart contract wrapper with an existing smart contract
          *
          * @param web3j the web3j object that connects with the network
@@ -195,7 +155,7 @@ class Erc20Service : Contract {
          * was first deployed.
          * @return RemoteCall with response of the request
          */
-        fun getInstance(
+        fun getService(
                 contractAddress: String,
                 web3j: Web3j,
                 credentials: Credentials,
@@ -215,7 +175,7 @@ class Erc20Service : Contract {
          * was first deployed.
          * @return RemoteCall with response of the request
          */
-        fun getInstance(
+        fun getService(
                 contractAddress: String,
                 web3j: Web3j,
                 transactionManager: TransactionManager,

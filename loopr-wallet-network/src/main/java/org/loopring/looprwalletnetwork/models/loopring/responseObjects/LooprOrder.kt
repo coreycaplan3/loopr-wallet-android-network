@@ -35,15 +35,22 @@ open class LooprOrder : RealmObject() {
     var owner : String? = null
 
     /**
+     * Order hash
+     * Example output - "0xe85590c6ac6096de02a4b1b1cf57fe2980c483d9a9a8eebdddbdbccc21445cd6"
+     */
+    @SerializedName("hash")
+    var hash : String? = null
+
+    /**
      * Token to sell
-     * Example output - "0x2956356cd2a2bf3202f771f50d3d14a367b48070"
+     * Example output - "LRC"
      */
     @SerializedName("tokenS")
     var toSell : String? = null
 
     /**
      * Token to buy
-     * Example output - "0xef68e7c694f40c8202821edf525de3782458639f"
+     * Example output - "APPC"
      */
     @SerializedName("tokenB")
     var toBuy : String? = null
@@ -107,6 +114,13 @@ open class LooprOrder : RealmObject() {
     private var mLrcFee : String? = null
 
     /**
+     * The market pair for the order
+     * Example output - "LRC-WETH"
+     */
+    @SerializedName("market")
+    var market : String? = null
+
+    /**
      * If true, this order does not accept buying more than [toBuy]
      * Example output - true
      */
@@ -137,6 +151,55 @@ open class LooprOrder : RealmObject() {
      */
     @SerializedName("s")
     var s : String? = null
+
+    /**
+     * Address of the wallet
+     * Example output - "0xb94065482Ad64d4c2b9252358D746B39e820A582"
+     */
+    @SerializedName("walletAddress")
+    var walletAddress : String? = null
+
+    /**
+     * Address of the order
+     * Example output - "0xb94065482Ad64d4c2b9252358D746B39e820A582"
+     */
+    @SerializedName("address")
+    var address : String? = null
+
+    /**
+     * The wallet auth public key
+     * Example output - "0xb94065482Ad64d4c2b9252358D746B39e820A582"
+     */
+    @SerializedName("authAddr")
+    var authAddr : String? = null
+
+    /**
+     * The wallet auth private key to sign ring when submitting ring
+     * Example output - "0xe84989447467e438565dd2715d93d7537e9bc07fe7dc3044d8cbf4bd10967a69"
+     */
+    @SerializedName("authPrivateKey")
+    var authPrivateKey : String? = null
+
+    /**
+     * The buy or sell side
+     * Example output - "buy"
+     */
+    @SerializedName("side")
+    var side : String? = null
+
+    /**
+     * The time the order was created
+     * Example output - 1526263146
+     */
+    @SerializedName("createTime")
+    var createTime : Date? = null
+
+    /**
+     * The type of order
+     * Example output - "market_order"
+     */
+    @SerializedName("orderType")
+    var orderType : String? = null
 
     /**
      * Custom class deserializer
@@ -175,11 +238,11 @@ open class LooprOrder : RealmObject() {
                 }
 
                 jsonObj.get("amountS")?.let {
-                    order.mAmtToSell = it.asString
+                    order.mAmtToSell = it.asString.substring(2)
                 }
 
                 jsonObj.get("amountB")?.let {
-                    order.mAmtToBuy = it.asString
+                    order.mAmtToBuy = it.asString.substring(2)
                 }
 
                 jsonObj.get("validSince")?.let {
@@ -198,12 +261,20 @@ open class LooprOrder : RealmObject() {
                     order.mLrcFee = it.asString
                 }
 
+                jsonObj.get("market")?.let {
+                    order.market = it.asString
+                }
+
+                jsonObj.get("hash")?.let {
+                    order.hash = it.asString
+                }
+
                 jsonObj.get("buyNoMoreThanAmountB")?.let {
                     order.buyNoMoreThanBuyAmt = it.asBoolean
                 }
 
                 jsonObj.get("marginSplitPercentage")?.let {
-                    order.marginSplitPercentage = it.asInt
+                    order.marginSplitPercentage = Integer.parseInt(it.asString.substring(2),16)
                 }
 
                 jsonObj.get("v")?.let {
@@ -216,6 +287,34 @@ open class LooprOrder : RealmObject() {
 
                 jsonObj.get("s")?.let {
                     order.s = it.asString
+                }
+
+                jsonObj.get("walletAddress")?.let {
+                    order.walletAddress = it.asString
+                }
+
+                jsonObj.get("address")?.let {
+                    order.address = it.asString
+                }
+
+                jsonObj.get("authAddr")?.let {
+                    order.authAddr = it.asString
+                }
+
+                jsonObj.get("authPrivateKey")?.let {
+                    order.authPrivateKey = it.asString
+                }
+
+                jsonObj.get("side")?.let {
+                    order.side = it.asString
+                }
+
+                jsonObj.get("createTime")?.let {
+                    order.createTime = context.deserialize(it,Date::class.java)
+                }
+
+                jsonObj.get("orderType")?.let {
+                    order.orderType = it.asString
                 }
 
                 return order

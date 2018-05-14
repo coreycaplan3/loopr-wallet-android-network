@@ -35,7 +35,7 @@ class Erc20ServiceTest() {
         val credentials = Credentials.create(privateKey)
 
         //TODO - move this to a test function to test the load function
-        wrapper = Erc20Service.getInstance(stupidCoinAddress, web3j, credentials, Contract.GAS_PRICE, Contract.GAS_LIMIT,stupidCoinBin)
+        wrapper = Erc20Service.getService(stupidCoinAddress, web3j, credentials, Contract.GAS_PRICE, Contract.GAS_LIMIT,stupidCoinBin)
     }
 
     @Test

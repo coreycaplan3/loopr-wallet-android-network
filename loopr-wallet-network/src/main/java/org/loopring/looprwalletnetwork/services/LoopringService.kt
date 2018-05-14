@@ -2,6 +2,7 @@ package org.loopring.looprwalletnetwork.services
 
 import kotlinx.coroutines.experimental.Deferred
 import okhttp3.HttpUrl
+import org.loopring.looprwalletnetwork.BuildConfig
 import org.loopring.looprwalletnetwork.models.loopring.requestObjects.*
 import org.loopring.looprwalletnetwork.models.loopring.responseObjects.*
 import org.web3j.crypto.Credentials
@@ -35,7 +36,7 @@ class LoopringService {
      * peer-to-peer network for off-chain order-book maintenance and ring-mining.
      * Once mined, the ring will be serialized into a transaction and submitted to Ethereum blockchain
      * @param owner - the owner of the tokens being traded away
-     * @param toSell - the token to sell, in the form "Eth"
+     * @param toSell - the token to sell, in the form "LoopringContractService"
      * @param toBuy - the token to buy, in the form "Lrc"
      * @param sellAmt - Maximum amount of [sellAmt] to sell. Takes an integer
      * @param buyAmt - Minimum amount of [toBuy] to buy if all sellAmt sold. Takes an inteer
@@ -73,9 +74,9 @@ class LoopringService {
      * @param pageSize - The size per page, default is 50
      *
      */
-    fun getOrders(owner: String, orderHash: String, status: String,
-                    market: String, side: String, pageIndex: Int,
-                    pageSize: Int): Deferred<LooprOrderList> {
+    fun getOrders(owner: String?, orderHash: String?, status: String,
+                    market: String?, side: String?, pageIndex: Int?,
+                    pageSize: Int?): Deferred<LooprOrderList> {
         val service = getLoopringService()
         val request = LooprRequestOrderList(owner, orderHash, status, side, delegateAddress, market,
                                             pageIndex, pageSize)
@@ -328,6 +329,11 @@ class LoopringService {
     }
 
     private fun getLoopringService(): LoopringServiceInternal{
+        /*when(BuildConfig.BUILD_TYPE) {
+            "debug" -> TODO("YOUR DEBUG CODE HERE")
+            "release" -> TODO("YOUR RELEASE CODE HERE")
+            else -> throw IllegalArgumentException("Invalid build type, found ${BuildConfig.BUILD_TYPE}")
+        }*/
     if (this.isMock) return LoopringServiceInternal.getMockService(this.mockUrl!!)
         else return LoopringServiceInternal.getService()
     }
