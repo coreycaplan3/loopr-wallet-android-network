@@ -41,11 +41,11 @@ class LoopringServiceTest {
             //TODO - externalize these responses
             when (method) {
                 "loopring_getBalance" -> //
-                    return MockResponse().setResponseCode(200).setBody("{\"jsonrpc\":\"2.0\",\"id\":64,\"result\":{\"delegateAddress\":\""+serviceMock.delegateAddress+"\",\"owner\":\"0x5496379c453c4e6Bf8DDf9794Ae8783D2B4Cb07d\",\"tokens\":[{\"symbol\":\"VITE\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"DAI\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"FOO\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"WETH\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"RDN\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"LRC\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"BNT\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"ZRX\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"BAR\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"RHOC\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"BAT\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"IOST\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"OMG\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"KNC\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"ETH\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"SNT\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"ARP\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"EOS\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"REQ\",\"balance\":\"0\",\"allowance\":\"0\"}]}}")
+                    return MockResponse().setResponseCode(200).setBody("{\"jsonrpc\":\"2.0\",\"id\":64,\"result\":{\"delegateAddress\":\"" + serviceMock.delegateAddress + "\",\"owner\":\"0x5496379c453c4e6Bf8DDf9794Ae8783D2B4Cb07d\",\"tokens\":[{\"symbol\":\"VITE\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"DAI\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"FOO\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"WETH\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"RDN\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"LRC\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"BNT\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"ZRX\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"BAR\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"RHOC\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"BAT\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"IOST\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"OMG\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"KNC\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"ETH\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"SNT\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"ARP\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"EOS\",\"balance\":\"0\",\"allowance\":\"0\"},{\"symbol\":\"REQ\",\"balance\":\"0\",\"allowance\":\"0\"}]}}")
                 "loopring_getOrders" -> //
                     return MockResponse().setResponseCode(200).setBody("{\"jsonrpc\":\"2.0\",\"id\":12312,\"result\":{\"data\":[{\"originalOrder\":{\"protocol\":\"0x8d8812b72d1e4ffCeC158D25f56748b7d67c1e78\",\"delegateAddress\":\"0x17233e07c67d086464fD408148c3ABB56245FA64\",\"address\":\"0x328Bf4C7772C7efEA43c3e0C741085481A0AC311\",\"hash\":\"0xe85590c6ac6096de02a4b1b1cf57fe2980c483d9a9a8eebdddbdbccc21445cd6\",\"tokenS\":\"LRC\",\"tokenB\":\"VITE\",\"amountS\":\"0x3e1b0038be886c60000\",\"amountB\":\"0xe605303a75d35880000\",\"validSince\":\"0x5af8ed0c\",\"validUntil\":\"0x5afa3e8c\",\"lrcFee\":\"0x1fcc27bc459d20000\",\"buyNoMoreThanAmountB\":true,\"marginSplitPercentage\":\"0x32\",\"v\":\"0x1c\",\"r\":\"0x415b91b4277947ac92a422d73528622f71075940b622487ac4ee0fabe2fbd326\",\"s\":\"0x618e2ce5a0cf7f9fa5ee3c486369125eb812ce135ed69e024c8ea7bcd8c3e242\",\"walletAddress\":\"0xb94065482Ad64d4c2b9252358D746B39e820A582\",\"authAddr\":\"0x2ab06e4d7606cF427b44C2aE01B1FA8b30c30824\",\"authPrivateKey\":\"0x82d50484609ee832fcff30abeb20a00935ba12746c0e18e391cb4a677bf72dd1\",\"market\":\"VITE-LRC\",\"side\":\"buy\",\"createTime\":1526263146,\"orderType\":\"market_order\"},\"dealtAmountS\":\"0x3e1affd8444b2a4fbbc\",\"dealtAmountB\":\"0xe605303a75d35880000\",\"cancelledAmountS\":\"0x0\",\"cancelledAmountB\":\"0x0\",\"status\":\"ORDER_FINISHED\"}],\"pageIndex\":1,\"pageSize\":1,\"total\":663}}")
                 "loopring_getDepth" ->
-                    return MockResponse().setResponseCode(200).setBody("{\"jsonrpc\":\"2.0\",\"id\":64,\"result\":{\"delegateAddress\":\""+serviceMock.delegateAddress+"\",\"market\":\"LRC-WETH\",\"depth\":{\"buy\":[[\"1.0000000000\",\"4.0000000000\",\"4.0000000000\"],[\"0.0014416000\",\"150.0000000000\",\"0.2162400000\"],[\"0.0014355300\",\"500.0000000000\",\"0.7177650000\"],[\"0.0014220800\",\"450.0000000000\",\"0.6399360000\"],[\"0.0011000000\",\"10000.0000000000\",\"11.0000000000\"],[\"0.0001000000\",\"2468.0000000000\",\"0.2468000000\"]],\"sell\":[[\"1.0100000000\",\"500.0000000000\",\"505.0000000000\"],[\"1.0000000000\",\"18.0000000000\",\"18.0000000000\"],[\"0.8888888800\",\"1000.0000000000\",\"888.8888800000\"],[\"0.0019000000\",\"200.0000000000\",\"0.3800000000\"],[\"0.0017000000\",\"200.0000000000\",\"0.3400000000\"],[\"0.0015000000\",\"90.0000000000\",\"0.1350000000\"],[\"0.0014700000\",\"450.0000000000\",\"0.6615000000\"],[\"0.0014416000\",\"150.0000000000\",\"0.2162400000\"],[\"0.0014355300\",\"213.0000000000\",\"0.3057678900\"],[\"0.0014000000\",\"30.0000000000\",\"0.0420000000\"]]}}}")
+                    return MockResponse().setResponseCode(200).setBody("{\"jsonrpc\":\"2.0\",\"id\":64,\"result\":{\"delegateAddress\":\"" + serviceMock.delegateAddress + "\",\"market\":\"LRC-WETH\",\"depth\":{\"buy\":[[\"1.0000000000\",\"4.0000000000\",\"4.0000000000\"],[\"0.0014416000\",\"150.0000000000\",\"0.2162400000\"],[\"0.0014355300\",\"500.0000000000\",\"0.7177650000\"],[\"0.0014220800\",\"450.0000000000\",\"0.6399360000\"],[\"0.0011000000\",\"10000.0000000000\",\"11.0000000000\"],[\"0.0001000000\",\"2468.0000000000\",\"0.2468000000\"]],\"sell\":[[\"1.0100000000\",\"500.0000000000\",\"505.0000000000\"],[\"1.0000000000\",\"18.0000000000\",\"18.0000000000\"],[\"0.8888888800\",\"1000.0000000000\",\"888.8888800000\"],[\"0.0019000000\",\"200.0000000000\",\"0.3800000000\"],[\"0.0017000000\",\"200.0000000000\",\"0.3400000000\"],[\"0.0015000000\",\"90.0000000000\",\"0.1350000000\"],[\"0.0014700000\",\"450.0000000000\",\"0.6615000000\"],[\"0.0014416000\",\"150.0000000000\",\"0.2162400000\"],[\"0.0014355300\",\"213.0000000000\",\"0.3057678900\"],[\"0.0014000000\",\"30.0000000000\",\"0.0420000000\"]]}}}")
                 "loopring_getTicker" ->
                     return MockResponse().setResponseCode(200).setBody("{\"jsonrpc\":\"2.0\",\"id\":64,\"result\":[{\"market\":\"ARP-BAR\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"ARP-LRC\",\"exchange\":\"\",\"interval\":\"\",\"amount\":1541180,\"vol\":105096.76776,\"open\":0.13942902,\"close\":0.11942902,\"high\":0.13942902,\"low\":0.00070903,\"last\":0.11942902,\"buy\":0.11942902,\"sell\":0.11942902,\"change\":\"-14.34%\"},{\"market\":\"ARP-WETH\",\"exchange\":\"\",\"interval\":\"\",\"amount\":7590168.968,\"vol\":948.8474535,\"open\":0.00012502,\"close\":0.000125,\"high\":0.00012525,\"low\":0.000125,\"last\":0.000125,\"buy\":0.000125,\"sell\":0.000125,\"change\":\"-0.02%\"},{\"market\":\"BAR-LRC\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"BAR-WETH\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"BAT-BAR\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"BAT-LRC\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"BAT-WETH\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"BNT-BAR\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"BNT-LRC\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"BNT-WETH\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"EOS-BAR\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"EOS-LRC\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"EOS-WETH\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"FOO-BAR\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0.01732051,\"close\":0.01732051,\"high\":0.01732051,\"low\":0.01732051,\"last\":0.01732051,\"buy\":0.01732051,\"sell\":0.01732051,\"change\":\"0.00%\"},{\"market\":\"FOO-LRC\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"FOO-WETH\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"IOST-BAR\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"IOST-LRC\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"IOST-WETH\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"KNC-BAR\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"KNC-LRC\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"KNC-WETH\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"LRC-WETH\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0.00143553,\"close\":0.00143553,\"high\":0.00143553,\"low\":0.00143553,\"last\":0.00143553,\"buy\":0.00143553,\"sell\":0.00143553,\"change\":\"0.00%\"},{\"market\":\"OMG-BAR\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"OMG-LRC\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"OMG-WETH\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"RDN-BAR\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"RDN-LRC\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"RDN-WETH\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"REQ-BAR\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"REQ-LRC\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"REQ-WETH\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"RHOC-BAR\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"RHOC-LRC\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"RHOC-WETH\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"SNT-BAR\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"SNT-LRC\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"SNT-WETH\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"VITE-BAR\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"VITE-LRC\",\"exchange\":\"\",\"interval\":\"\",\"amount\":367686,\"vol\":47947.686,\"open\":0.17964002,\"close\":0.1282,\"high\":0.17964002,\"low\":0.12794365,\"last\":0.1282,\"buy\":0.1282,\"sell\":0.1282,\"change\":\"-28.64%\"},{\"market\":\"VITE-WETH\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0.0003,\"close\":0.0003,\"high\":0.0003,\"low\":0.0003,\"last\":0.0003,\"buy\":0.0003,\"sell\":0.0003,\"change\":\"0.00%\"},{\"market\":\"ZRX-BAR\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"ZRX-LRC\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"},{\"market\":\"ZRX-WETH\",\"exchange\":\"\",\"interval\":\"\",\"amount\":0,\"vol\":0,\"open\":0,\"close\":0,\"high\":0,\"low\":0,\"last\":0,\"buy\":0,\"sell\":0,\"change\":\"\"}]}")
                 "loopring_getTickers" ->
@@ -53,7 +53,7 @@ class LoopringServiceTest {
                 "loopring_getTrend" ->
                     return MockResponse().setResponseCode(200).setBody("{\"jsonrpc\":\"2.0\",\"id\":64,\"result\":[{\"intervals\":\"1Day\",\"market\":\"LRC-WETH\",\"vol\":1.0694368,\"amount\":899.28375,\"createTime\":1524614471,\"open\":0.0010667891,\"close\":0.0012489996,\"high\":0.0012505002,\"low\":0.0010667891,\"start\":1524528001,\"end\":1524614400}]}")
                 "loopring_getRingMined" ->
-                    return MockResponse().setResponseCode(200).setBody("{\"jsonrpc\":\"2.0\",\"id\":64,\"result\":{\"data\":[{\"id\":1,\"protocol\":\"0xb1170dE31c7f72aB62535862C97F5209E356991b\",\"delegateAddress\":\""+serviceMock.delegateAddress+"\",\"ringIndex\":\"0\",\"ringHash\":\"0x3d58a550136668074648778c3ac6757df582c0df7c7af12c76f39d4a43be5054\",\"txHash\":\"0x30940beef7acb033d10882861a469c19bb6c1aab9a15e6897d6bb0020d70ffa7\",\"miner\":\"0x3ACDF3e3D8eC52a768083f718e763727b0210650\",\"feeRecipient\":\"0x3ACDF3e3D8eC52a768083f718e763727b0210650\",\"isRinghashReserved\":false,\"blockNumber\":5469397,\"totalLrcFee\":\"323200000000000000\",\"tradeAmount\":2,\"timestamp\":1524156383,\"Fork\":false}],\"pageIndex\":1,\"pageSize\":20,\"total\":1}}")
+                    return MockResponse().setResponseCode(200).setBody("{\"jsonrpc\":\"2.0\",\"id\":64,\"result\":{\"data\":[{\"id\":1,\"protocol\":\"0xb1170dE31c7f72aB62535862C97F5209E356991b\",\"delegateAddress\":\"" + serviceMock.delegateAddress + "\",\"ringIndex\":\"0\",\"ringHash\":\"0x3d58a550136668074648778c3ac6757df582c0df7c7af12c76f39d4a43be5054\",\"txHash\":\"0x30940beef7acb033d10882861a469c19bb6c1aab9a15e6897d6bb0020d70ffa7\",\"miner\":\"0x3ACDF3e3D8eC52a768083f718e763727b0210650\",\"feeRecipient\":\"0x3ACDF3e3D8eC52a768083f718e763727b0210650\",\"isRinghashReserved\":false,\"blockNumber\":5469397,\"totalLrcFee\":\"323200000000000000\",\"tradeAmount\":2,\"timestamp\":1524156383,\"Fork\":false}],\"pageIndex\":1,\"pageSize\":20,\"total\":1}}")
                 "loopring_getCutoff" ->
                     return MockResponse().setResponseCode(200).setBody("{\"jsonrpc\":\"2.0\",\"id\":64,\"result\":1501232222}")
                 "loopring_getPriceQuote" ->
@@ -97,8 +97,8 @@ class LoopringServiceTest {
                 .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .build()*/
 
-        serviceMock = LoopringService(mockServer.url(""))
-        serviceLive = LoopringService()
+        serviceMock = LoopringService.getInstance(mockServer.url(""))
+        serviceLive = LoopringService.getInstance()
     }
 
     /**
@@ -149,7 +149,7 @@ class LoopringServiceTest {
                 "buy",
                 2,
                 40
-                )
+        )
 
         val result = deferred.await()
         Assert.assertEquals(12312, result.id)
@@ -159,35 +159,35 @@ class LoopringServiceTest {
         Assert.assertEquals(663, result.total)
         Assert.assertNotNull(result.orders)
         Assert.assertNotNull(result.orders?.get(0))
-        Assert.assertEquals(BigInteger("3e1affd8444b2a4fbbc",16),result.orders?.get(0)?.dealtAmountToSell)
-        Assert.assertEquals(BigInteger("e605303a75d35880000",16),result.orders?.get(0)?.dealtAmountToBuy)
-        Assert.assertEquals(BigInteger("0"),result.orders?.get(0)?.cancelledAmountToSell)
-        Assert.assertEquals(BigInteger("0"),result.orders?.get(0)?.cancelledAmountToBuy)
-        Assert.assertEquals("ORDER_FINISHED",result.orders?.get(0)?.status)
+        Assert.assertEquals(BigInteger("3e1affd8444b2a4fbbc", 16), result.orders?.get(0)?.dealtAmountToSell)
+        Assert.assertEquals(BigInteger("e605303a75d35880000", 16), result.orders?.get(0)?.dealtAmountToBuy)
+        Assert.assertEquals(BigInteger("0"), result.orders?.get(0)?.cancelledAmountToSell)
+        Assert.assertEquals(BigInteger("0"), result.orders?.get(0)?.cancelledAmountToBuy)
+        Assert.assertEquals("ORDER_FINISHED", result.orders?.get(0)?.status)
         Assert.assertNotNull(result.orders?.get(0)?.originalOrder)
-        Assert.assertEquals("0x8d8812b72d1e4ffCeC158D25f56748b7d67c1e78",result.orders?.get(0)?.originalOrder?.protocol)
-        Assert.assertEquals("0x17233e07c67d086464fD408148c3ABB56245FA64",result.orders?.get(0)?.originalOrder?.delegateAddress)
-        Assert.assertEquals("0x328Bf4C7772C7efEA43c3e0C741085481A0AC311",result.orders?.get(0)?.originalOrder?.address)
-        Assert.assertEquals("0xe85590c6ac6096de02a4b1b1cf57fe2980c483d9a9a8eebdddbdbccc21445cd6",result.orders?.get(0)?.originalOrder?.hash)
-        Assert.assertEquals("LRC",result.orders?.get(0)?.originalOrder?.toSell)
-        Assert.assertEquals("VITE",result.orders?.get(0)?.originalOrder?.toBuy)
-        Assert.assertEquals(BigInteger("0x3e1b0038be886c60000",16),result.orders?.get(0)?.originalOrder?.amtToSell)
-        Assert.assertEquals(BigInteger("0xe605303a75d35880000",16),result.orders?.get(0)?.originalOrder?.amtToBuy)
-        Assert.assertEquals("0x5af8ed0c",result.orders?.get(0)?.originalOrder?.validSince)
-        Assert.assertEquals("0x5afa3e8c",result.orders?.get(0)?.originalOrder?.validUntil)
-        Assert.assertEquals("0x1fcc27bc459d20000",result.orders?.get(0)?.originalOrder?.lrcFee)
-        Assert.assertEquals(true,result.orders?.get(0)?.originalOrder?.buyNoMoreThanBuyAmt)
-        Assert.assertEquals("0x32",result.orders?.get(0)?.originalOrder?.marginSplitPercentage)
-        Assert.assertEquals("0x1c",result.orders?.get(0)?.originalOrder?.v)
-        Assert.assertEquals("0x415b91b4277947ac92a422d73528622f71075940b622487ac4ee0fabe2fbd326",result.orders?.get(0)?.originalOrder?.r)
-        Assert.assertEquals("0x618e2ce5a0cf7f9fa5ee3c486369125eb812ce135ed69e024c8ea7bcd8c3e242",result.orders?.get(0)?.originalOrder?.s)
-        Assert.assertEquals("0xb94065482Ad64d4c2b9252358D746B39e820A582",result.orders?.get(0)?.originalOrder?.walletAddress)
-        Assert.assertEquals("0x2ab06e4d7606cF427b44C2aE01B1FA8b30c30824",result.orders?.get(0)?.originalOrder?.authAddr)
-        Assert.assertEquals("0x82d50484609ee832fcff30abeb20a00935ba12746c0e18e391cb4a677bf72dd1",result.orders?.get(0)?.originalOrder?.authPrivateKey)
-        Assert.assertEquals("VITE-LRC",result.orders?.get(0)?.originalOrder?.market)
-        Assert.assertEquals("buy",result.orders?.get(0)?.originalOrder?.side)
-        Assert.assertEquals(Date(1526263146),result.orders?.get(0)?.originalOrder?.createTime)
-        Assert.assertEquals("market_order",result.orders?.get(0)?.originalOrder?.orderType)
+        Assert.assertEquals("0x8d8812b72d1e4ffCeC158D25f56748b7d67c1e78", result.orders?.get(0)?.originalOrder?.protocol)
+        Assert.assertEquals("0x17233e07c67d086464fD408148c3ABB56245FA64", result.orders?.get(0)?.originalOrder?.delegateAddress)
+        Assert.assertEquals("0x328Bf4C7772C7efEA43c3e0C741085481A0AC311", result.orders?.get(0)?.originalOrder?.address)
+        Assert.assertEquals("0xe85590c6ac6096de02a4b1b1cf57fe2980c483d9a9a8eebdddbdbccc21445cd6", result.orders?.get(0)?.originalOrder?.hash)
+        Assert.assertEquals("LRC", result.orders?.get(0)?.originalOrder?.toSell)
+        Assert.assertEquals("VITE", result.orders?.get(0)?.originalOrder?.toBuy)
+        Assert.assertEquals(BigInteger("0x3e1b0038be886c60000", 16), result.orders?.get(0)?.originalOrder?.amtToSell)
+        Assert.assertEquals(BigInteger("0xe605303a75d35880000", 16), result.orders?.get(0)?.originalOrder?.amtToBuy)
+        Assert.assertEquals("0x5af8ed0c", result.orders?.get(0)?.originalOrder?.validSince)
+        Assert.assertEquals("0x5afa3e8c", result.orders?.get(0)?.originalOrder?.validUntil)
+        Assert.assertEquals("0x1fcc27bc459d20000", result.orders?.get(0)?.originalOrder?.lrcFee)
+        Assert.assertEquals(true, result.orders?.get(0)?.originalOrder?.buyNoMoreThanBuyAmt)
+        Assert.assertEquals("0x32", result.orders?.get(0)?.originalOrder?.marginSplitPercentage)
+        Assert.assertEquals("0x1c", result.orders?.get(0)?.originalOrder?.v)
+        Assert.assertEquals("0x415b91b4277947ac92a422d73528622f71075940b622487ac4ee0fabe2fbd326", result.orders?.get(0)?.originalOrder?.r)
+        Assert.assertEquals("0x618e2ce5a0cf7f9fa5ee3c486369125eb812ce135ed69e024c8ea7bcd8c3e242", result.orders?.get(0)?.originalOrder?.s)
+        Assert.assertEquals("0xb94065482Ad64d4c2b9252358D746B39e820A582", result.orders?.get(0)?.originalOrder?.walletAddress)
+        Assert.assertEquals("0x2ab06e4d7606cF427b44C2aE01B1FA8b30c30824", result.orders?.get(0)?.originalOrder?.authAddr)
+        Assert.assertEquals("0x82d50484609ee832fcff30abeb20a00935ba12746c0e18e391cb4a677bf72dd1", result.orders?.get(0)?.originalOrder?.authPrivateKey)
+        Assert.assertEquals("VITE-LRC", result.orders?.get(0)?.originalOrder?.market)
+        Assert.assertEquals("buy", result.orders?.get(0)?.originalOrder?.side)
+        Assert.assertEquals(Date(1526263146), result.orders?.get(0)?.originalOrder?.createTime)
+        Assert.assertEquals("market_order", result.orders?.get(0)?.originalOrder?.orderType)
 
     }
 
@@ -218,13 +218,13 @@ class LoopringServiceTest {
      */
     @Test
     fun getDepth_shouldWorkMock() = runBlocking {
-        val deferred = serviceMock.getDepth( "LRC-WETH",10)
+        val deferred = serviceMock.getDepth("LRC-WETH", 10)
 
         val result = deferred.await()
         Assert.assertEquals(serviceMock.id, result.id)
         Assert.assertEquals(serviceMock.jsonRpcVersion, result.jsonrpc)
         Assert.assertEquals("LRC-WETH", result.market)
-        Assert.assertEquals("1.0000000000",result.buyDepth?.get(0)?.depthPrice.toString())
+        Assert.assertEquals("1.0000000000", result.buyDepth?.get(0)?.depthPrice.toString())
     }
 
     /**
@@ -233,13 +233,13 @@ class LoopringServiceTest {
      */
     @Test
     fun getDepth_shouldWorkLive() = runBlocking {
-        val deferred = serviceLive.getDepth( "LRC-WETH",10)
+        val deferred = serviceLive.getDepth("LRC-WETH", 10)
 
         val result = deferred.await()
         Assert.assertEquals(serviceLive.id, result.id)
         Assert.assertEquals(serviceLive.jsonRpcVersion, result.jsonrpc)
         Assert.assertEquals("LRC-WETH", result.market)
-        Assert.assertEquals("1.0000000000",result.buyDepth?.get(0)?.depthPrice.toString()) //TODO - this will have to adjust to account for changing live data
+        Assert.assertEquals("1.0000000000", result.buyDepth?.get(0)?.depthPrice.toString()) //TODO - this will have to adjust to account for changing live data
     }
 
     /**
@@ -276,7 +276,7 @@ class LoopringServiceTest {
      */
     @Test
     fun getTickers_shouldWorkMock() = runBlocking {
-        val deferred = serviceMock.getTickers( "LRC-WETH")
+        val deferred = serviceMock.getTickers("LRC-WETH")
 
         val result = deferred.await()
         Assert.assertEquals(serviceMock.id, result.id)
@@ -290,7 +290,7 @@ class LoopringServiceTest {
      */
     @Test
     fun getTickers_shouldWorkLive() = runBlocking {
-        val deferred = serviceLive.getTickers( "LRC-WETH")
+        val deferred = serviceLive.getTickers("LRC-WETH")
 
         val result = deferred.await()
         Assert.assertEquals(serviceLive.id, result.id)
@@ -306,12 +306,12 @@ class LoopringServiceTest {
      */
     @Test
     fun getTrend_shouldWorkMock() = runBlocking {
-        val deferred = serviceMock.getTrend( "LRC-WETH", "1Day")
+        val deferred = serviceMock.getTrend("LRC-WETH", "1Day")
 
         val result = deferred.await()
         Assert.assertEquals(serviceMock.id, result.id)
         Assert.assertEquals(serviceMock.jsonRpcVersion, result.jsonrpc)
-        Assert.assertEquals("1Day",result.trends?.get(0)?.market, "LRC-WETH")
+        Assert.assertEquals("1Day", result.trends?.get(0)?.market, "LRC-WETH")
     }
 
     /**
@@ -320,12 +320,12 @@ class LoopringServiceTest {
      */
     @Test
     fun getTrend_shouldWorkLive() = runBlocking {
-        val deferred = serviceLive.getTrend( "LRC-WETH", "1Day")
+        val deferred = serviceLive.getTrend("LRC-WETH", "1Day")
 
         val result = deferred.await()
         Assert.assertEquals(serviceLive.id, result.id)
         Assert.assertEquals(serviceLive.jsonRpcVersion, result.jsonrpc)
-        Assert.assertEquals("1Day",result.trends?.get(0)?.market, "LRC-WETH")
+        Assert.assertEquals("1Day", result.trends?.get(0)?.market, "LRC-WETH")
     }
 
     /**
@@ -334,25 +334,25 @@ class LoopringServiceTest {
      */
     @Test
     fun getRingMined_shouldWorkMock() = runBlocking {
-        val deferred = serviceMock.getRingMined( "0xb903239f8543d04b5dc1ba6579132b143087c68db1b2168786408fcbce568238",1,20)
+        val deferred = serviceMock.getRingMined("0xb903239f8543d04b5dc1ba6579132b143087c68db1b2168786408fcbce568238", 1, 20)
 
         val result = deferred.await()
         Assert.assertEquals(serviceMock.id, result.id)
         Assert.assertEquals(serviceMock.jsonRpcVersion, result.jsonrpc)
-        Assert.assertEquals(1,result.pageIndex)
-        Assert.assertEquals(20,result.pageSize)
-        Assert.assertEquals(1,result.total)
-        Assert.assertEquals("0x3d58a550136668074648778c3ac6757df582c0df7c7af12c76f39d4a43be5054",result.minedRings?.get(0)?.ringHash)
-        Assert.assertEquals(BigInteger("5469397"),result.minedRings?.get(0)?.blockNumber)
-        Assert.assertEquals("0x3ACDF3e3D8eC52a768083f718e763727b0210650",result.minedRings?.get(0)?.feeRecipient)
-        Assert.assertEquals("0x3ACDF3e3D8eC52a768083f718e763727b0210650",result.minedRings?.get(0)?.miner)
-        Assert.assertEquals(Date(1524156383),result.minedRings?.get(0)?.timestamp)
-        Assert.assertEquals(BigInteger("323200000000000000"),result.minedRings?.get(0)?.totalLrcFee)
-        Assert.assertEquals(2,result.minedRings?.get(0)?.tradeAmount)
-        Assert.assertEquals("0x30940beef7acb033d10882861a469c19bb6c1aab9a15e6897d6bb0020d70ffa7",result.minedRings?.get(0)?.txHash)
-        Assert.assertEquals(1,result.minedRings?.get(0)?.id)
-        Assert.assertEquals(false,result.minedRings?.get(0)?.isRinghashReserved)
-        Assert.assertEquals(false,result.minedRings?.get(0)?.fork)
+        Assert.assertEquals(1, result.pageIndex)
+        Assert.assertEquals(20, result.pageSize)
+        Assert.assertEquals(1, result.total)
+        Assert.assertEquals("0x3d58a550136668074648778c3ac6757df582c0df7c7af12c76f39d4a43be5054", result.minedRings?.get(0)?.ringHash)
+        Assert.assertEquals(BigInteger("5469397"), result.minedRings?.get(0)?.blockNumber)
+        Assert.assertEquals("0x3ACDF3e3D8eC52a768083f718e763727b0210650", result.minedRings?.get(0)?.feeRecipient)
+        Assert.assertEquals("0x3ACDF3e3D8eC52a768083f718e763727b0210650", result.minedRings?.get(0)?.miner)
+        Assert.assertEquals(Date(1524156383), result.minedRings?.get(0)?.timestamp)
+        Assert.assertEquals(BigInteger("323200000000000000"), result.minedRings?.get(0)?.totalLrcFee)
+        Assert.assertEquals(2, result.minedRings?.get(0)?.tradeAmount)
+        Assert.assertEquals("0x30940beef7acb033d10882861a469c19bb6c1aab9a15e6897d6bb0020d70ffa7", result.minedRings?.get(0)?.txHash)
+        Assert.assertEquals(1, result.minedRings?.get(0)?.id)
+        Assert.assertEquals(false, result.minedRings?.get(0)?.isRinghashReserved)
+        Assert.assertEquals(false, result.minedRings?.get(0)?.fork)
     }
 
     /**
@@ -361,25 +361,25 @@ class LoopringServiceTest {
      */
     @Test
     fun getRingMined_shouldWorkLive() = runBlocking {
-        val deferred = serviceLive.getRingMined( "0xb903239f8543d04b5dc1ba6579132b143087c68db1b2168786408fcbce568238",1,20)
+        val deferred = serviceLive.getRingMined("0xb903239f8543d04b5dc1ba6579132b143087c68db1b2168786408fcbce568238", 1, 20)
 
         val result = deferred.await()
         Assert.assertEquals(serviceLive.id, result.id)
         Assert.assertEquals(serviceLive.jsonRpcVersion, result.jsonrpc)
-        Assert.assertEquals(1,result.pageIndex)
-        Assert.assertEquals(20,result.pageSize)
-        Assert.assertEquals(0,result.total)
-        Assert.assertEquals("0x3d58a550136668074648778c3ac6757df582c0df7c7af12c76f39d4a43be5054",result.minedRings?.get(0)?.ringHash)
-        Assert.assertEquals(BigInteger("5469397"),result.minedRings?.get(0)?.blockNumber)
-        Assert.assertEquals("0x3ACDF3e3D8eC52a768083f718e763727b0210650",result.minedRings?.get(0)?.feeRecipient)
-        Assert.assertEquals("0x3ACDF3e3D8eC52a768083f718e763727b0210650",result.minedRings?.get(0)?.miner)
-        Assert.assertEquals(Date(1524156383),result.minedRings?.get(0)?.timestamp)
-        Assert.assertEquals(BigInteger("323200000000000000"),result.minedRings?.get(0)?.totalLrcFee)
-        Assert.assertEquals(2,result.minedRings?.get(0)?.tradeAmount)
-        Assert.assertEquals("0x30940beef7acb033d10882861a469c19bb6c1aab9a15e6897d6bb0020d70ffa7",result.minedRings?.get(0)?.txHash)
-        Assert.assertEquals(1,result.minedRings?.get(0)?.id)
-        Assert.assertEquals(false,result.minedRings?.get(0)?.isRinghashReserved)
-        Assert.assertEquals(false,result.minedRings?.get(0)?.fork)
+        Assert.assertEquals(1, result.pageIndex)
+        Assert.assertEquals(20, result.pageSize)
+        Assert.assertEquals(0, result.total)
+        Assert.assertEquals("0x3d58a550136668074648778c3ac6757df582c0df7c7af12c76f39d4a43be5054", result.minedRings?.get(0)?.ringHash)
+        Assert.assertEquals(BigInteger("5469397"), result.minedRings?.get(0)?.blockNumber)
+        Assert.assertEquals("0x3ACDF3e3D8eC52a768083f718e763727b0210650", result.minedRings?.get(0)?.feeRecipient)
+        Assert.assertEquals("0x3ACDF3e3D8eC52a768083f718e763727b0210650", result.minedRings?.get(0)?.miner)
+        Assert.assertEquals(Date(1524156383), result.minedRings?.get(0)?.timestamp)
+        Assert.assertEquals(BigInteger("323200000000000000"), result.minedRings?.get(0)?.totalLrcFee)
+        Assert.assertEquals(2, result.minedRings?.get(0)?.tradeAmount)
+        Assert.assertEquals("0x30940beef7acb033d10882861a469c19bb6c1aab9a15e6897d6bb0020d70ffa7", result.minedRings?.get(0)?.txHash)
+        Assert.assertEquals(1, result.minedRings?.get(0)?.id)
+        Assert.assertEquals(false, result.minedRings?.get(0)?.isRinghashReserved)
+        Assert.assertEquals(false, result.minedRings?.get(0)?.fork)
     }
 
     /**
@@ -422,7 +422,7 @@ class LoopringServiceTest {
         val result = deferred.await()
         Assert.assertEquals(serviceMock.id, result.id)
         Assert.assertEquals(serviceMock.jsonRpcVersion, result.jsonrpc)
-        Assert.assertEquals("CNY",result.currency)
+        Assert.assertEquals("CNY", result.currency)
         Assert.assertNotNull(result.tokens?.get(0)?.price)
         Assert.assertTrue(result.tokens?.get(0)?.price!! > BigDecimal("0"))
         Assert.assertNotNull(result.tokens?.get(0)?.symbol)
@@ -439,7 +439,7 @@ class LoopringServiceTest {
         val result = deferred.await()
         Assert.assertEquals(serviceLive.id, result.id)
         Assert.assertEquals(serviceLive.jsonRpcVersion, result.jsonrpc)
-        Assert.assertEquals("CNY",result.currency)
+        Assert.assertEquals("CNY", result.currency)
         Assert.assertNotNull(result.tokens?.get(0)?.price)
         Assert.assertTrue(result.tokens?.get(0)?.price!! > BigDecimal("0"))
         Assert.assertNotNull(result.tokens?.get(0)?.symbol)
@@ -457,7 +457,7 @@ class LoopringServiceTest {
         Assert.assertEquals(serviceMock.id, result.id)
         Assert.assertEquals(serviceMock.jsonRpcVersion, result.jsonrpc)
         Assert.assertNotNull(result.allowance)
-        Assert.assertEquals(BigInteger("2347ad6c",16), result.allowance)
+        Assert.assertEquals(BigInteger("2347ad6c", 16), result.allowance)
     }
 
     /**
@@ -487,7 +487,7 @@ class LoopringServiceTest {
         Assert.assertEquals(serviceMock.id, result.id)
         Assert.assertEquals(serviceMock.jsonRpcVersion, result.jsonrpc)
         Assert.assertNotNull(result.frozenFees)
-        Assert.assertEquals(BigInteger("2347ad6c",16), result.frozenFees)
+        Assert.assertEquals(BigInteger("2347ad6c", 16), result.frozenFees)
     }
 
     /**
@@ -502,7 +502,7 @@ class LoopringServiceTest {
         Assert.assertEquals(serviceLive.id, result.id)
         Assert.assertEquals(serviceLive.jsonRpcVersion, result.jsonrpc)
         Assert.assertNotNull(result.frozenFees)
-        Assert.assertEquals(BigInteger("0",16), result.frozenFees)
+        Assert.assertEquals(BigInteger("0", 16), result.frozenFees)
     }
 
     /**
@@ -626,28 +626,28 @@ class LoopringServiceTest {
         val deferred = serviceMock.getTransactions(
                 "0xeba7136a36da0f5e16c6bdbc739c716bb5b65a00",
                 "0x46b9ab33d6904718fc2d16ad1a133a35ae23045bb65893eb2c41b0984b78eca7",
-                "LRC","success","receive",1,20
+                "LRC", "success", "receive", 1, 20
         )
 
         val result = deferred.await()
         Assert.assertEquals(serviceMock.id, result.id)
         Assert.assertEquals(serviceMock.jsonRpcVersion, result.jsonrpc)
-        Assert.assertEquals(1,result.pageIndex)
-        Assert.assertEquals(10,result.pageSize)
-        Assert.assertEquals(3,result.total)
+        Assert.assertEquals(1, result.pageIndex)
+        Assert.assertEquals(10, result.pageSize)
+        Assert.assertEquals(3, result.total)
         Assert.assertNotNull(result.transactions)
         Assert.assertNotNull(result.transactions?.get(0))
-        Assert.assertEquals("0xeba7136a36da0f5e16c6bdbc739c716bb5b65a00",result.transactions?.get(0)?.owner)
-        Assert.assertEquals("0x2234c96681e9533fdfd122bacbbc634efbafa0f0",result.transactions?.get(0)?.from)
-        Assert.assertEquals("0xeba7136a36da0f5e16c6bdbc739c716bb5b65a00",result.transactions?.get(0)?.to)
-        Assert.assertEquals("0x46b9ab33d6904718fc2d16ad1a133a35ae23045bb65893eb2c41b0984b78eca7",result.transactions?.get(0)?.hash)
-        Assert.assertEquals("LRC",result.transactions?.get(0)?.symbol)
-        Assert.assertEquals(parseLong("5550001"),result.transactions?.get(0)?.blockNumber)
-        Assert.assertEquals(BigInteger("79640000000000000000"),result.transactions?.get(0)?.value)
-        Assert.assertEquals("receive",result.transactions?.get(0)?.type)
-        Assert.assertEquals("success",result.transactions?.get(0)?.status)
-        Assert.assertEquals(Date(1525364262),result.transactions?.get(0)?.createTime)
-        Assert.assertEquals(Date(1525364262),result.transactions?.get(0)?.updateTime)
+        Assert.assertEquals("0xeba7136a36da0f5e16c6bdbc739c716bb5b65a00", result.transactions?.get(0)?.owner)
+        Assert.assertEquals("0x2234c96681e9533fdfd122bacbbc634efbafa0f0", result.transactions?.get(0)?.from)
+        Assert.assertEquals("0xeba7136a36da0f5e16c6bdbc739c716bb5b65a00", result.transactions?.get(0)?.to)
+        Assert.assertEquals("0x46b9ab33d6904718fc2d16ad1a133a35ae23045bb65893eb2c41b0984b78eca7", result.transactions?.get(0)?.hash)
+        Assert.assertEquals("LRC", result.transactions?.get(0)?.symbol)
+        Assert.assertEquals(parseLong("5550001"), result.transactions?.get(0)?.blockNumber)
+        Assert.assertEquals(BigInteger("79640000000000000000"), result.transactions?.get(0)?.value)
+        Assert.assertEquals("receive", result.transactions?.get(0)?.type)
+        Assert.assertEquals("success", result.transactions?.get(0)?.status)
+        Assert.assertEquals(Date(1525364262), result.transactions?.get(0)?.createTime)
+        Assert.assertEquals(Date(1525364262), result.transactions?.get(0)?.updateTime)
     }
 
     /**
@@ -659,15 +659,15 @@ class LoopringServiceTest {
         val deferred = serviceLive.getTransactions(
                 "0xeba7136a36da0f5e16c6bdbc739c716bb5b65a00",
                 "0x46b9ab33d6904718fc2d16ad1a133a35ae23045bb65893eb2c41b0984b78eca7",
-                "LRC","success","receive",1,20
+                "LRC", "success", "receive", 1, 20
         )
 
         val result = deferred.await()
         Assert.assertEquals(serviceLive.id, result.id)
         Assert.assertEquals(serviceLive.jsonRpcVersion, result.jsonrpc)
-        Assert.assertEquals(1,result.pageIndex)
-        Assert.assertEquals(20,result.pageSize)
-        Assert.assertEquals(3,result.total)
+        Assert.assertEquals(1, result.pageIndex)
+        Assert.assertEquals(20, result.pageSize)
+        Assert.assertEquals(3, result.total)
         Assert.assertNotNull(result.transactions)
         Assert.assertNotNull(result.transactions?.get(0))
         Assert.assertNotNull(result.transactions?.get(0)?.owner)
@@ -694,7 +694,7 @@ class LoopringServiceTest {
         val result = deferred.await()
         Assert.assertEquals(serviceMock.id, result.id)
         Assert.assertEquals(serviceMock.jsonRpcVersion, result.jsonrpc)
-        Assert.assertEquals("unlock_notice_success",result.response)
+        Assert.assertEquals("unlock_notice_success", result.response)
     }
 
     /**
@@ -708,7 +708,7 @@ class LoopringServiceTest {
         val result = deferred.await()
         Assert.assertEquals(serviceLive.id, result.id)
         Assert.assertEquals(serviceLive.jsonRpcVersion, result.jsonrpc)
-        Assert.assertEquals("unlock_notice_success",result.response)
+        Assert.assertEquals("unlock_notice_success", result.response)
     }
 
     /**
@@ -722,7 +722,7 @@ class LoopringServiceTest {
         val result = deferred.await()
         Assert.assertEquals(serviceMock.id, result.id)
         Assert.assertEquals(serviceMock.jsonRpcVersion, result.jsonrpc)
-        Assert.assertEquals("unlock_notice_success",result.response)
+        Assert.assertEquals("unlock_notice_success", result.response)
     }
 
 
